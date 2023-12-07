@@ -15,7 +15,7 @@ public:
     void jump();               //跳跃
     void updatePositionY();    //更新Y轴坐标
 public:
-    QPixmap run_img[32];  //奔跑图片
+    QPixmap run_img[2];  //奔跑图片
     QPixmap jump_img;     //跳跃图片
     QTimer run_Timer;       //奔跑图片切换计时器
     QTimer jump_Timer;      //跳跃时间计时器

@@ -198,23 +198,6 @@ font: 18pt;</string>
      <string>游戏介绍</string>
     </property>
    </widget>
-   <widget class="QLabel" name="highscore">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>70</y>
-      <width>171</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color: rgb(54,54,54);
-font: 11pt;</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

@@ -45,7 +45,6 @@ void MainWindow::initWindow(){
     ui->over_score->setFont(font);
     ui->over_distance->setFont(font);
     ui->game_over->setFont(font);
-    ui->highscore->setFont(font);
 
     ui->start->setGeometry(390,140,ui->start->width(),ui->start->height());      //大小
     ui->intro->setGeometry(390,260,ui->intro->width(),ui->intro->height());
@@ -54,7 +53,6 @@ void MainWindow::initWindow(){
     ui->restart->setFocusPolicy(Qt::NoFocus);
     ui->return_main->setFocusPolicy(Qt::NoFocus);
     ui->score->hide();
-    ui->highscore->hide();
     ui->distance->hide();
     ui->groupBox->hide();
 
@@ -74,7 +72,6 @@ void MainWindow::initWindow(){
         collisionDetection();  //碰撞检测
         ui->score->setText("Score: "+QString::number(score));   //更新分数
         ui->distance->setText("Distance: "+QString::number(grounds.distance)+" m");
-        ui->highscore->setText("High Score: "+QString::number(highscore));
         update();          //刷新屏幕
     });
     connect(&add_Barrier_interval_Timer,&QTimer::timeout,[=](){
@@ -129,13 +126,11 @@ void MainWindow::playgame(){                                                    
     dino.current_run_img=0;
     ui->score->show();
     ui->distance->show();
-    ui->highscore->show();
     m_Timer.start();            //启动计时器
     dino.run_Timer.start();
     add_Barrier_interval_Timer.start();
 }
 void MainWindow::gameover(){
-    highscore=(highscore<score)?score:highscore;
     m_Timer.stop();
     sprint_Timer.stop();
     sprint_interval_Timer.stop();
@@ -278,7 +273,6 @@ void MainWindow::on_return_main_clicked()
     ui->groupBox->hide();
     ui->score->hide();
     ui->distance->hide();
-    ui->highscore->hide();
     ui->start->show();
     ui->intro->show();
     barriers.clear();

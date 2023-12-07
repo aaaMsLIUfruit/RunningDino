@@ -44,13 +44,12 @@ public:
     QTimer sprint_Timer;           //冲刺持续时间计时器
     QTimer sprint_interval_Timer;  //冲刺间隔时间计时器
     QTimer add_Barrier_interval_Timer; //生成障碍物计时器
-    QTimer add_veget_intervai_Timer;   //生成棒棒糖间隔时间计时器
+    QTimer add_veget_intervai_Timer;   //生成兰纳罗间隔时间计时器
     QTimer protected_Timer;            //无敌时间
     bool sprint_once;         //是否已经冲刺一次
     bool sprint_twice;        //是否已经冲刺两次
     int i;                    //障碍物类型
     int score;           //分数
-    int highscore=0;
 
     Grounds grounds;  //地面对象
     Dino dino;

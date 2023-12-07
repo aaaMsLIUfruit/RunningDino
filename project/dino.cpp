@@ -15,7 +15,7 @@ Dino::Dino()
     jump_Timer.setInterval(JUMP_DURATION);
     jump_Timer.setSingleShot(true);
 
-    fall_speed=0;
+    fall_speed=INIT_FALL_SPEED;
     jump_once=false;
     jump_twice=false;
     dino_Rect.setWidth(51);        //初始化角色边框
@@ -54,7 +54,7 @@ void Dino::updatePositionY(){
         y-=jump_Timer.remainingTime()/45;
     }
     else{
-        fall_speed+=0.1;              //下落加速度
+        fall_speed+=0.03;              //下落加速度
         y+=fall_speed;
     }
     if(y>=DINO_ON_GROUNG_POS_Y){

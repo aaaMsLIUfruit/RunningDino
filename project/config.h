@@ -17,7 +17,7 @@
 #define YUCHA_PATH ":/res/yucha.png"               //鱼叉
 #define YUCHA_PATH2 ":/res/yucha2.png"
 #define LOLIPOP_PATH ":res/lolipop.png"             //棒棒糖
-#define APPLE_PATH ":/res/apple.png"               //苹果
+#define COIN_PATH ":/res/coin.png"               //金币
 
 #define SCENE_SCROLL_SPEED 3     //场景移动速度
 #define GAME_RATE 8              //屏幕刷新间隔

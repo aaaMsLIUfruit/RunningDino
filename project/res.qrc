@@ -2,55 +2,10 @@
     <qresource prefix="/">
         <file>res/apple.png</file>
         <file>res/background.png</file>
-        <file>res/fly.png</file>
-        <file>res/gameover.png</file>
-        <file>res/ground.png</file>
-        <file>res/ground2.png</file>
         <file>res/icon.ico</file>
-        <file>res/paimon.png</file>
-        <file>res/piaofuling.png</file>
         <file>res/Setting_icon.png</file>
-        <file>res/shilaimu.png</file>
-        <file>res/shime1.png</file>
-        <file>res/stand_0.png</file>
-        <file>res/veget.png</file>
-        <file>res/w_00.png</file>
-        <file>res/w_01.png</file>
-        <file>res/w_02.png</file>
-        <file>res/w_03.png</file>
-        <file>res/w_04.png</file>
-        <file>res/w_05.png</file>
-        <file>res/w_06.png</file>
-        <file>res/w_07.png</file>
-        <file>res/w_08.png</file>
-        <file>res/w_09.png</file>
-        <file>res/w_10.png</file>
-        <file>res/w_11.png</file>
-        <file>res/w_12.png</file>
-        <file>res/w_13.png</file>
-        <file>res/w_14.png</file>
-        <file>res/w_15.png</file>
-        <file>res/w_16.png</file>
-        <file>res/w_17.png</file>
-        <file>res/w_18.png</file>
-        <file>res/w_19.png</file>
-        <file>res/w_20.png</file>
-        <file>res/w_21.png</file>
-        <file>res/w_22.png</file>
-        <file>res/w_23.png</file>
-        <file>res/w_24.png</file>
-        <file>res/w_25.png</file>
-        <file>res/w_26.png</file>
-        <file>res/w_27.png</file>
-        <file>res/w_28.png</file>
-        <file>res/w_29.png</file>
-        <file>res/w_30.png</file>
-        <file>res/w_31.png</file>
         <file>res/yucha.png</file>
-        <file>res/piaofuling2.png</file>
-        <file>res/shilaimu2.png</file>
         <file>res/yucha2.png</file>
-        <file>res/hk4e_zh-cn.ttf</file>
         <file>res/yucha3.png</file>
         <file>res/BIRD_DOWN.png</file>
         <file>res/BIRD_UP.png</file>
@@ -67,16 +22,15 @@
         <file>res/Land.png</file>
         <file>res/Land1.png</file>
         <file>res/LoseSound.mp3</file>
-        <file>res/OVER_LOGO.png</file>
         <file>res/PAUSE.png</file>
         <file>res/PAUSE_LOGO.png</file>
         <file>res/POO.png</file>
         <file>res/PooSound.mp3</file>
-        <file>res/TUMBLEWEED.png</file>
         <file>res/WindSound.mp3</file>
         <file>res/ark-pixel-12px-monospaced-zh_cn.ttf</file>
         <file>res/DINO_RUN1.png</file>
         <file>res/DINO_RUN2.png</file>
         <file>res/lolipop.png</file>
+        <file>res/coin.png</file>
     </qresource>
 </RCC>

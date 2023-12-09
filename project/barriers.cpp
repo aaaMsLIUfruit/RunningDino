@@ -138,7 +138,7 @@ QPixmap Veget::getImg(int i){
 }
 
 Apple::Apple(int i){
-    img.load(APPLE_PATH);
+    img.load(COIN_PATH);
     x=GAME_WIDTH;
     if(i==1){
         x+=22;

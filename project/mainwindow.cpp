@@ -40,11 +40,12 @@ void MainWindow::initWindow(){
     ui->intro->setFont(font);
     ui->restart->setFont(font);
     ui->return_main->setFont(font);
-    ui->score->setFont(font);
+    ui->coin->setFont(font);
     ui->distance->setFont(font);
     ui->over_score->setFont(font);
     ui->over_distance->setFont(font);
     ui->game_over->setFont(font);
+    ui->record->setFont(font);
 
     ui->start->setGeometry(390,140,ui->start->width(),ui->start->height());      //大小
     ui->intro->setGeometry(390,260,ui->intro->width(),ui->intro->height());
@@ -52,9 +53,10 @@ void MainWindow::initWindow(){
     ui->intro->setFocusPolicy(Qt::NoFocus);
     ui->restart->setFocusPolicy(Qt::NoFocus);
     ui->return_main->setFocusPolicy(Qt::NoFocus);
-    ui->score->hide();
+    ui->coin->hide();
     ui->distance->hide();
     ui->groupBox->hide();
+    ui->record->hide();
 
     m_Timer.setInterval(GAME_RATE);                    //主定时器设置
     sprint_Timer.setInterval(SPRINT_DURATION);         //冲刺定时器设置
@@ -70,18 +72,23 @@ void MainWindow::initWindow(){
     connect(&m_Timer,&QTimer::timeout,[=](){
         updatePosition();    //更新坐标
         collisionDetection();  //碰撞检测
-        ui->score->setText("Score: "+QString::number(score));   //更新分数
+        ui->coin->setText("Coin: "+QString::number(coin));   //更新金币数
         ui->distance->setText("Distance: "+QString::number(grounds.distance)+" m");
+        ui->record->setText("Record: "+QString::number(rec)+" m");
+        if(grounds.distance>rec){
+            ui->record->setText("Record: "+QString::number(grounds.distance)+" m");
+        }
         update();          //刷新屏幕
     });
     connect(&add_Barrier_interval_Timer,&QTimer::timeout,[=](){
         addBarrier();
     });
 
-    score=0;
     grounds.distance=0;
-    ui->score->setText("Score: "+QString::number(score));
+    ui->coin->setText("Coin: "+QString::number(coin));
     ui->distance->setText("Distance: "+QString::number(grounds.distance)+" m");
+    ui->record->setText("Record: "+QString::number(rec)+" m");
+
     sprint_once=false;
     sprint_twice=false;
 }
@@ -121,11 +128,11 @@ void MainWindow::mousePressEvent(QMouseEvent *event){                           
 
 
 void MainWindow::playgame(){                                                                                      /////////playgame & gameover
-    score=0;
     grounds.distance=0;
     dino.current_run_img=0;
-    ui->score->show();
+    ui->coin->show();
     ui->distance->show();
+    ui->record->show();
     m_Timer.start();            //启动计时器
     dino.run_Timer.start();
     add_Barrier_interval_Timer.start();
@@ -139,9 +146,17 @@ void MainWindow::gameover(){
     dino.run_Timer.stop();
     protected_Timer.stop();
     ui->groupBox->setGeometry(330,0,ui->groupBox->width(),ui->groupBox->height());
-    ui->over_score->setText("Score: "+QString::number(score));
+    ui->over_score->setText("Coin: "+QString::number(coin));
     ui->over_distance->setText("Distance: "+QString::number(grounds.distance)+" m");
+    arch->saveSettings(filename,"coin",coin);
+    if(grounds.distance>rec){
+        arch->saveSettings(filename,"record",grounds.distance);
+    }
+    QDateTime dateTime(QDateTime::currentDateTime());
+    QString qStr = dateTime.toString("yyyy-MM-dd hh:mm:ss ddd");
+    arch->saveSettings(filename,"time",qStr);
     ui->groupBox->show();
+    update();
 }
 
 
@@ -187,12 +202,11 @@ void MainWindow::collisionDetection(){
         case 2:{                      //棒棒糖
             protected_Timer.start();
             it=barriers.erase(it);
-            score+=20;
             break;
         }
-        case 3:{                      //苹果
+        case 3:{                      //金币
             it=barriers.erase(it);
-            score+=2;
+            coin++;
             break;
         }
         default:
@@ -253,14 +267,30 @@ void MainWindow::on_start_clicked()           //开始游戏按键              
 {
     ui->start->hide();
     ui->intro->hide();
-    playgame();
+    arch=new Archive;
+    arch->setParent(this);
+    arch->show();
+    arch->setFocusPolicy(Qt::NoFocus);
+    connect(arch,&Archive::aboutToClose,[=](){
+        // 窗口已关闭
+        coin=arch->c;
+        rec=arch->dis;
+        filename=arch->filename;
+        this->setFocus();
+        arch->loadSettings(filename, "coin", coin);
+        arch->loadSettings(filename, "record", rec);
+        playgame();
+        update();
+    });
 }
+
 void MainWindow::on_intro_clicked()           //游戏介绍按键
 {
     intro=new Introduction;
     intro->setWindowFlags(Qt::WindowStaysOnTopHint);
     intro->show();
 }
+
 void MainWindow::on_restart_clicked()
 {
     ui->groupBox->hide();
@@ -268,11 +298,13 @@ void MainWindow::on_restart_clicked()
     dino.y=DINO_ON_GROUNG_POS_Y;
     playgame();
 }
+
 void MainWindow::on_return_main_clicked()
 {
     ui->groupBox->hide();
-    ui->score->hide();
+    ui->coin->hide();
     ui->distance->hide();
+    ui->record->hide();
     ui->start->show();
     ui->intro->show();
     barriers.clear();

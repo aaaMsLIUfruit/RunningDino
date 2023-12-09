@@ -12,6 +12,7 @@
 #include "introduction.h"
 #include "dino.h"
 #include "barriers.h"
+#include "archive.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -49,12 +50,16 @@ public:
     bool sprint_once;         //是否已经冲刺一次
     bool sprint_twice;        //是否已经冲刺两次
     int i;                    //障碍物类型
-    int score;           //分数
+    int coin;           //金币
+    int rec;               //纪录
+    QString filename;           //存档
+
 
     Grounds grounds;  //地面对象
     Dino dino;
 
     Introduction *intro=new Introduction;   //游戏介绍窗口
+    Archive *arch=new Archive;
 
 private slots:
     void on_start_clicked();

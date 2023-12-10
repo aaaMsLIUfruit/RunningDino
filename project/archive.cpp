@@ -9,6 +9,7 @@ Archive::Archive(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    setFixedSize(GAME_WIDTH,GAME_HEIGHT);
     int fontId=QFontDatabase::addApplicationFont(QStringLiteral(":/res/ark-pixel-12px-monospaced-zh_cn.ttf"));   //导入字体文件
     QStringList fontFamilies=QFontDatabase::applicationFontFamilies(fontId);
     QFont font;

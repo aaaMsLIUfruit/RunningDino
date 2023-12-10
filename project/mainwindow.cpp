@@ -15,6 +15,26 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->start->hide();
+    ui->intro->hide();
+
+    // 创建并展示存档界面
+    arch = new Archive(this);
+    arch->show();
+
+    // 当存档界面关闭时，进行相应的处理
+    connect(arch, &Archive::aboutToClose, [=]() {
+    // 存档读取完成
+        coin = arch->c;
+        rec = arch->dis;
+        filename = arch->filename;
+        this->setFocus();
+        arch->loadSettings(filename, "coin", coin);
+        arch->loadSettings(filename, "record", rec);
+        // 初始化开始界面
+        initStartScreen();
+        update();
+    });
 
     initWindow();    //初始化窗口
 }
@@ -267,21 +287,22 @@ void MainWindow::on_start_clicked()           //开始游戏按键              
 {
     ui->start->hide();
     ui->intro->hide();
-    arch=new Archive;
-    arch->setParent(this);
-    arch->show();
-    arch->setFocusPolicy(Qt::NoFocus);
-    connect(arch,&Archive::aboutToClose,[=](){
-        // 窗口已关闭
-        coin=arch->c;
-        rec=arch->dis;
-        filename=arch->filename;
-        this->setFocus();
-        arch->loadSettings(filename, "coin", coin);
-        arch->loadSettings(filename, "record", rec);
-        playgame();
-        update();
-    });
+//    arch=new Archive;
+//    arch->setParent(this);
+//    arch->show();
+//    arch->setFocusPolicy(Qt::NoFocus);
+//    connect(arch,&Archive::aboutToClose,[=](){
+//        // 窗口已关闭
+//        coin=arch->c;
+//        rec=arch->dis;
+//        filename=arch->filename;
+//        this->setFocus();
+//        arch->loadSettings(filename, "coin", coin);
+//        arch->loadSettings(filename, "record", rec);
+//        playgame();
+//        update();
+//    });
+    playgame();
 }
 
 void MainWindow::on_intro_clicked()           //游戏介绍按键
@@ -311,5 +332,11 @@ void MainWindow::on_return_main_clicked()
     dino.y=DINO_ON_GROUNG_POS_Y;
     dino.current_run_img=0;
     update();
+}
+
+void MainWindow::initStartScreen() {
+    ui->start->show();
+    ui->intro->show();
+    // 其他初始化开始界面的操作
 }
 

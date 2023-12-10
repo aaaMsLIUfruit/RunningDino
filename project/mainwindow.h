@@ -60,6 +60,7 @@ public:
 
     Introduction *intro=new Introduction;   //游戏介绍窗口
     Archive *arch=new Archive;
+    void initStartScreen();
 
 private slots:
     void on_start_clicked();

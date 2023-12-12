@@ -76,10 +76,10 @@ Archive::Archive(QWidget *parent) :
         }
 
         if(qstr[i]!="0"){
-            btn[i]->setText("Coin: "+QString::number(coin[i])+", "+QString::number(record[i])+"m"+"\n"+qstr[i]);
+            btn[i]->setText(QString::number(i)+"号"+"\n"+QString::number(record[i])+"m"+", "+"Coin: "+QString::number(coin[i])+"\n"+qstr[i]);
         }
         else{
-            btn[i]->setText("null");
+            btn[i]->setText(QString::number(i)+"号"+"\n"+"未存档");
         }
     }
 

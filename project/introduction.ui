@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>523</width>
+    <width>666</width>
     <height>313</height>
    </rect>
   </property>
@@ -19,7 +19,7 @@
      <x>30</x>
      <y>10</y>
      <width>221</width>
-     <height>31</height>
+     <height>41</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -134,9 +134,9 @@ color: rgb(54,54,54);</string>
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>130</y>
+     <y>120</y>
      <width>91</width>
-     <height>21</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -170,7 +170,7 @@ color: rgb(54,54,54);</string>
     <rect>
      <x>30</x>
      <y>210</y>
-     <width>491</width>
+     <width>581</width>
      <height>81</height>
     </rect>
    </property>
@@ -189,7 +189,7 @@ color: rgb(54,54,54);</string>
     <rect>
      <x>240</x>
      <y>50</y>
-     <width>101</width>
+     <width>131</width>
      <height>31</height>
     </rect>
    </property>

@@ -6,6 +6,8 @@
 #include <ctime>
 #include <QFontDatabase>
 #include <QString>
+#include<QScreen>
+#include<QStyle>
 
 #include "config.h"
 #include "dino.h"
@@ -317,8 +319,18 @@ void MainWindow::on_start_clicked()           //开始游戏按键              
 
 void MainWindow::on_intro_clicked()           //游戏介绍按键
 {
-    intro=new Introduction;
+    intro=new Introduction(this);
     intro->setWindowFlags(Qt::WindowStaysOnTopHint);
+    intro->setWindowFlags(Qt::Window | Qt::WindowStaysOnTopHint | Qt::CustomizeWindowHint);
+    intro->setGeometry(
+        QStyle::alignedRect(
+            Qt::LeftToRight,
+            Qt::AlignCenter,
+            intro->size(),
+            qApp->primaryScreen()->availableGeometry()
+        )
+    );
+    intro->setAttribute(Qt::WA_DeleteOnClose);
     intro->show();
 }
 

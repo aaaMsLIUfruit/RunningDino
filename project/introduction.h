@@ -3,6 +3,8 @@
 
 #include <QDialog>
 #include<QIcon>
+#include <QWidget>
+
 namespace Ui {
 class Introduction;
 }
@@ -14,6 +16,10 @@ class Introduction : public QDialog
 public:
     explicit Introduction(QWidget *parent = nullptr);
     ~Introduction();
+
+protected:
+    bool eventFilter(QObject *obj, QEvent *event) override;
+    void showEvent(QShowEvent *event) override;
 
 private:
     Ui::Introduction *ui;

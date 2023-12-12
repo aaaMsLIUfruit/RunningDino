@@ -8,6 +8,7 @@
 #include <QMouseEvent>
 #include <vector>
 
+#include "store.h"
 #include "ground.h"
 #include "introduction.h"
 #include "dino.h"
@@ -60,6 +61,8 @@ public:
 
     Introduction *intro=new Introduction;   //游戏介绍窗口
     Archive *arch=new Archive;
+    Store *store=new Store;
+
     void initStartScreen();
 
 private slots:
@@ -70,6 +73,8 @@ private slots:
     void on_restart_clicked();
 
     void on_return_main_clicked();
+
+    void on_store_clicked();
 
 private:
     Ui::MainWindow *ui;

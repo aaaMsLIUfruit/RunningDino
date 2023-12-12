@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1069</width>
-    <height>574</height>
+    <width>1000</width>
+    <height>524</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -215,13 +215,30 @@ font: 11pt;</string>
      <string>TextLabel</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="store">
+    <property name="geometry">
+     <rect>
+      <x>790</x>
+      <y>410</y>
+      <width>131</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(54, 54,54);
+font: 18pt;</string>
+    </property>
+    <property name="text">
+     <string>商店</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1069</width>
+     <width>1000</width>
      <height>25</height>
     </rect>
    </property>

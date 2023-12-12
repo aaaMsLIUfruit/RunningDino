@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     ui->start->hide();
     ui->intro->hide();
+    ui->store->hide();
 
     // 创建并展示存档界面
     arch = new Archive(this);
@@ -58,6 +59,7 @@ void MainWindow::initWindow(){
     font.setFamily(fontFamilies[0]);
     ui->start->setFont(font);
     ui->intro->setFont(font);
+    ui->store->setFont(font);
     ui->restart->setFont(font);
     ui->return_main->setFont(font);
     ui->coin->setFont(font);
@@ -69,10 +71,13 @@ void MainWindow::initWindow(){
 
     ui->start->setGeometry(390,140,ui->start->width(),ui->start->height());      //大小
     ui->intro->setGeometry(390,260,ui->intro->width(),ui->intro->height());
+
     ui->start->setFocusPolicy(Qt::NoFocus);
     ui->intro->setFocusPolicy(Qt::NoFocus);
+    ui->store->setFocusPolicy(Qt::NoFocus);
     ui->restart->setFocusPolicy(Qt::NoFocus);
     ui->return_main->setFocusPolicy(Qt::NoFocus);
+
     ui->coin->hide();
     ui->distance->hide();
     ui->groupBox->hide();
@@ -89,6 +94,7 @@ void MainWindow::initWindow(){
     protected_Timer.setInterval(PROTECTED_DURATION);
     protected_Timer.setSingleShot(true);
     dino.y=DINO_ON_GROUNG_POS_Y;
+
     connect(&m_Timer,&QTimer::timeout,[=](){
         updatePosition();    //更新坐标
         collisionDetection();  //碰撞检测
@@ -141,6 +147,9 @@ void MainWindow::keyPressEvent(QKeyEvent *event){                               
     }
 }
 void MainWindow::mousePressEvent(QMouseEvent *event){                             /////////mousePressEvent
+    if(event->button()==Qt::LeftButton){
+        dino.jump();
+    }
     if(event->button()==Qt::RightButton){
         sprint();
     }
@@ -287,6 +296,7 @@ void MainWindow::on_start_clicked()           //开始游戏按键              
 {
     ui->start->hide();
     ui->intro->hide();
+    ui->store->hide();
 //    arch=new Archive;
 //    arch->setParent(this);
 //    arch->show();
@@ -320,6 +330,19 @@ void MainWindow::on_restart_clicked()
     playgame();
 }
 
+void MainWindow::on_store_clicked(){
+    //点击商店
+    ui->start->hide();
+    ui->intro->hide();
+    ui->store->hide();
+
+    store=new Store;
+    store->setParent(this);
+    store->show();
+
+
+}
+
 void MainWindow::on_return_main_clicked()
 {
     ui->groupBox->hide();
@@ -328,6 +351,7 @@ void MainWindow::on_return_main_clicked()
     ui->record->hide();
     ui->start->show();
     ui->intro->show();
+    ui->store->hide();
     barriers.clear();
     dino.y=DINO_ON_GROUNG_POS_Y;
     dino.current_run_img=0;
@@ -337,6 +361,7 @@ void MainWindow::on_return_main_clicked()
 void MainWindow::initStartScreen() {
     ui->start->show();
     ui->intro->show();
+    ui->store->show();
     // 其他初始化开始界面的操作
 }
 

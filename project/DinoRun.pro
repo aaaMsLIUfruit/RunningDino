@@ -11,25 +11,31 @@ CONFIG += c++17
 SOURCES += \
     archive.cpp \
     barriers.cpp \
+    character.cpp \
     dino.cpp \
     ground.cpp \
     introduction.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    store.cpp
 
 HEADERS += \
     archive.h \
     barriers.h \
+    character.h \
     config.h \
     dino.h \
     ground.h \
     introduction.h \
-    mainwindow.h
+    mainwindow.h \
+    store.h
 
 FORMS += \
     archive.ui \
+    character.ui \
     introduction.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    store.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

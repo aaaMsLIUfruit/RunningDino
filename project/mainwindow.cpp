@@ -139,6 +139,7 @@ void MainWindow::paintEvent(QPaintEvent *){                                  ///
         }
     }
 }
+
 void MainWindow::keyPressEvent(QKeyEvent *event){                                 /////////keyPressEvent
     QKeyEvent *key=(QKeyEvent*) event;
     if(key->key()==Qt::Key_Space){                     //空格键跳跃
@@ -148,6 +149,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event){                               
         sprint();
     }
 }
+
 void MainWindow::mousePressEvent(QMouseEvent *event){                             /////////mousePressEvent
     if(event->button()==Qt::LeftButton){
         dino.jump();
@@ -168,6 +170,7 @@ void MainWindow::playgame(){                                                    
     dino.run_Timer.start();
     add_Barrier_interval_Timer.start();
 }
+
 void MainWindow::gameover(){
     m_Timer.stop();
     sprint_Timer.stop();
@@ -317,10 +320,10 @@ void MainWindow::on_start_clicked()           //开始游戏按键              
     playgame();
 }
 
-void MainWindow::on_intro_clicked()           //游戏介绍按键
+//游戏介绍按键
+void MainWindow::on_intro_clicked()
 {
-    intro=new Introduction(this);
-    intro->setWindowFlags(Qt::WindowStaysOnTopHint);
+    intro = new Introduction(this);
     intro->setWindowFlags(Qt::Window | Qt::WindowStaysOnTopHint | Qt::CustomizeWindowHint);
     intro->setGeometry(
         QStyle::alignedRect(
@@ -333,6 +336,7 @@ void MainWindow::on_intro_clicked()           //游戏介绍按键
     intro->setAttribute(Qt::WA_DeleteOnClose);
     intro->show();
 }
+
 
 void MainWindow::on_restart_clicked()
 {

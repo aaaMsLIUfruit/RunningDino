@@ -16,15 +16,46 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>300</x>
+     <x>150</x>
      <y>30</y>
      <width>351</width>
      <height>111</height>
     </rect>
    </property>
    <property name="text">
-    <string>请选择你的英雄</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt;请选择你的英雄&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
+   <property name="margin">
+    <number>10</number>
+   </property>
+   <property name="indent">
+    <number>0</number>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBox">
+   <property name="geometry">
+    <rect>
+     <x>580</x>
+     <y>70</y>
+     <width>191</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>经典小恐龙</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>摇晃小鸵鸟</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>超级马里奥</string>
+    </property>
+   </item>
   </widget>
  </widget>
  <resources/>

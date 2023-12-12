@@ -23,7 +23,9 @@ Dino::Dino()
     dino_Rect.moveTo(x+17,y+8);
 }
 
-QPixmap Dino::getImg(){              //根据位置获取角色状态图片
+//根据位置获取角色状态图片
+QPixmap Dino::getImg()
+{
     if(y>=DINO_ON_GROUNG_POS_Y){
         return run_img[current_run_img];
     }
@@ -39,11 +41,13 @@ void Dino::jump(){
     if(jump_twice||(jump_Timer.remainingTime()>200&&jump_Timer.isActive())){
         return;
     }
-    if(y==DINO_ON_GROUNG_POS_Y){
+    if(y==DINO_ON_GROUNG_POS_Y)
+    {
         jump_Timer.start();
         jump_once=true;
     }
-    if(y<DINO_ON_GROUNG_POS_Y&&!jump_twice){
+    if(y<DINO_ON_GROUNG_POS_Y&&!jump_twice)
+    {
         jump_Timer.start();
         jump_twice=true;
     }
@@ -57,7 +61,8 @@ void Dino::updatePositionY(){
         fall_speed+=0.03;              //下落加速度
         y+=fall_speed;
     }
-    if(y>=DINO_ON_GROUNG_POS_Y){
+    if(y>=DINO_ON_GROUNG_POS_Y)
+    {
         y=DINO_ON_GROUNG_POS_Y;
     }
     dino_Rect.moveTo(x+17,y+8);

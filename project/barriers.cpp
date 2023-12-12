@@ -89,11 +89,15 @@ Yucha::Yucha()
     rect.setHeight(img.height());
     rect.moveTo(x+21,y);
 }
-void Yucha::updatePosition(){
+
+void Yucha::updatePosition()
+{
     x-=SCENE_SCROLL_SPEED;
     rect.moveTo(x+21,y);
 }
-bool Yucha::isOut(){
+
+bool Yucha::isOut()
+{
     return x<-img.width();
 }
 int Yucha::collisionDetection(QRect r){
@@ -103,7 +107,8 @@ int Yucha::collisionDetection(QRect r){
     else
         return 0;
 }
-QPixmap Yucha::getImg(int i){
+QPixmap Yucha::getImg(int i)
+{
     if(i==0){
         return img;
     }
@@ -111,7 +116,8 @@ QPixmap Yucha::getImg(int i){
         return img2;
 }
 
-Veget::Veget(){
+Veget::Veget()
+{
     img.load(LOLIPOP_PATH);
     x=GAME_WIDTH;
     y=rand()%(260)+40;
@@ -119,6 +125,7 @@ Veget::Veget(){
     rect.setHeight(img.height());
     rect.moveTo(x,y);
 }
+
 void Veget::updatePosition(){
     x-=SCENE_SCROLL_SPEED;
     rect.moveTo(x,y);
@@ -126,14 +133,18 @@ void Veget::updatePosition(){
 bool Veget::isOut(){
     return x<-img.width();
 }
-int Veget::collisionDetection(QRect r){
+
+int Veget::collisionDetection(QRect r)
+{
     if(rect.intersects(r)){
         return 2;
     }
     else
         return 0;
 }
-QPixmap Veget::getImg(int i){
+
+QPixmap Veget::getImg(int i)
+{
     return img;
 }
 
@@ -151,20 +162,27 @@ Apple::Apple(int i){
     rect.setHeight(img.height());
     rect.moveTo(x,y);
 }
-void Apple::updatePosition(){
+
+void Apple::updatePosition()
+{
     x-=SCENE_SCROLL_SPEED;
     rect.moveTo(x,y);
 }
-bool Apple::isOut(){
+
+bool Apple::isOut()
+{
     return x<-img.width();
 }
-int Apple::collisionDetection(QRect r){
+
+int Apple::collisionDetection(QRect r)
+{
     if(rect.intersects(r)){
         return 3;
     }
     else
         return 0;
 }
+
 QPixmap Apple::getImg(int i){
     return img;
 }

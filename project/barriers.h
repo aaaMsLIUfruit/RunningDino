@@ -11,7 +11,7 @@ public:
     virtual void updatePosition()=0;
     virtual void updateBirdY()=0;
     virtual bool isOut()=0;
-    virtual int collisionDetection(QRect)=0;           //碰撞检测情况处理超过两种，定义返回值为int
+    virtual int collisionDetection(QRect)=0;          //碰撞检测情况处理超过两种，定义返回值为int
     virtual QPixmap getImg(int)=0;
 public:
     int x,y;

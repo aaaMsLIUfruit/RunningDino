@@ -1,8 +1,10 @@
 #include "store.h"
 #include "ui_store.h"
 #include "config.h"
+#include"character.h"
 
 #include <QFontDatabase>
+#include<QObject>
 
 Store::Store(QWidget *parent) :
     QWidget(parent),
@@ -17,17 +19,30 @@ Store::Store(QWidget *parent) :
     QFont font;
 
     font.setFamily(fontFamilies[0]);
-    font.setPointSize(24);
+    font.setPointSize(20);
     font1.setFamily(fontFamilies[0]);
     font1.setPointSize(36);
 
-    ui->text->setFont(font1);
+    ui->head->setFont(font1);
     ui->characters->setFont(font);
     ui->props->setFont(font);
     ui->backgrounds->setFont(font);
+    ui->returned->setFont(font);
 
+    connect(ui->characters,SIGNAL(clicked()),this,SLOT(on_character_clicked()));
 
+}
 
+void Store::on_character_clicked()
+{
+    ui->props->hide();
+    ui->characters->hide();
+    ui->head->hide();
+    ui->backgrounds->hide();
+
+    character=new Character;
+    character->setParent(this);
+    character->show();
 }
 
 Store::~Store()

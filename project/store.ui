@@ -70,12 +70,12 @@
     <string>背景包</string>
    </property>
   </widget>
-  <widget class="QLabel" name="text">
+  <widget class="QLabel" name="head">
    <property name="geometry">
     <rect>
      <x>430</x>
      <y>100</y>
-     <width>131</width>
+     <width>151</width>
      <height>131</height>
     </rect>
    </property>
@@ -87,6 +87,19 @@
    </property>
    <property name="text">
     <string>商店</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="returned">
+   <property name="geometry">
+    <rect>
+     <x>810</x>
+     <y>20</y>
+     <width>141</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>返回</string>
    </property>
   </widget>
  </widget>

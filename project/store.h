@@ -5,6 +5,8 @@
 #include <QVariant>
 #include <QString>
 
+#include"character.h"
+
 
 namespace Ui {
 class Store;
@@ -17,6 +19,11 @@ class Store : public QWidget
 public:
     explicit Store(QWidget *parent = nullptr);
     ~Store();
+
+    Character *character=new Character;
+
+private slots:
+    void on_character_clicked();
 
 private:
     Ui::Store *ui;

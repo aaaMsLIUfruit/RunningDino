@@ -1,7 +1,9 @@
 #include "store.h"
 #include "ui_store.h"
 #include "config.h"
-#include"character.h"
+#include "character.h"
+#include "prop.h"
+#include "background.h"
 
 #include <QFontDatabase>
 #include<QObject>
@@ -30,6 +32,8 @@ Store::Store(QWidget *parent) :
     ui->returned->setFont(font);
 
     connect(ui->characters,SIGNAL(clicked()),this,SLOT(on_character_clicked()));
+    connect(ui->props,SIGNAL(clicked()),this,SLOT(on_prop_clicked()));
+    connect(ui->backgrounds,SIGNAL(clicked()),this,SLOT(on_background_clicked()));
 
 }
 
@@ -42,7 +46,34 @@ void Store::on_character_clicked()
 
     character=new Character;
     character->setParent(this);
+
     character->show();
+}
+
+void Store::on_prop_clicked()
+{
+    ui->props->hide();
+    ui->characters->hide();
+    ui->head->hide();
+    ui->backgrounds->hide();
+
+    prop=new Prop;
+    prop->setParent(this);
+
+    prop->show();
+}
+
+void Store::on_background_clicked()
+{
+    ui->props->hide();
+    ui->characters->hide();
+    ui->head->hide();
+    ui->backgrounds->hide();
+
+    background=new Background;
+    background->setParent(this);
+
+    background->show();
 }
 
 Store::~Store()

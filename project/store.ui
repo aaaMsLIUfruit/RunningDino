@@ -67,7 +67,7 @@
     </font>
    </property>
    <property name="text">
-    <string>背景包</string>
+    <string>新大陆</string>
    </property>
   </widget>
   <widget class="QLabel" name="head">

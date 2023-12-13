@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     archive.cpp \
+    background.cpp \
     barriers.cpp \
     character.cpp \
     dino.cpp \
@@ -17,10 +18,12 @@ SOURCES += \
     introduction.cpp \
     main.cpp \
     mainwindow.cpp \
+    prop.cpp \
     store.cpp
 
 HEADERS += \
     archive.h \
+    background.h \
     barriers.h \
     character.h \
     config.h \
@@ -28,13 +31,16 @@ HEADERS += \
     ground.h \
     introduction.h \
     mainwindow.h \
+    prop.h \
     store.h
 
 FORMS += \
     archive.ui \
+    background.ui \
     character.ui \
     introduction.ui \
     mainwindow.ui \
+    prop.ui \
     store.ui
 
 # Default rules for deployment.

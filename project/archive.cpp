@@ -3,6 +3,7 @@
 #include "config.h"
 
 #include <QFontDatabase>
+
 Archive::Archive(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::archive)
@@ -10,6 +11,7 @@ Archive::Archive(QWidget *parent) :
     ui->setupUi(this);
 
     setFixedSize(GAME_WIDTH,GAME_HEIGHT);
+    //设置字体
     int fontId=QFontDatabase::addApplicationFont(QStringLiteral(":/res/ark-pixel-12px-monospaced-zh_cn.ttf"));   //导入字体文件
     QStringList fontFamilies=QFontDatabase::applicationFontFamilies(fontId);
     QFont font;
@@ -75,6 +77,7 @@ Archive::Archive(QWidget *parent) :
             coin[i] = 0;// 处理无法转换的情况
         }
 
+        //处理未存档部分的显示
         if(qstr[i]!="0"){
             btn[i]->setText(QString::number(i)+"号"+"\n"+QString::number(record[i])+"m"+", "+"Coin: "+QString::number(coin[i])+"\n"+qstr[i]);
         }

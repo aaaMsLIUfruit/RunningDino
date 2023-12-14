@@ -21,25 +21,21 @@ MainWindow::MainWindow(QWidget *parent)
     ui->intro->hide();
     ui->store->hide();
 
-    // 创建并展示存档界面
+    //创建存档界面
     arch = new Archive(this);
-    arch->show();
+    arch->hide();
 
-    // 当存档界面关闭时，进行相应的处理
-    connect(arch, &Archive::aboutToClose, [=]() {
-    // 存档读取完成
-        coin = arch->c;
-        rec = arch->dis;
-        filename = arch->filename;
-        this->setFocus();
-        arch->loadSettings(filename, "coin", coin);
-        arch->loadSettings(filename, "record", rec);
-        // 初始化开始界面
-        initStartScreen();
-        update();
-    });
+    //创建并展示主界面
+    home = new Home(this);
+    home->show();
+
+    //连接home的信号到槽函数
+    connect(home,&Home::switchToArc,this,&MainWindow::switchToArchWindow);
 
     initWindow();    //初始化窗口
+
+    //主页动画(todo)
+
 }
 
 MainWindow::~MainWindow()
@@ -249,6 +245,7 @@ void MainWindow::collisionDetection(){
     }
 }
 
+//冲刺
 void MainWindow::sprint(){
     if(!sprint_interval_Timer.isActive()){
         sprint_once=false;
@@ -379,5 +376,28 @@ void MainWindow::initStartScreen() {
     ui->intro->show();
     ui->store->show();
     // 其他初始化开始界面的操作
+}
+
+//切换到存档页面函数实现
+void MainWindow::switchToArchWindow(){
+    // 创建并展示存档界面
+    arch->show();
+
+    //动画停止(todo)
+
+    // 当存档界面关闭时，进行相应的处理
+    connect(arch, &Archive::aboutToClose, [=]() {
+        // 存档读取完成
+        coin = arch->c;
+        rec = arch->dis;
+        filename = arch->filename;
+        this->setFocus();
+        arch->loadSettings(filename, "coin", coin);
+        arch->loadSettings(filename, "record", rec);
+        // 初始化开始界面
+        initStartScreen();
+        arch->hide();
+        update();
+    });
 }
 

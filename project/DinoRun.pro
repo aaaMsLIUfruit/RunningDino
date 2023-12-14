@@ -15,6 +15,7 @@ SOURCES += \
     character.cpp \
     dino.cpp \
     ground.cpp \
+    home.cpp \
     introduction.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -29,6 +30,7 @@ HEADERS += \
     config.h \
     dino.h \
     ground.h \
+    home.h \
     introduction.h \
     mainwindow.h \
     prop.h \
@@ -38,6 +40,7 @@ FORMS += \
     archive.ui \
     background.ui \
     character.ui \
+    home.ui \
     introduction.ui \
     mainwindow.ui \
     prop.ui \

@@ -8,6 +8,8 @@
 #include <QString>
 #include <QCloseEvent>
 
+//存档
+
 namespace Ui {
 class archive;
 }

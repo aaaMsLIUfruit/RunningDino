@@ -14,6 +14,7 @@
 #include "dino.h"
 #include "barriers.h"
 #include "archive.h"
+#include "home.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -55,17 +56,19 @@ public:
     int rec;               //纪录
     QString filename;           //存档
 
-
     Grounds grounds;  //地面对象
     Dino dino;
 
-    Introduction *intro=new Introduction;   //游戏介绍窗口
-    Archive *arch=new Archive;
-    Store *store=new Store;
+    Home *home;  //首页界面
+    Introduction *intro;   //游戏介绍窗口
+    Archive *arch;  //存档界面
+    Store *store;  //商店界面
 
     void initStartScreen();
 
 private slots:
+    void switchToArchWindow();
+
     void on_start_clicked();
 
     void on_intro_clicked();

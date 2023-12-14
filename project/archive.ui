@@ -22,6 +22,9 @@
      <height>91</height>
     </rect>
    </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
    <property name="text">
     <string>PushButton</string>
    </property>
@@ -34,6 +37,9 @@
      <width>231</width>
      <height>91</height>
     </rect>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
    </property>
    <property name="text">
     <string>PushButton</string>
@@ -48,6 +54,9 @@
      <height>91</height>
     </rect>
    </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
    <property name="text">
     <string>PushButton</string>
    </property>
@@ -60,6 +69,9 @@
      <width>231</width>
      <height>91</height>
     </rect>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
    </property>
    <property name="text">
     <string>PushButton</string>
@@ -74,6 +86,9 @@
      <height>91</height>
     </rect>
    </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
    <property name="text">
     <string>PushButton</string>
    </property>
@@ -86,6 +101,9 @@
      <width>231</width>
      <height>91</height>
     </rect>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
    </property>
    <property name="text">
     <string>PushButton</string>

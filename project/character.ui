@@ -48,6 +48,11 @@
    </item>
    <item>
     <property name="text">
+     <string>说的道理</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
      <string>摇晃小鸵鸟</string>
     </property>
    </item>

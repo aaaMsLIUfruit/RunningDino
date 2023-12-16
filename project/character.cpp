@@ -32,6 +32,8 @@ void Character::onCharacterSelected(const QString &characterName)
 {
     // 处理角色选择
     qDebug() << "Selected character: " << characterName;
+    emit characterSelected(characterName); // 触发信号
 }
+
 
 

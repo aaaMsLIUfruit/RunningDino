@@ -6,8 +6,8 @@
 #include <ctime>
 #include <QFontDatabase>
 #include <QString>
-#include<QScreen>
-#include<QStyle>
+#include <QScreen>
+#include <QStyle>
 
 #include "config.h"
 #include "dino.h"
@@ -31,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     //连接home的信号到槽函数
     connect(home,&Home::switchToArc,this,&MainWindow::switchToArchWindow);
+//    connect(store, &Store::characterChangedInStore, this, &MainWindow::updateDinoCharacter);
 
     initWindow();    //初始化窗口
 
@@ -118,20 +119,27 @@ void MainWindow::initWindow(){
 }
 
 
-void MainWindow::paintEvent(QPaintEvent *){                                  ////////paintEvent             //////////Event
+void MainWindow::paintEvent(QPaintEvent *) {
     QPainter painter(this);
-    painter.drawPixmap(0,0,background);    //绘制背景
-    for(int i=0;i<9;i++){               //绘制地面
-        painter.drawPixmap(grounds.grounds[i].ground_posX,356,grounds.grounds[i].ground);
+    painter.drawPixmap(0, 0, background); // 绘制背景
+
+    for (int i = 0; i < 9; i++) {
+        painter.drawPixmap(grounds.grounds[i].ground_posX, 356, grounds.grounds[i].ground);
     }
-    painter.drawPixmap(dino.x,dino.y,dino.getImg());
-    for(auto& barr:barriers)            //绘制障碍物
-    {
-        if(protected_Timer.isActive()){
-            painter.drawPixmap(barr->x,barr->y,barr->getImg(1));
-        }
-        else{
-            painter.drawPixmap(barr->x,barr->y,barr->getImg(0));
+
+    // 如果 Dino 使用的是静态图片，则在这里绘制
+    if (dino.dinoLabel->isHidden()) {
+        painter.drawPixmap(dino.x, dino.y, dino.getImg());
+    }
+    // 注意：如果 Dino 正在使用 GIF 动画，那么 dinoLabel 已经负责显示了
+    //dino.dinoLabel->move(dino.x, dino.y);
+    //dino.dinoLabel->show();
+
+    for (auto &barr : barriers) {
+        if (protected_Timer.isActive()) {
+            painter.drawPixmap(barr->x, barr->y, barr->getImg(1));
+        } else {
+            painter.drawPixmap(barr->x, barr->y, barr->getImg(0));
         }
     }
 }
@@ -415,10 +423,13 @@ void Store::on_returned_clicked()
     }
 }
 
+void MainWindow::updateDinoCharacter(const QString &characterName) {
+    dino.setCharacter(characterName);
+}
+
 void MainWindow::showComponents() {
     ui->start->show();
     ui->intro->show();
     ui->store->show();
     // 显示其他需要的组件
-
 }

@@ -48,6 +48,7 @@ void Store::on_character_clicked()
 
     character=new Character(this);
     character->setParent(this);
+    connect(character, &Character::characterSelected, this, &Store::onCharacterChanged);
 
     character->show();
 }
@@ -131,6 +132,10 @@ void Background::on_returnButton_clicked()
                 storeWindow->showComponents(); // 显示 Store 窗口的组件
         }
     }
+}
+
+void Store::onCharacterChanged(const QString &characterName) {
+    emit characterChangedInStore(characterName);
 }
 
 Store::~Store()

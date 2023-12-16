@@ -17,6 +17,9 @@ class Store : public QWidget
 {
     Q_OBJECT
 
+signals:
+    void characterChangedInStore(const QString &characterName);
+
 public:
     explicit Store(QWidget *parent = nullptr);
     ~Store();
@@ -27,11 +30,15 @@ public:
 
     void showComponents();
 
+public slots:
+    void onCharacterChanged(const QString &characterName);
+
 private slots:
     void on_character_clicked();
     void on_prop_clicked();
     void on_background_clicked();
     void on_returned_clicked();
+
 
 private:
     Ui::Store *ui;

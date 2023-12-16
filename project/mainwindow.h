@@ -66,6 +66,7 @@ public:
 
     void initStartScreen();
     void showComponents();
+    void updateDinoCharacter(const QString &characterName);
 
 private slots:
     void switchToArchWindow();

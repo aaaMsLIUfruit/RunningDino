@@ -23,6 +23,9 @@ private:
     void setupUi(); // 设置UI组件
     void setupConnections(); // 设置信号和槽的连接
 
+signals:
+    void characterSelected(const QString &characterName); // 新信号
+
 private slots:
     void onCharacterSelected(const QString &characterName);
     void on_returnButton_clicked(); // 返回按钮的槽函数

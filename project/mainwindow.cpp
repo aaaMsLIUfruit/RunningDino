@@ -47,17 +47,32 @@ MainWindow::~MainWindow()
 }
 
 //初始化窗口
-void MainWindow::initWindow(){
-    setFixedSize(GAME_WIDTH,GAME_HEIGHT);  //大小
-    setWindowTitle(GAME_TITLE);            //标题
-    setWindowIcon(QIcon(GAME_ICON));       //图标
-    background.load(BACKGROUND_PATH);    //加载背景
+// 初始化窗口的函数定义
+void MainWindow::initWindow() {
+    // 设置游戏窗口的固定大小，使用在config.h文件中定义的常量
+    setFixedSize(GAME_WIDTH, GAME_HEIGHT);
+
+    // 设置窗口的标题
+    setWindowTitle(GAME_TITLE);
+
+    // 设置窗口的图标
+    setWindowIcon(QIcon(GAME_ICON));
+
+    // 加载背景图片，并将其赋给background成员变量
+    background.load(BACKGROUND_PATH);
+
+    // 调用update函数，强制窗口重绘，确保背景被正确加载和显示
     update();
 
-    int fontId=QFontDatabase::addApplicationFont(QStringLiteral(":/res/ark-pixel-12px-monospaced-zh_cn.ttf"));   //导入字体文件
-    QStringList fontFamilies=QFontDatabase::applicationFontFamilies(fontId);
+    // 添加字体文件，返回字体ID
+    int fontId = QFontDatabase::addApplicationFont(QStringLiteral(":/res/ark-pixel-12px-monospaced-zh_cn.ttf"));
+    // 从字体数据库中获取字体家族名称
+    QStringList fontFamilies = QFontDatabase::applicationFontFamilies(fontId);
+    // 创建字体对象，并设置字体家族
     QFont font;
     font.setFamily(fontFamilies[0]);
+
+    // 为UI元素设置字体
     ui->start->setFont(font);
     ui->intro->setFont(font);
     ui->store->setFont(font);
@@ -70,56 +85,67 @@ void MainWindow::initWindow(){
     ui->game_over->setFont(font);
     ui->record->setFont(font);
 
-    ui->start->setGeometry(390,140,ui->start->width(),ui->start->height());      //大小
-    ui->intro->setGeometry(390,260,ui->intro->width(),ui->intro->height());
+    // 设置UI元素的几何位置
+    ui->start->setGeometry(390, 140, ui->start->width(), ui->start->height());
+    ui->intro->setGeometry(390, 260, ui->intro->width(), ui->intro->height());
 
+    // 设置焦点策略，防止UI元素抢占键盘焦点
     ui->start->setFocusPolicy(Qt::NoFocus);
     ui->intro->setFocusPolicy(Qt::NoFocus);
     ui->store->setFocusPolicy(Qt::NoFocus);
     ui->restart->setFocusPolicy(Qt::NoFocus);
     ui->return_main->setFocusPolicy(Qt::NoFocus);
 
+    // 隐藏某些UI元素，这些元素在游戏开始时不应该显示
     ui->coin->hide();
     ui->distance->hide();
     ui->groupBox->hide();
     ui->record->hide();
 
-    m_Timer.setInterval(GAME_RATE);                    //主定时器设置
-    sprint_Timer.setInterval(SPRINT_DURATION);         //冲刺定时器设置
+    // 设置定时器的间隔时间，并启用定时器
+    m_Timer.setInterval(GAME_RATE);
+    sprint_Timer.setInterval(SPRINT_DURATION);
     sprint_Timer.setSingleShot(true);
     sprint_interval_Timer.setInterval(SPRINT_INTERVAL);
     sprint_interval_Timer.setSingleShot(true);
-    add_Barrier_interval_Timer.setInterval(ADD_BARRIER_INTERVAL); //障碍物计时器设置
-    add_veget_intervai_Timer.setInterval(ADD_LOLIPOP_INTERVAL);     //棒棒糖计时器设置
+    add_Barrier_interval_Timer.setInterval(ADD_BARRIER_INTERVAL);
+    add_veget_intervai_Timer.setInterval(ADD_LOLIPOP_INTERVAL);
     add_veget_intervai_Timer.setSingleShot(true);
     protected_Timer.setInterval(PROTECTED_DURATION);
     protected_Timer.setSingleShot(true);
-    dino->y=DINO_ON_GROUNG_POS_Y;
 
-    connect(&m_Timer,&QTimer::timeout,[=](){
-        updatePosition();    //更新坐标
-        collisionDetection();  //碰撞检测
-        ui->coin->setText("Coin: "+QString::number(coin));   //更新金币数
-        ui->distance->setText("Distance: "+QString::number(grounds.distance)+" m");
-        ui->record->setText("Record: "+QString::number(rec)+" m");
-        if(grounds.distance>rec){
-            ui->record->setText("Record: "+QString::number(grounds.distance)+" m");
+    // Dino对象的初始Y坐标设置为地面位置
+    dino->y = DINO_ON_GROUNG_POS_Y;
+
+    // 连接信号和槽，以便在定时器超时时更新游戏状态
+    connect(&m_Timer, &QTimer::timeout, this, [&]() {
+        updatePosition(); // 更新游戏内物体的位置
+        collisionDetection(); // 检测碰撞
+        // 更新金币和距离的显示
+        ui->coin->setText("Coin: " + QString::number(coin));
+        ui->distance->setText("Distance: " + QString::number(grounds.distance) + " m");
+        ui->record->setText("Record: " + QString::number(rec) + " m");
+        // 如果当前距离超过了记录，则更新记录
+        if (grounds.distance > rec) {
+            ui->record->setText("Record: " + QString::number(grounds.distance) + " m");
         }
-        update();          //刷新屏幕
+        // 刷新屏幕，以便更改能够显示出来
+        update();
     });
-    connect(&add_Barrier_interval_Timer,&QTimer::timeout,[=](){
-        addBarrier();
+    connect(&add_Barrier_interval_Timer, &QTimer::timeout, this, [&]() {
+        addBarrier(); // 添加新的障碍物
     });
 
-    grounds.distance=0;
-    ui->coin->setText("Coin: "+QString::number(coin));
-    ui->distance->setText("Distance: "+QString::number(grounds.distance)+" m");
-    ui->record->setText("Record: "+QString::number(rec)+" m");
+    // 初始化距离和金币的显示
+    grounds.distance = 0;
+    ui->coin->setText("Coin: " + QString::number(coin));
+    ui->distance->setText("Distance: " + QString::number(grounds.distance) + " m");
+    ui->record->setText("Record: " + QString::number(rec) + " m");
 
-    sprint_once=false;
-    sprint_twice=false;
+    // 初始化冲刺状态为false
+    sprint_once = false;
+    sprint_twice = false;
 }
-
 
 void MainWindow::paintEvent(QPaintEvent *) {
     QPainter painter(this);
@@ -146,38 +172,60 @@ void MainWindow::paintEvent(QPaintEvent *) {
     }
 }
 
-void MainWindow::keyPressEvent(QKeyEvent *event){                                 /////////keyPressEvent
-    QKeyEvent *key=(QKeyEvent*) event;
-    if(key->key()==Qt::Key_Space){                     //空格键跳跃
+// 当用户按键时触发的事件处理函数
+void MainWindow::keyPressEvent(QKeyEvent *event) {
+    // 将event强制转换为QKeyEvent，以便获取更详细的按键信息
+    QKeyEvent *key = static_cast<QKeyEvent*>(event);
+
+    // 检查是否按下了空格键
+    if (key->key() == Qt::Key_Space) {
+        // 空格键被按下，调用Dino对象的jump方法使角色跳跃
         dino->jump();
     }
-    if(key->key()==Qt::Key_Shift){                     //shift键冲刺
+
+    // 检查是否按下了Shift键
+    if (key->key() == Qt::Key_Shift) {
+        // Shift键被按下，调用当前类的sprint方法使角色进行冲刺
         sprint();
     }
 }
 
-void MainWindow::mousePressEvent(QMouseEvent *event){                             /////////mousePressEvent
-    if(event->button()==Qt::LeftButton){
+// 当用户点击鼠标时触发的事件处理函数
+void MainWindow::mousePressEvent(QMouseEvent *event) {
+    // 检查是否点击了鼠标左键
+    if (event->button() == Qt::LeftButton) {
+        // 鼠标左键被点击，调用Dino对象的jump方法使角色跳跃
         dino->jump();
     }
-    if(event->button()==Qt::RightButton){
+
+    // 检查是否点击了鼠标右键
+    if (event->button() == Qt::RightButton) {
+        // 鼠标右键被点击，调用当前类的sprint方法使角色进行冲刺
         sprint();
     }
 }
 
+// 开始游戏的函数
+void MainWindow::playgame() {
+    // 重置游戏距离为0
+    grounds.distance = 0;
+    // 重置Dino对象的当前运行图像索引为0
+    dino->current_run_img = 0;
 
-void MainWindow::playgame(){                                                                                      /////////playgame & gameover
-    grounds.distance=0;
-    dino->current_run_img=0;
+    // 显示游戏中的金币和距离UI元素
     ui->coin->show();
     ui->distance->show();
     ui->record->show();
-    m_Timer.start();            //启动计时器
+
+    // 启动各种定时器以开始游戏循环
+    m_Timer.start();
     dino->run_Timer.start();
     add_Barrier_interval_Timer.start();
 }
 
-void MainWindow::gameover(){
+// 游戏结束的函数
+void MainWindow::gameover() {
+    // 停止所有定时器，暂停游戏循环
     m_Timer.stop();
     sprint_Timer.stop();
     sprint_interval_Timer.stop();
@@ -185,153 +233,195 @@ void MainWindow::gameover(){
     add_veget_intervai_Timer.stop();
     dino->run_Timer.stop();
     protected_Timer.stop();
-    ui->groupBox->setGeometry(330,0,ui->groupBox->width(),ui->groupBox->height());
-    ui->over_score->setText("Coin: "+QString::number(coin));
-    ui->over_distance->setText("Distance: "+QString::number(grounds.distance)+" m");
-    arch->saveSettings(filename,"coin",coin);
-    if(grounds.distance>rec){
-        arch->saveSettings(filename,"record",grounds.distance);
+
+    // 显示游戏结束时的分数和距离
+    ui->over_score->setText("Coin: " + QString::number(coin));
+    ui->over_distance->setText("Distance: " + QString::number(grounds.distance) + " m");
+
+    // 保存游戏设置，如金币数和最远距离
+    arch->saveSettings(filename, "coin", coin);
+    if (grounds.distance > rec) {
+        arch->saveSettings(filename, "record", grounds.distance);
     }
-    QDateTime dateTime(QDateTime::currentDateTime());
+
+    // 获取当前日期时间，并保存
+    QDateTime dateTime = QDateTime::currentDateTime();
     QString qStr = dateTime.toString("yyyy-MM-dd hh:mm:ss ddd");
-    arch->saveSettings(filename,"time",qStr);
+    arch->saveSettings(filename, "time", qStr);
+
+    // 显示游戏结束的UI组件
     ui->groupBox->show();
+
+    // 刷新屏幕以更新UI变化
     update();
 }
 
 
-void MainWindow::updatePosition(){           //更新对象坐标
+// 更新游戏中所有对象的位置
+void MainWindow::updatePosition() {
+    // 计算地面的新位置，用于动画效果
     grounds.calculatePositions();
-    for(it=barriers.begin();it!=barriers.end();){
-        if((*it)->isOut()){
-            it=barriers.erase(it);
-        }
-        else{
+
+    // 遍历所有障碍物
+    for (it = barriers.begin(); it != barriers.end(); ) {
+        // 如果障碍物已经离开屏幕，则移除它
+        if ((*it)->isOut()) {
+            it = barriers.erase(it);
+        } else {
+            // 否则，更新障碍物的位置
             (*it)->updatePosition();
-            (*it)->updateBirdY();     //对象为鸟，则更新Y坐标；对象不是鸟，则执行空函数
+            // 如果障碍物是鸟类，还需要更新它的飞行高度
+            (*it)->updateBirdY();
             it++;
         }
     }
+
+    // 更新恐龙的垂直位置
     dino->updatePositionY();
-    if(this->sprint_Timer.isActive()){
+
+    // 如果正在进行冲刺，需要加速地面和障碍物的移动速度
+    if (this->sprint_Timer.isActive()) {
+        // 通过再次调用计算位置函数加速移动
         grounds.calculatePositions();
         grounds.calculatePositions();
-        for(auto& barr:barriers)
-        {
+        for (auto &barr : barriers) {
             barr->updatePosition();
             barr->updatePosition();
         }
     }
 }
 
-void MainWindow::collisionDetection(){
-    int i=0;
-    for(it=barriers.begin();it!=barriers.end();){
-        i=(*it)->collisionDetection(dino->dino_Rect);
-        switch (i) {
-        case 0:                       //无碰撞
+// 碰撞检测函数
+void MainWindow::collisionDetection() {
+    // 遍历所有障碍物以检测与恐龙的碰撞
+    for (it = barriers.begin(); it != barriers.end(); ) {
+        // 检查当前障碍物是否与恐龙的碰撞矩形发生碰撞
+        int collisionType = (*it)->collisionDetection(dino->dino_Rect);
+
+        // 根据碰撞类型处理结果
+        switch (collisionType) {
+        case 0: // 无碰撞
             it++;
             break;
-        case 1:{                      //障碍物
+        case 1: // 碰到障碍物
             it++;
-            if(!protected_Timer.isActive()&&!sprint_Timer.isActive()){
+            // 如果没有保护且不在冲刺状态，游戏结束
+            if (!protected_Timer.isActive() && !sprint_Timer.isActive()) {
                 gameover();
             }
             break;
-        }
-        case 2:{                      //棒棒糖
+        case 2: // 捡到棒棒糖，获得保护
             protected_Timer.start();
-            it=barriers.erase(it);
+            it = barriers.erase(it);
             break;
-        }
-        case 3:{                      //金币
-            it=barriers.erase(it);
+        case 3: // 捡到金币，增加金币数量
+            it = barriers.erase(it);
             coin++;
             break;
-        }
         default:
             break;
         }
     }
 }
 
-//冲刺
-void MainWindow::sprint(){
-    if(!sprint_interval_Timer.isActive()){
-        sprint_once=false;
-        sprint_twice=false;
+// 冲刺功能的实现
+void MainWindow::sprint() {
+    // 如果冲刺间隔定时器未激活，允许再次冲刺
+    if (!sprint_interval_Timer.isActive()) {
+        sprint_once = false;
+        sprint_twice = false;
     }
-    if(sprint_twice||(sprint_Timer.remainingTime()>90&&sprint_Timer.isActive())){
-        return;
+
+    // 如果已经进行了第二次冲刺，或者第一次冲刺的剩余时间过长，则不再冲刺
+    if (sprint_twice || (sprint_Timer.remainingTime() > 90 && sprint_Timer.isActive())) {
+        return; // 退出函数，不再执行冲刺
     }
-    if(!sprint_once){
-        sprint_once=true;
+
+    // 启动第一次冲刺
+    if (!sprint_once) {
+        sprint_once = true;
         sprint_Timer.start();
         sprint_interval_Timer.start();
     }
-    else if(!sprint_twice){
-        sprint_twice=true;
+    // 启动第二次冲刺
+    else if (!sprint_twice) {
+        sprint_twice = true;
         sprint_Timer.start();
     }
 }
 
-void MainWindow::addBarrier(){                        //生成障碍物
-    srand((unsigned int)time(NULL));
-    i=rand()%4;
+
+// 生成障碍物的函数
+void MainWindow::addBarrier() {
+    srand((unsigned int)time(NULL)); // 初始化随机数生成器，基于当前时间
+    i = rand() % 4; // 生成一个0到3之间的随机数，用于决定添加哪种障碍物
+
+    // 根据随机数选择添加的障碍物类型
     switch (i) {
     case 0:
+        // 添加仙人掌和苹果作为障碍物
         barriers.emplace_back(new Cactus);
         barriers.emplace_back(new Apple(1));
         break;
     case 1:
+        // 添加鸟类作为障碍物
         barriers.emplace_back(new Bird);
         break;
     case 2:
+        // 添加玉蝉和苹果作为障碍物
         barriers.emplace_back(new Yucha);
         barriers.emplace_back(new Apple(2));
         break;
     case 3:
-        if(add_veget_intervai_Timer.isActive()){
+        // 检查是否可以添加蔬菜类障碍物
+        if (add_veget_intervai_Timer.isActive()) {
+            // 如果定时器激活，仅添加苹果
             barriers.emplace_back(new Apple(2));
             return;
         }
+        // 启动蔬菜添加间隔计时器，并添加蔬菜作为障碍物
         add_veget_intervai_Timer.start();
         barriers.emplace_back(new Veget);
         break;
     default:
+        // 默认情况下不执行任何操作
         break;
     }
 }
 
-
-void MainWindow::on_start_clicked()           //开始游戏按键                                    /////QButton
-{
+// 开始游戏按钮点击事件处理
+void MainWindow::on_start_clicked() {
+    // 隐藏开始、介绍和商店按钮
     ui->start->hide();
     ui->intro->hide();
     ui->store->hide();
-//    arch=new Archive;
-//    arch->setParent(this);
-//    arch->show();
-//    arch->setFocusPolicy(Qt::NoFocus);
-//    connect(arch,&Archive::aboutToClose,[=](){
-//        // 窗口已关闭
-//        coin=arch->c;
-//        rec=arch->dis;
-//        filename=arch->filename;
-//        this->setFocus();
-//        arch->loadSettings(filename, "coin", coin);
-//        arch->loadSettings(filename, "record", rec);
-//        playgame();
-//        update();
-//    });
-    playgame();
+
+    //    arch=new Archive;
+    //    arch->setParent(this);
+    //    arch->show();
+    //    arch->setFocusPolicy(Qt::NoFocus);
+    //    connect(arch,&Archive::aboutToClose,[=](){
+    //        // 窗口已关闭
+    //        coin=arch->c;
+    //        rec=arch->dis;
+    //        filename=arch->filename;
+    //        this->setFocus();
+    //        arch->loadSettings(filename, "coin", coin);
+    //        arch->loadSettings(filename, "record", rec);
+    //        playgame();
+    //        update();
+    //    });
+    // 开始游戏的主要逻辑
+    playgame(); // 调用playgame函数来开始游戏
 }
 
-//游戏介绍按键
-void MainWindow::on_intro_clicked()
-{
+// 游戏介绍按钮点击事件处理
+void MainWindow::on_intro_clicked() {
+    // 创建游戏介绍的窗口实例
     intro = new Introduction(this);
+    // 设置窗口样式，使其始终位于顶部
     intro->setWindowFlags(Qt::Window | Qt::WindowStaysOnTopHint | Qt::CustomizeWindowHint);
+    // 设置窗口位置和大小
     intro->setGeometry(
         QStyle::alignedRect(
             Qt::LeftToRight,
@@ -340,45 +430,59 @@ void MainWindow::on_intro_clicked()
             qApp->primaryScreen()->availableGeometry()
         )
     );
-    intro->setAttribute(Qt::WA_DeleteOnClose);
-    intro->show();
+    intro->setAttribute(Qt::WA_DeleteOnClose); // 设置窗口关闭时自动删除
+    intro->show(); // 显示游戏介绍窗口
 }
 
 
-void MainWindow::on_restart_clicked()
-{
+
+void MainWindow::on_restart_clicked() {
+    // 当点击重启游戏按钮时触发
     ui->groupBox->hide();
+    // 隐藏游戏结束的界面
     barriers.clear();
-    dino->y=DINO_ON_GROUNG_POS_Y;
+    // 清空所有障碍物
+    dino->y = DINO_ON_GROUNG_POS_Y;
+    // 重置恐龙的位置到地面
     playgame();
+    // 调用playgame函数重新开始游戏
 }
 
-void MainWindow::on_store_clicked(){
-    //点击商店
+
+void MainWindow::on_store_clicked() {
+    // 当点击商店按钮时触发
+    // 隐藏主界面上的按钮
     ui->start->hide();
     ui->intro->hide();
     ui->store->hide();
 
-    store=new Store(this);
+    // 创建商店界面，并设置其为主窗口的子窗口
+    store = new Store(this);
     store->setParent(this);
+    // 将商店界面设置为主窗口的子窗口
     store->show();
-
+    // 显示商店界面
 
 }
 
-void MainWindow::on_return_main_clicked()
-{
-    ui->groupBox->hide();
+
+void MainWindow::on_return_main_clicked() {
+    // 当点击返回主界面按钮时触发
+
+    ui->groupBox->hide();  // 隐藏游戏结束界面
+    // 隐藏游戏中的信息显示
     ui->coin->hide();
     ui->distance->hide();
     ui->record->hide();
+    // 显示主界面上的按钮
     ui->start->show();
     ui->intro->show();
     ui->store->show();
-    barriers.clear();
-    dino->y=DINO_ON_GROUNG_POS_Y;
-    dino->current_run_img=0;
-    update();
+    barriers.clear();  // 清空所有障碍物
+    // 重置恐龙的位置和动画帧
+    dino->y = DINO_ON_GROUNG_POS_Y;
+    dino->current_run_img = 0;
+    update();  // 刷新界面，显示变更
 }
 
 void MainWindow::initStartScreen() {
@@ -419,9 +523,11 @@ void Store::on_returned_clicked()
         // 显示主窗口的相关组件
         MainWindow* mainWindow = qobject_cast<MainWindow*>(parentWidget);
         if (mainWindow) {
-            mainWindow->showComponents(); // 在 MainWindow 中定义的方法
+            mainWindow->showComponents();
+            // 在 MainWindow 中定义的方法
         }
-        parentWidget->show(); // 显示父窗口
+        parentWidget->show();
+        // 显示父窗口
     }
 }
 

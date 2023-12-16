@@ -33,7 +33,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     //连接home的信号到槽函数
     connect(home,&Home::switchToArc,this,&MainWindow::switchToArchWindow);
-//    connect(store, &Store::characterChangedInStore, this, &MainWindow::updateDinoCharacter);
 
     initWindow();    //初始化窗口
 
@@ -342,11 +341,17 @@ void MainWindow::sprint() {
         sprint_once = true;
         sprint_Timer.start();
         sprint_interval_Timer.start();
+        if(dino->chara=="经典小恐龙"){
+            dino->windSound.play();
+        }
     }
     // 启动第二次冲刺
     else if (!sprint_twice) {
         sprint_twice = true;
         sprint_Timer.start();
+        if(dino->chara=="经典小恐龙"){
+            dino->windSound.play();
+        }
     }
 }
 
@@ -361,7 +366,7 @@ void MainWindow::addBarrier() {
     case 0:
         // 添加仙人掌和苹果作为障碍物
         barriers.emplace_back(new Cactus);
-        barriers.emplace_back(new Apple(1));
+        barriers.emplace_back(new Coin(1));
         break;
     case 1:
         // 添加鸟类作为障碍物
@@ -370,13 +375,13 @@ void MainWindow::addBarrier() {
     case 2:
         // 添加玉蝉和苹果作为障碍物
         barriers.emplace_back(new Yucha);
-        barriers.emplace_back(new Apple(2));
+        barriers.emplace_back(new Coin(2));
         break;
     case 3:
         // 检查是否可以添加蔬菜类障碍物
         if (add_veget_intervai_Timer.isActive()) {
             // 如果定时器激活，仅添加苹果
-            barriers.emplace_back(new Apple(2));
+            barriers.emplace_back(new Coin(2));
             return;
         }
         // 启动蔬菜添加间隔计时器，并添加蔬菜作为障碍物
@@ -462,6 +467,7 @@ void MainWindow::on_store_clicked() {
     // 将商店界面设置为主窗口的子窗口
     store->show();
     // 显示商店界面
+    connect(store, &Store::characterChangedInStore, this, &MainWindow::updateDinoCharacter);
 
 }
 

@@ -5,6 +5,9 @@
 #include <QTimer>
 #include <QMovie>
 #include <QLabel>
+#include <QSoundEffect>
+#include <QMediaPlayer>
+
 
 #include "config.h"
 
@@ -18,6 +21,7 @@ public:
     void jump();               //跳跃
     void updatePositionY();    //更新Y轴坐标
     void setCharacter(const QString &Path); // 设置图片
+    ~Dino();
 
 public:
     QPixmap run_img[2];  //奔跑图片
@@ -34,6 +38,10 @@ public:
     QRect dino_Rect;    //角色边框  用于碰撞检测
     QMovie *dinoGif;
     QLabel *dinoLabel;
+    QString chara;
+    QMediaPlayer *jumpSound;
+    QSoundEffect windSound;
+
 
 };
 

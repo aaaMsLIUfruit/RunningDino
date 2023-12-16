@@ -72,10 +72,10 @@ public:
     QPixmap getImg(int);
 };
 
-class Apple:public Barriers
+class Coin:public Barriers
 {
 public:
-    Apple(int);
+    Coin(int);
     void updatePosition();
     void updateBirdY(){}
     bool isOut();

@@ -192,7 +192,7 @@ QPixmap Veget::getImg(int) {
 }
 
 
-Apple::Apple(int i) {
+Coin::Coin(int i) {
     // 构造函数，初始化金币对象
     img.load(COIN_PATH);  // 加载金币图片
     x = GAME_WIDTH;  // 初始x位置设置为游戏窗口宽度，表示从右侧进入
@@ -209,18 +209,18 @@ Apple::Apple(int i) {
     rect.moveTo(x, y);  // 设置碰撞矩形的位置
 }
 
-void Apple::updatePosition() {
+void Coin::updatePosition() {
     // 更新金币的位置
     x -= SCENE_SCROLL_SPEED;  // 根据场景滚动速度向左移动
     rect.moveTo(x, y);  // 更新碰撞检测矩形的位置
 }
 
-bool Apple::isOut() {
+bool Coin::isOut() {
     // 检查金币是否移出屏幕
     return x < -img.width();  // 如果金币完全离开屏幕，返回true
 }
 
-int Apple::collisionDetection(QRect r) {
+int Coin::collisionDetection(QRect r) {
     // 碰撞检测函数
     if (rect.intersects(r)) {  // 如果碰撞矩形与传入的矩形相交
         return 3;  // 发生碰撞，返回3表示金币碰撞
@@ -229,7 +229,7 @@ int Apple::collisionDetection(QRect r) {
         return 0;  // 无碰撞
 }
 
-QPixmap Apple::getImg(int) {
+QPixmap Coin::getImg(int) {
     // 获取金币的图像
     return img;  // 因为只有一张图像，直接返回
 }

@@ -34,8 +34,9 @@ Dino::Dino(QWidget *parent){
     dinoLabel->show();
     // 默认隐藏 GIF 标签
     dinoLabel->raise();
+    jumpSound = new QMediaPlayer(parent);
+    setCharacter("经典小恐龙");
 
-    setCharacter("说的道理");
 }
 
 // 获取当前 Dino 的图像，基于其位置（跳跃或跑步）
@@ -70,9 +71,12 @@ void Dino::jump() {
     if (y == DINO_ON_GROUNG_POS_Y) {
         jump_Timer.start();
         jump_once = true;
-    } else if (y < DINO_ON_GROUNG_POS_Y && !jump_twice) {
+        jumpSound->play();// 播放跳跃音效
+    }
+    else if (y < DINO_ON_GROUNG_POS_Y && !jump_twice) {
         jump_Timer.start();
         jump_twice = true;
+        jumpSound->play(); // 播放跳跃音效
     }
 }
 
@@ -100,6 +104,8 @@ void Dino::updatePositionY() {
 // 设置 Dino 的角色
 void Dino::setCharacter(const QString &character) {
 
+    chara=character;
+
     // 如果路径是 GIF 动画
     if (character=="说的道理") {
         dinoGif=new QMovie(":/res/Daoli.gif");
@@ -111,24 +117,33 @@ void Dino::setCharacter(const QString &character) {
         run_Timer.setInterval(RUN_INTERVAL);
         jump_Timer.setInterval(JUMP_DURATION);
         jump_Timer.setSingleShot(true);
+
+
     }
 
-    else {
-        // 如果路径是静态图片
-        if (character == "经典小恐龙") {
-            dinoLabel->hide(); // 隐藏 GIF 动画显示控件
+    else if (character == "经典小恐龙") {
+        dinoLabel->hide(); // 隐藏 GIF 动画显示控件
 
-            // 加载静态图片
-            run_img[0].load(QString(":/res/DINO_RUN1.png"));
-            run_img[1].load(QString(":/res/DINO_RUN2.png"));
-            jump_img.load(JUMP_PATH);
-            current_run_img = 0;
-            run_Timer.setInterval(RUN_INTERVAL);
-            QObject::connect(&run_Timer, &QTimer::timeout, [this]() {
-                current_run_img = (++current_run_img) % 2;
-            });
-            jump_Timer.setInterval(JUMP_DURATION);
-            jump_Timer.setSingleShot(true);
-        }
+        // 加载静态图片
+        run_img[0].load(QString(":/res/DINO_RUN1.png"));
+        run_img[1].load(QString(":/res/DINO_RUN2.png"));
+        jump_img.load(JUMP_PATH);
+        current_run_img = 0;
+        run_Timer.setInterval(RUN_INTERVAL);
+        QObject::connect(&run_Timer, &QTimer::timeout, [this]() {
+            current_run_img = (++current_run_img) % 2;
+        });
+        jump_Timer.setInterval(JUMP_DURATION);
+        jump_Timer.setSingleShot(true);
+
+        //初始化声音
+        jumpSound->setMedia(QUrl::fromLocalFile(":/res/JumpSound.wav"));
+
+        windSound.setSource(QUrl::fromLocalFile(":/res/WindSound.mp3"));
+        windSound.setVolume(50);
     }
+
+}
+Dino::~Dino() {
+
 }

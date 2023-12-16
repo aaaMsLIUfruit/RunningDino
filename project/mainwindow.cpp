@@ -349,7 +349,7 @@ void MainWindow::on_store_clicked(){
     ui->intro->hide();
     ui->store->hide();
 
-    store=new Store;
+    store=new Store(this);
     store->setParent(this);
     store->show();
 
@@ -364,7 +364,7 @@ void MainWindow::on_return_main_clicked()
     ui->record->hide();
     ui->start->show();
     ui->intro->show();
-    ui->store->hide();
+    ui->store->show();
     barriers.clear();
     dino.y=DINO_ON_GROUNG_POS_Y;
     dino.current_run_img=0;
@@ -401,3 +401,24 @@ void MainWindow::switchToArchWindow(){
     });
 }
 
+void Store::on_returned_clicked()
+{
+    this->hide(); // 隐藏当前窗口
+
+    if (parentWidget) {
+        // 显示主窗口的相关组件
+        MainWindow* mainWindow = qobject_cast<MainWindow*>(parentWidget);
+        if (mainWindow) {
+            mainWindow->showComponents(); // 在 MainWindow 中定义的方法
+        }
+        parentWidget->show(); // 显示父窗口
+    }
+}
+
+void MainWindow::showComponents() {
+    ui->start->show();
+    ui->intro->show();
+    ui->store->show();
+    // 显示其他需要的组件
+
+}

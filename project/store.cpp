@@ -6,11 +6,12 @@
 #include "background.h"
 
 #include <QFontDatabase>
-#include<QObject>
+#include <QObject>
 
 Store::Store(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::Store)
+    ui(new Ui::Store),
+    parentWidget(parent)
 {
     ui->setupUi(this);
 
@@ -43,8 +44,9 @@ void Store::on_character_clicked()
     ui->characters->hide();
     ui->head->hide();
     ui->backgrounds->hide();
+    ui->returned->hide();
 
-    character=new Character;
+    character=new Character(this);
     character->setParent(this);
 
     character->show();
@@ -56,8 +58,9 @@ void Store::on_prop_clicked()
     ui->characters->hide();
     ui->head->hide();
     ui->backgrounds->hide();
+    ui->returned->hide();
 
-    prop=new Prop;
+    prop=new Prop(this);
     prop->setParent(this);
 
     prop->show();
@@ -69,11 +72,65 @@ void Store::on_background_clicked()
     ui->characters->hide();
     ui->head->hide();
     ui->backgrounds->hide();
+    ui->returned->hide();
 
-    background=new Background;
+    background=new Background(this);
     background->setParent(this);
 
     background->show();
+}
+
+void Store::showComponents() {
+    // 显示所有需要的 UI 元素
+
+    ui->props->show();
+    ui->characters->show();
+    ui->head->show();
+    ui->backgrounds->show();
+    ui->returned->show();
+
+}
+
+void Character::on_returnButton_clicked()
+{
+    this->hide(); // 隐藏当前窗口
+
+    QWidget* parent = this->parentWidget();
+    if (parent != nullptr) {
+        // 尝试将父窗口转换为 Store 类型
+        Store* storeWindow = qobject_cast<Store*>(parent);
+        if (storeWindow) {
+                storeWindow->showComponents(); // 显示 Store 窗口的组件
+        }
+    }
+}
+
+void Prop::on_returnButton_clicked()
+{
+    this->hide(); // 隐藏当前窗口
+
+    QWidget* parent = this->parentWidget();
+    if (parent != nullptr) {
+        // 尝试将父窗口转换为 Store 类型
+        Store* storeWindow = qobject_cast<Store*>(parent);
+        if (storeWindow) {
+                storeWindow->showComponents(); // 显示 Store 窗口的组件
+        }
+    }
+}
+
+void Background::on_returnButton_clicked()
+{
+    this->hide(); // 隐藏当前窗口
+
+    QWidget* parent = this->parentWidget();
+    if (parent != nullptr) {
+        // 尝试将父窗口转换为 Store 类型
+        Store* storeWindow = qobject_cast<Store*>(parent);
+        if (storeWindow) {
+                storeWindow->showComponents(); // 显示 Store 窗口的组件
+        }
+    }
 }
 
 Store::~Store()

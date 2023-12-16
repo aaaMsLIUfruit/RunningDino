@@ -25,13 +25,17 @@ public:
     Prop *prop = new Prop;
     Background *background = new Background;
 
+    void showComponents();
+
 private slots:
     void on_character_clicked();
     void on_prop_clicked();
     void on_background_clicked();
+    void on_returned_clicked();
 
 private:
     Ui::Store *ui;
+    QWidget *parentWidget;
 };
 
 #endif // STORE_H

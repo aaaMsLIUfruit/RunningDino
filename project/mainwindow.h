@@ -65,6 +65,7 @@ public:
     Store *store;  //商店界面
 
     void initStartScreen();
+    void showComponents();
 
 private slots:
     void switchToArchWindow();

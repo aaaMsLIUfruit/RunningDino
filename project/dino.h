@@ -12,6 +12,7 @@
 class Dino: public QWidget
 {
 public:
+    explicit Dino(QWidget *parent = nullptr);
     Dino();
     QPixmap getImg();
     void jump();               //跳跃

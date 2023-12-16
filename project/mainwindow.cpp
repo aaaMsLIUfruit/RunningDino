@@ -29,6 +29,8 @@ MainWindow::MainWindow(QWidget *parent)
     home = new Home(this);
     home->show();
 
+    dino = new Dino(this);
+
     //连接home的信号到槽函数
     connect(home,&Home::switchToArc,this,&MainWindow::switchToArchWindow);
 //    connect(store, &Store::characterChangedInStore, this, &MainWindow::updateDinoCharacter);
@@ -92,7 +94,7 @@ void MainWindow::initWindow(){
     add_veget_intervai_Timer.setSingleShot(true);
     protected_Timer.setInterval(PROTECTED_DURATION);
     protected_Timer.setSingleShot(true);
-    dino.y=DINO_ON_GROUNG_POS_Y;
+    dino->y=DINO_ON_GROUNG_POS_Y;
 
     connect(&m_Timer,&QTimer::timeout,[=](){
         updatePosition();    //更新坐标
@@ -128,8 +130,8 @@ void MainWindow::paintEvent(QPaintEvent *) {
     }
 
     // 如果 Dino 使用的是静态图片，则在这里绘制
-    if (dino.dinoLabel->isHidden()) {
-        painter.drawPixmap(dino.x, dino.y, dino.getImg());
+    if (dino->dinoLabel->isHidden()) {
+        painter.drawPixmap(dino->x, dino->y, dino->getImg());
     }
     // 注意：如果 Dino 正在使用 GIF 动画，那么 dinoLabel 已经负责显示了
     //dino.dinoLabel->move(dino.x, dino.y);
@@ -147,7 +149,7 @@ void MainWindow::paintEvent(QPaintEvent *) {
 void MainWindow::keyPressEvent(QKeyEvent *event){                                 /////////keyPressEvent
     QKeyEvent *key=(QKeyEvent*) event;
     if(key->key()==Qt::Key_Space){                     //空格键跳跃
-        dino.jump();
+        dino->jump();
     }
     if(key->key()==Qt::Key_Shift){                     //shift键冲刺
         sprint();
@@ -156,7 +158,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event){                               
 
 void MainWindow::mousePressEvent(QMouseEvent *event){                             /////////mousePressEvent
     if(event->button()==Qt::LeftButton){
-        dino.jump();
+        dino->jump();
     }
     if(event->button()==Qt::RightButton){
         sprint();
@@ -166,12 +168,12 @@ void MainWindow::mousePressEvent(QMouseEvent *event){                           
 
 void MainWindow::playgame(){                                                                                      /////////playgame & gameover
     grounds.distance=0;
-    dino.current_run_img=0;
+    dino->current_run_img=0;
     ui->coin->show();
     ui->distance->show();
     ui->record->show();
     m_Timer.start();            //启动计时器
-    dino.run_Timer.start();
+    dino->run_Timer.start();
     add_Barrier_interval_Timer.start();
 }
 
@@ -181,7 +183,7 @@ void MainWindow::gameover(){
     sprint_interval_Timer.stop();
     add_Barrier_interval_Timer.stop();
     add_veget_intervai_Timer.stop();
-    dino.run_Timer.stop();
+    dino->run_Timer.stop();
     protected_Timer.stop();
     ui->groupBox->setGeometry(330,0,ui->groupBox->width(),ui->groupBox->height());
     ui->over_score->setText("Coin: "+QString::number(coin));
@@ -210,7 +212,7 @@ void MainWindow::updatePosition(){           //更新对象坐标
             it++;
         }
     }
-    dino.updatePositionY();
+    dino->updatePositionY();
     if(this->sprint_Timer.isActive()){
         grounds.calculatePositions();
         grounds.calculatePositions();
@@ -225,7 +227,7 @@ void MainWindow::updatePosition(){           //更新对象坐标
 void MainWindow::collisionDetection(){
     int i=0;
     for(it=barriers.begin();it!=barriers.end();){
-        i=(*it)->collisionDetection(dino.dino_Rect);
+        i=(*it)->collisionDetection(dino->dino_Rect);
         switch (i) {
         case 0:                       //无碰撞
             it++;
@@ -347,7 +349,7 @@ void MainWindow::on_restart_clicked()
 {
     ui->groupBox->hide();
     barriers.clear();
-    dino.y=DINO_ON_GROUNG_POS_Y;
+    dino->y=DINO_ON_GROUNG_POS_Y;
     playgame();
 }
 
@@ -374,8 +376,8 @@ void MainWindow::on_return_main_clicked()
     ui->intro->show();
     ui->store->show();
     barriers.clear();
-    dino.y=DINO_ON_GROUNG_POS_Y;
-    dino.current_run_img=0;
+    dino->y=DINO_ON_GROUNG_POS_Y;
+    dino->current_run_img=0;
     update();
 }
 
@@ -424,7 +426,7 @@ void Store::on_returned_clicked()
 }
 
 void MainWindow::updateDinoCharacter(const QString &characterName) {
-    dino.setCharacter(characterName);
+    dino->setCharacter(characterName);
 }
 
 void MainWindow::showComponents() {

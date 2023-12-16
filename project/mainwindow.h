@@ -57,7 +57,8 @@ public:
     QString filename;           //存档
 
     Grounds grounds;  //地面对象
-    Dino dino;
+
+    Dino *dino;
 
     Home *home;  //首页界面
     Introduction *intro;   //游戏介绍窗口

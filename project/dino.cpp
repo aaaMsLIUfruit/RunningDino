@@ -2,7 +2,7 @@
 #include <QDebug>
 // Dino 类的构造函数
 
-Dino::Dino() {
+Dino::Dino(QWidget *parent){
 
     // 设置 Dino 的初始角色
 //    setCharacter("经典小恐龙");
@@ -28,14 +28,14 @@ Dino::Dino() {
     dino_Rect.moveTo(x+17, y+8);
 
     // 初始化 GIF 动画和其显示控件
-    dinoGif = new QMovie(this);
-    dinoLabel = new QLabel(this);
+    dinoGif = new QMovie(parent);
+    dinoLabel = new QLabel(parent);
     dinoLabel->setGeometry(QRect(x, y, 100, 108));
-    dinoLabel->hide();
+    dinoLabel->show();
     // 默认隐藏 GIF 标签
     dinoLabel->raise();
 
-    setCharacter("经典小恐龙");
+    setCharacter("说的道理");
 }
 
 // 获取当前 Dino 的图像，基于其位置（跳跃或跑步）

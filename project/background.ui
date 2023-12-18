@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>930</width>
-    <height>472</height>
+    <width>1000</width>
+    <height>524</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,8 +16,8 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>60</y>
+     <x>120</x>
+     <y>110</y>
      <width>231</width>
      <height>18</height>
     </rect>
@@ -29,8 +29,8 @@
   <widget class="QPushButton" name="returnButton">
    <property name="geometry">
     <rect>
-     <x>670</x>
-     <y>60</y>
+     <x>690</x>
+     <y>80</y>
      <width>161</width>
      <height>61</height>
     </rect>
@@ -42,8 +42,8 @@
   <widget class="QComboBox" name="comboBox">
    <property name="geometry">
     <rect>
-     <x>460</x>
-     <y>70</y>
+     <x>480</x>
+     <y>90</y>
      <width>191</width>
      <height>24</height>
     </rect>

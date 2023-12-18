@@ -9,10 +9,10 @@ Barriers::Barriers()
 
 }
 
-Cactus::Cactus() {
+Cactus1::Cactus1() {
     // 构造函数，初始化仙人掌对象
     img.load(CACTUS_PATH);  // 加载第一张图片
-    img2.load(CACTUS_PATH2);  // 加载第二张图片
+    img2.load(CACTUS_PATH2);
     x = GAME_WIDTH;  // 初始x位置设置为游戏窗口宽度，表示从右侧进入
     y = 351;  // 设置y坐标，表示仙人掌的垂直位置
     // 设置碰撞检测矩形的大小和位置
@@ -22,20 +22,20 @@ Cactus::Cactus() {
 
 }
 
-void Cactus::updatePosition() {
+void Cactus1::updatePosition() {
     // 更新仙人掌的位置
     x -= SCENE_SCROLL_SPEED;  // 根据场景滚动速度向左移动
     rect.moveTo(x + 5, y + 3);  // 更新碰撞检测矩形的位置
 
 }
 
-bool Cactus::isOut() {
+bool Cactus1::isOut() {
     // 检查仙人掌是否移出屏幕
     return x < -img.width();  // 如果仙人掌完全离开屏幕，返回true
 
 }
 
-int Cactus::collisionDetection(QRect r) {
+int Cactus1::collisionDetection(QRect r) {
     // 碰撞检测函数
     if (rect.intersects(r)) {  // 如果碰撞矩形与传入的矩形相交
         return 1;  // 发生碰撞
@@ -45,14 +45,49 @@ int Cactus::collisionDetection(QRect r) {
 
 }
 
-QPixmap Cactus::getImg(int i) {
+QPixmap Cactus1::getImg(int i) {
     // 获取仙人掌的图像
-    if (i == 0) {
-        return img;  // 返回第一张图片
+    return img;
+}
+
+Cactus2::Cactus2() {
+    // 构造函数，初始化仙人掌对象
+    img.load(CACTUS_PATH2);  // 加载第二张图片
+    x = GAME_WIDTH;  // 初始x位置设置为游戏窗口宽度，表示从右侧进入
+    y = 351;  // 设置y坐标，表示仙人掌的垂直位置
+    // 设置碰撞检测矩形的大小和位置
+    rect.setWidth(img.width() - 10);
+    rect.setHeight(img.height() - 3);
+    rect.moveTo(x + 5, y + 3);
+
+}
+
+void Cactus2::updatePosition() {
+    // 更新仙人掌的位置
+    x -= SCENE_SCROLL_SPEED;  // 根据场景滚动速度向左移动
+    rect.moveTo(x + 5, y + 3);  // 更新碰撞检测矩形的位置
+
+}
+
+bool Cactus2::isOut() {
+    // 检查仙人掌是否移出屏幕
+    return x < -img.width();  // 如果仙人掌完全离开屏幕，返回true
+
+}
+
+int Cactus2::collisionDetection(QRect r) {
+    // 碰撞检测函数
+    if (rect.intersects(r)) {  // 如果碰撞矩形与传入的矩形相交
+        return 1;  // 发生碰撞
     }
     else
-        return img2;  // 返回第二张图片
+        return 0;  // 无碰撞
 
+}
+
+QPixmap Cactus2::getImg(int i) {
+    // 获取仙人掌的图像
+    return img;
 }
 
 Bird::Bird() {
@@ -123,14 +158,14 @@ Yucha::Yucha() {
 }
 
 void Yucha::updatePosition() {
-    // 更新余茶的位置
+    // 更新鱼叉的位置
     x -= SCENE_SCROLL_SPEED;  // 根据场景滚动速度向左移动
     rect.moveTo(x + 21, y);  // 更新碰撞检测矩形的位置
 }
 
 bool Yucha::isOut() {
-    // 检查余茶是否移出屏幕
-    return x < -img.width();  // 如果余茶完全离开屏幕，返回true
+    // 检查鱼叉是否移出屏幕
+    return x < -img.width();  // 如果鱼叉完全离开屏幕，返回true
 }
 
 int Yucha::collisionDetection(QRect r) {
@@ -145,7 +180,7 @@ int Yucha::collisionDetection(QRect r) {
 }
 
 QPixmap Yucha::getImg(int i) {
-    // 获取余茶的图像
+    // 获取鱼叉的图像
     if (i == 0) {
         return img;  // 返回第一张图片
     }

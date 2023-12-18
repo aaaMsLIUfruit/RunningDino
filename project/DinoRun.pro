@@ -14,6 +14,10 @@ SOURCES += \
     archive.cpp \
     background.cpp \
     barriers.cpp \
+    boss.cpp \
+    bossbarriers.cpp \
+    bossmode.cpp \
+    bossplayer.cpp \
     character.cpp \
     dino.cpp \
     ground.cpp \
@@ -28,6 +32,10 @@ HEADERS += \
     archive.h \
     background.h \
     barriers.h \
+    boss.h \
+    bossbarriers.h \
+    bossmode.h \
+    bossplayer.h \
     character.h \
     config.h \
     dino.h \
@@ -41,6 +49,8 @@ HEADERS += \
 FORMS += \
     archive.ui \
     background.ui \
+    boss.ui \
+    bossmode.ui \
     character.ui \
     home.ui \
     introduction.ui \

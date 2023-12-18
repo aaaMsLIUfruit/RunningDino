@@ -11,6 +11,7 @@
 
 #include "config.h"
 #include "dino.h"
+#include "bossmode.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -20,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->start->hide();
     ui->intro->hide();
     ui->store->hide();
+    ui->bossmode->hide();
 
     //创建存档界面
     arch = new Archive(this);
@@ -40,10 +42,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 }
 
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
 
 //初始化窗口
 // 初始化窗口的函数定义
@@ -83,6 +81,7 @@ void MainWindow::initWindow() {
     ui->over_distance->setFont(font);
     ui->game_over->setFont(font);
     ui->record->setFont(font);
+    ui->bossmode->setFont(font);
 
     // 设置UI元素的几何位置
     ui->start->setGeometry(390, 140, ui->start->width(), ui->start->height());
@@ -365,7 +364,7 @@ void MainWindow::addBarrier() {
     switch (i) {
     case 0:
         // 添加仙人掌和苹果作为障碍物
-        barriers.emplace_back(new Cactus);
+        barriers.emplace_back(new Cactus1);
         barriers.emplace_back(new Coin(1));
         break;
     case 1:
@@ -400,6 +399,7 @@ void MainWindow::on_start_clicked() {
     ui->start->hide();
     ui->intro->hide();
     ui->store->hide();
+    ui->bossmode->hide();
 
     //    arch=new Archive;
     //    arch->setParent(this);
@@ -460,6 +460,7 @@ void MainWindow::on_store_clicked() {
     ui->start->hide();
     ui->intro->hide();
     ui->store->hide();
+    ui->bossmode->hide();
 
     // 创建商店界面，并设置其为主窗口的子窗口
     store = new Store(this);
@@ -484,6 +485,7 @@ void MainWindow::on_return_main_clicked() {
     ui->start->show();
     ui->intro->show();
     ui->store->show();
+    ui->bossmode->show();
     barriers.clear();  // 清空所有障碍物
     // 重置恐龙的位置和动画帧
     dino->y = DINO_ON_GROUNG_POS_Y;
@@ -495,6 +497,7 @@ void MainWindow::initStartScreen() {
     ui->start->show();
     ui->intro->show();
     ui->store->show();
+    ui->bossmode->show();
     // 其他初始化开始界面的操作
 }
 
@@ -545,5 +548,30 @@ void MainWindow::showComponents() {
     ui->start->show();
     ui->intro->show();
     ui->store->show();
+    ui->bossmode->show();
     // 显示其他需要的组件
+}
+
+void MainWindow::on_bossmode_clicked(){
+    ui->start->hide();
+    ui->intro->hide();
+    ui->store->hide();
+    ui->bossmode->hide();
+
+    bossmode=new Bossmode(this);
+    bossmode->setParent(this);
+
+    bossmode->show();
+    bossmode->start_game();
+
+}
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+    delete bossmode;
+    delete arch;
+    delete store;
+    delete dino;
+    delete home;
 }

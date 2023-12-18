@@ -15,6 +15,7 @@
 #include "barriers.h"
 #include "archive.h"
 #include "home.h"
+#include "bossmode.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -64,6 +65,7 @@ public:
     Introduction *intro;   //游戏介绍窗口
     Archive *arch;  //存档界面
     Store *store;  //商店界面
+    Bossmode *bossmode;
 
     void initStartScreen();
     void showComponents();
@@ -81,6 +83,8 @@ private slots:
     void on_return_main_clicked();
 
     void on_store_clicked();
+
+    void on_bossmode_clicked();
 
 private:
     Ui::MainWindow *ui;

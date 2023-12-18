@@ -2,13 +2,13 @@
 #define CHARACTER_H
 
 #include <QWidget>
-#include <QComboBox>
-#include <QLabel>
-#include <QPushButton>
+#include <QString>
 
 namespace Ui {
 class Character;
 }
+
+// 定义角色枚举
 
 class Character : public QWidget
 {
@@ -18,17 +18,19 @@ public:
     explicit Character(QWidget *parent = nullptr);
     ~Character();
 
-private:
-    Ui::Character *ui;
-    void setupUi(); // 设置UI组件
-    void setupConnections(); // 设置信号和槽的连接
-
 signals:
-    void characterSelected(const QString &characterName); // 新信号
+    void characterSelected(const QString &characterName);
 
 private slots:
     void onCharacterSelected(const QString &characterName);
-    void on_returnButton_clicked(); // 返回按钮的槽函数
+    void on_returnButton_clicked();
+
+private:
+    Ui::Character *ui;
+
+    void setupFont();         // 设置字体
+    void setupUi();           // 设置UI元素
+    void setupConnections();  // 设置信号和槽的连接
 };
 
 #endif // CHARACTER_H

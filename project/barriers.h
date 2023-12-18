@@ -20,10 +20,23 @@ public:
 };
 
 //派生类
-class Cactus:public Barriers
+class Cactus1:public Barriers
 {
 public:
-    Cactus();
+    Cactus1();
+    void updatePosition();
+    void updateBirdY(){}
+    bool isOut();
+    int collisionDetection(QRect);
+    QPixmap getImg(int);
+public:
+    QPixmap img2;
+};
+
+class Cactus2:public Barriers
+{
+public:
+    Cactus2();
     void updatePosition();
     void updateBirdY(){}
     bool isOut();

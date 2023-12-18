@@ -107,7 +107,8 @@ void Dino::setCharacter(const QString &character) {
     chara=character;
 
     // 如果路径是 GIF 动画
-    if (character=="说的道理") {
+    if (character=="说的道理")
+    {
         dinoGif=new QMovie(":/res/Daoli.gif");
         dinoLabel->setMovie(dinoGif);
         dinoLabel->show();
@@ -118,8 +119,22 @@ void Dino::setCharacter(const QString &character) {
         jump_Timer.setInterval(JUMP_DURATION);
         jump_Timer.setSingleShot(true);
 
+    }
+
+    else if (character=="科比")
+    {
+        dinoGif=new QMovie(":/res/kobe.gif");
+        dinoLabel->setMovie(dinoGif);
+        dinoLabel->show();
+        dinoGif->setScaledSize(dinoLabel->size());
+        dinoGif->start();
+        dinoLabel->update();
+        run_Timer.setInterval(RUN_INTERVAL);
+        jump_Timer.setInterval(JUMP_DURATION);
+        jump_Timer.setSingleShot(true);
 
     }
+
 
     else if (character == "经典小恐龙") {
         dinoLabel->hide(); // 隐藏 GIF 动画显示控件

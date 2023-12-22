@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>300</height>
+    <height>500</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,10 +16,10 @@
   <widget class="QPushButton" name="BossPlayButton">
    <property name="geometry">
     <rect>
-     <x>150</x>
-     <y>230</y>
-     <width>80</width>
-     <height>31</height>
+     <x>30</x>
+     <y>270</y>
+     <width>101</width>
+     <height>61</height>
     </rect>
    </property>
    <property name="text">
@@ -29,11 +29,17 @@
   <widget class="QLabel" name="intro_1">
    <property name="geometry">
     <rect>
-     <x>100</x>
-     <y>30</y>
+     <x>40</x>
+     <y>20</y>
      <width>271</width>
-     <height>31</height>
+     <height>41</height>
     </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>271</width>
+     <height>41</height>
+    </size>
    </property>
    <property name="text">
     <string>按W、A、S、D移动</string>
@@ -42,8 +48,8 @@
   <widget class="QLabel" name="intro_2">
    <property name="geometry">
     <rect>
-     <x>100</x>
-     <y>70</y>
+     <x>40</x>
+     <y>80</y>
      <width>231</width>
      <height>31</height>
     </rect>
@@ -55,8 +61,8 @@
   <widget class="QLabel" name="intro_3">
    <property name="geometry">
     <rect>
-     <x>100</x>
-     <y>120</y>
+     <x>40</x>
+     <y>130</y>
      <width>191</width>
      <height>31</height>
     </rect>
@@ -68,8 +74,8 @@
   <widget class="QLabel" name="intro_4">
    <property name="geometry">
     <rect>
-     <x>100</x>
-     <y>170</y>
+     <x>40</x>
+     <y>190</y>
      <width>161</width>
      <height>31</height>
     </rect>

@@ -91,6 +91,8 @@ private slots:
 
     void on_bossmode_clicked();
 
+    void boss_closed();
+
 private:
     Ui::MainWindow *ui;
 };

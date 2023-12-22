@@ -31,7 +31,12 @@ MainWindow::MainWindow(QWidget *parent)
     home = new Home(this);
     home->show();
 
+    // 创建商店界面，并设置其为主窗口的子窗口
+    store = new Store(this);
+    store->hide();
+
     dino = new Dino(this);
+
 
     //连接home的信号到槽函数
     connect(home,&Home::switchToArc,this,&MainWindow::switchToArchWindow);
@@ -501,12 +506,9 @@ void MainWindow::on_store_clicked() {
     ui->store->hide();
     ui->bossmode->hide();
 
-    // 创建商店界面，并设置其为主窗口的子窗口
-    store = new Store(this);
-    store->setParent(this);
-    // 将商店界面设置为主窗口的子窗口
-    store->show();
     // 显示商店界面
+    store->show();
+
     connect(store, &Store::characterChangedInStore, this, &MainWindow::updateDinoCharacter);
     connect(store, &Store::backgroundChangedInStore, this, &MainWindow::updateBackground);
 
@@ -600,28 +602,35 @@ void MainWindow::on_bossmode_clicked(){
     ui->store->hide();
     ui->bossmode->hide();
 
-    bossmode=new Bossmode(this);
-    bossmode->setParent(this);
+    //创建并展示boss模式
+    bossmode = new Bossmode(this);
+    bossmode->setAttribute(Qt::WA_DeleteOnClose);//设置窗口关闭时自动删除
     bossmode->show();
 
     //创建boss模式介绍窗口
     bossIntro = new BossIntro(this);
     bossIntro->setAttribute(Qt::WA_DeleteOnClose);//设置窗口关闭时自动删除
     bossIntro->show();
-    //连接介绍界面信号到槽
+
+    //连接boss介绍界面信号到槽
     connect(bossIntro,&BossIntro::BossPlayButton_clicked,[=](){
         bossmode->start_game();
     });
+    //连接boss模式按钮信号
+    connect(bossmode,&Bossmode::boss_close,this,&MainWindow::boss_closed);
+
+}
+
+void MainWindow::boss_closed(){
+    ui->start->show();
+    ui->intro->show();
+    ui->store->show();
+    ui->bossmode->show();
+
 }
 
 
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete bossmode;
-    delete arch;
-    delete store;
-    delete dino;
-    delete home;
-
 }

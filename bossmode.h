@@ -2,8 +2,9 @@
 #define BOSSMODE_H
 
 #include <QWidget>
-#include<QTimer>
-#include<vector>
+#include <QTimer>
+#include <vector>
+#include <QPushButton>
 
 #include<bossbarriers.h>
 #include<boss.h>
@@ -40,10 +41,15 @@ public:
     vector<jin1 *>obstacle6;//放技能1的容器
     vector<jin2 *>obstacle7;//放技能2的容器
 
-    GameButton *button=0;
-    GameButton *button_2=0;
-    GameButton *button_3=0;
-    GameButton *button_4=0;
+//    GameButton *button=0;
+//    GameButton *button_2=0;
+//    GameButton *button_3=0;
+//    GameButton *button_4=0;
+
+    //按钮
+    QPushButton *backButton;
+    QPushButton *restartButton;
+    QPushButton *continueButton;
 
     double backImgX[3]={0,200,0}; //图片水平移动参数
     double imgSpeed[3]={0.15,1,0.5};  //移动速度参数
@@ -78,6 +84,12 @@ public:
     void shott();
     int maxscore ;
 
+signals:
+    void boss_close();
+
+private slots:
+    void backButton_clicked();
+    void restartButton_clicked();
 
 private:
     Ui::Bossmode *ui;

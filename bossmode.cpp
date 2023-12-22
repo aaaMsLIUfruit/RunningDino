@@ -15,14 +15,15 @@
 #include <QTimer>
 #include <QFontDatabase>
 
+
 #include "bossmode.h"
 #include "ui_bossmode.h"
 
-
+#define start_ui ":/res/start_ui.PNG"
 #define back_game ":/res/background.png"
 #define ground_pic ":/res/Land.png"
 #define hurtpic ":/res/hurt.png"
-#define gameover ":/res/death.png"
+#define gameover ":/res/death.JPG"
 #define pause ":/res/pause.png"
 
 //音效
@@ -52,7 +53,7 @@ Bossmode::Bossmode(QWidget *parent,int wid ,int hei) :
 
     // 加载游戏所需的图像资源
     background.load(back_game); // 加载背景图片
-    before_start.load(back_game);  // 加载游戏开始前的图片
+    before_start.load(start_ui);  // 加载游戏开始前的图片
     ground.load(ground_pic);    // 加载地面的图片
     hurtImg.load(hurtpic);      // 加载角色受伤时的图片
     pauseImg.load(pause);       // 加载暂停游戏时的图片
@@ -82,6 +83,21 @@ Bossmode::Bossmode(QWidget *parent,int wid ,int hei) :
         r->addzidan();
     });
 */
+
+    //按钮设置
+    backButton = new QPushButton("返回",this);
+    restartButton = new QPushButton("重来",this);
+    continueButton = new QPushButton("继续",this);
+    connect(backButton,&QPushButton::clicked,this,&Bossmode::backButton_clicked);
+    connect(restartButton,&QPushButton::clicked,this,&Bossmode::restartButton_clicked);
+    connect(continueButton,&QPushButton::clicked,this,&Bossmode::gamecontinue);
+    backButton->setGeometry(450,300,100,40);
+    restartButton->setGeometry(450,360,100,40);
+    continueButton->setGeometry(450,360,100,40);
+    backButton->hide();
+    restartButton->hide();
+    continueButton->hide();
+
 
     connect(&remove, &QTimer::timeout, [=]()
     {
@@ -453,7 +469,6 @@ Bossmode::Bossmode(QWidget *parent,int wid ,int hei) :
 Bossmode::~Bossmode()
 {
     delete ui;
-    delete r;
 }
 
 //绘制地图
@@ -558,11 +573,19 @@ void Bossmode::paintEvent(QPaintEvent *event)
 //        painter.drawLine(600,50,1050,60);
 //        painter.drawLine(600,50,1100,60);   //划线
 
+
+        QPainter hp_painter(this);
+        QBrush red_brush( QColor("#F20900") );//把刷子设置为红色
+        hp_painter.setBrush(red_brush);//应用刷子
+        float rate = 1.0*r->gethp()/r->maxhp;//计算比例
+        float bo_rate=1.0*rr->hp/rr->maxhp;
+        hp_painter.drawRect(150,457,rate*100,30);//绘制人物血量
+
         //QPen pen1(Qt::white);
         painter.setFont(font);
         //pen1.setColor(Qt::white);
         painter.setPen(Qt::black);
-        painter.drawText(100,445,QString("HP:      %1%").arg(r->gethppercent()));
+        painter.drawText(100,480,QString("HP:       %1%").arg(r->gethppercent()));
 
 
 
@@ -628,24 +651,11 @@ void Bossmode::paintEvent(QPaintEvent *event)
 
 
 
-
-
-        //暂停画面
-        if(isPause&&!GameOver)
-        {
-            painter.drawPixmap(QRect(0,0,this->width(),this->height()),pauseImg);
-        }
-
-
-
-
-
-        QPainter hp_painter(this);
-        QBrush red_brush( QColor("#F20900") );//把刷子设置为红色
-        hp_painter.setBrush(red_brush);//应用刷子
-        float rate = 1.0*r->gethp()/r->maxhp;//计算比例
-        float bo_rate=1.0*rr->hp/rr->maxhp;
-        hp_painter.drawRect(150,420,rate*100,30);//绘制人物血量
+//        //暂停画面
+//        if(isPause&&!GameOver)
+//        {
+//            painter.drawPixmap(QRect(0,0,this->width(),this->height()),pauseImg);
+//        }
 
 
 
@@ -878,6 +888,8 @@ void Bossmode::gamepause()
 {
     isPause = true;
     remove.stop() ;
+    backButton->show();
+    continueButton->show();
     r->pauseplayer();
     rr->action.stop();
     rr->do_action.stop();
@@ -888,6 +900,8 @@ void Bossmode::gamecontinue()
 {
     isPause = false;
     remove.start() ;
+    backButton->hide();
+    continueButton->hide();
     r->continueplayer();
     rr->action.stop();
     rr->do_action.stop();
@@ -932,6 +946,10 @@ void Bossmode::gameIsOver()
     GameOver=1;
 
 
+    backButton->show();
+    restartButton->show();
+
+
     remove.stop();
     obstacle1.clear();
     obstacle2.clear();
@@ -957,4 +975,17 @@ void Bossmode::shott()
     obstacle4.push_back(p);
 
 }
+
+void Bossmode::backButton_clicked(){
+    emit boss_close();
+    this->close();
+}
+
+void Bossmode::restartButton_clicked(){
+    start_game();
+    backButton->hide();
+    restartButton->hide();
+}
+
+
 

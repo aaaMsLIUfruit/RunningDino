@@ -18,6 +18,7 @@ BossIntro::BossIntro(QWidget *parent) :
     QStringList fontFamilies = QFontDatabase::applicationFontFamilies(fontId);
     QFont font;
     font.setFamily(fontFamilies[0]);
+    font.setPointSize(20);
 
     //设置标签字体
     ui->BossPlayButton->setFont(font);
@@ -25,6 +26,10 @@ BossIntro::BossIntro(QWidget *parent) :
     ui->intro_2->setFont(font);
     ui->intro_3->setFont(font);
     ui->intro_4->setFont(font);
+
+    //设置按钮样式
+    ui->BossPlayButton->setStyleSheet("QPushButton{background-color:rgba(0,0,0,0);}"
+                                   "QPushButton:hover{color:rgb(140, 162, 188);}");
 
     //连接点击事件到槽函数
     connect(ui->BossPlayButton,&QPushButton::clicked,this,[&](){

@@ -108,6 +108,7 @@ void MainWindow::initWindow() {
     add_veget_intervai_Timer.setSingleShot(true);
     protected_Timer.setInterval(PROTECTED_DURATION);
     protected_Timer.setSingleShot(true);
+    jumpHome_Timer.setInterval(JUMP_INTERVAL);
 
     // Dino对象的初始Y坐标设置为地面位置
     dino->y = DINO_ON_GROUNG_POS_Y;

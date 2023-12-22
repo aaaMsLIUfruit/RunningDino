@@ -23,6 +23,7 @@
 #define RUN_INTERVAL 70          //奔跑图片刷新间隔
 #define INIT_FALL_SPEED 3        //初始下落速度
 #define DINO_ON_GROUNG_POS_Y 298   //角色位于地面上的Y轴坐标
+#define JUMP_INTERVAL 1500       //首页动画恐龙跳跃间隔时间
 
 #define JUMP_DURATION 380           //跳跃持续时间
 #define SPRINT_DURATION 250         //冲刺持续时间

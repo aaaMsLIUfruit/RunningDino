@@ -3,12 +3,12 @@
 #include "bossmode.h"
 #include <QDebug>
 
-#define run_1 ":/res/run_1.png"
-#define run_2 ":/res/run_2.png"
-#define run_3 ":/res/run_3.png"
-#define run_4 ":/res/run_4.png"
-#define run_5 ":/res/run_5.png"
-#define jump ":/res/jump.png"
+#define run_1 ":/res/DINO_RUN1.png"
+#define run_2 ":/res/DINO_RUN2.png"
+//#define run_3 ":/res/DINO_RUN1.png"
+//#define run_4 ":/res/DINO_RUN2.png"
+//#define run_5 ":/res/DINO_RUN1.png"
+#define jump ":/res/DINO_JUMP.png"
 
 
 Bossplayer::Bossplayer(QWidget *parent)
@@ -40,9 +40,9 @@ Bossplayer::Bossplayer(QWidget *parent)
     jump_Timer.setSingleShot(true);
 
     //加载图片
-    for(int i=0;i<5;i++)
+    for(int i=0;i<2;i++)
     {
-        run_pic[i].load(QString(":/res/run_%1.png").arg(i+1));
+        run_pic[i].load(QString(":/res/DINO_RUN%1.png").arg(i+1));
     }
     jump_pic.load(jump);
     currunpic=0;
@@ -51,7 +51,7 @@ Bossplayer::Bossplayer(QWidget *parent)
     connect(&run_Timer,&QTimer::timeout,
             [=]()
             {
-               currunpic=(currunpic+1)%3;
+               currunpic=(currunpic+1)%2;
 
             }
       );//跑步图片的切换

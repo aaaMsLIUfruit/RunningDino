@@ -50,7 +50,7 @@
    </property>
    <item>
     <property name="text">
-     <string>不知道</string>
+     <string>无道具</string>
     </property>
    </item>
   </widget>

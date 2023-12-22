@@ -166,6 +166,23 @@ void MainWindow::updateBackground(const QString &backgroundName){
     update();
 }
 
+bool wudi=true;//开局无敌是否开启,默认关闭
+bool morecoin=true;//更多金币是否开启,默认关闭
+
+//检测使用了哪个道具
+void MainWindow::updateprop(const QString &propName){
+    if(propName=="更多金币"){
+        morecoin=true;
+    }
+    else if(propName=="开局无敌"){
+        wudi=true;
+    }
+    else if(propName=="无道具"){
+
+    }
+    update();
+}
+
 void MainWindow::playAnimation() {
     m_Timer.start();
     jumpHome_Timer.start();
@@ -330,6 +347,14 @@ void MainWindow::updatePosition() {
 
 // 碰撞检测函数
 void MainWindow::collisionDetection() {
+
+    if(wudi==true)//检测无敌道具是否成功使用
+    {
+        protected_Timer.start();
+        if(startgame_Timer.elapsed() >= 15000){
+            protected_Timer.stop();
+        }
+    }
     // 遍历所有障碍物以检测与恐龙的碰撞
     for (it = barriers.begin(); it != barriers.end(); ) {
         // 检查当前障碍物是否与恐龙的碰撞矩形发生碰撞
@@ -396,39 +421,80 @@ void MainWindow::sprint() {
 
 // 生成障碍物的函数
 void MainWindow::addBarrier() {
-    srand((unsigned int)time(NULL)); // 初始化随机数生成器，基于当前时间
-    i = rand() % 4; // 生成一个0到3之间的随机数，用于决定添加哪种障碍物
+    if(morecoin){
+        srand((unsigned int)time(NULL)); // 初始化随机数生成器，基于当前时间
+        i = rand() % 4; // 生成一个0到3之间的随机数，用于决定添加哪种障碍物
 
-    // 根据随机数选择添加的障碍物类型
-    switch (i) {
-    case 0:
-        // 添加仙人掌和苹果作为障碍物
-        barriers.emplace_back(new Cactus1);
-        barriers.emplace_back(new Coin(1));
-        break;
-    case 1:
-        // 添加鸟类作为障碍物
-        barriers.emplace_back(new Bird);
-        break;
-    case 2:
-        // 添加玉蝉和苹果作为障碍物
-        barriers.emplace_back(new Yucha);
-        barriers.emplace_back(new Coin(2));
-        break;
-    case 3:
-        // 检查是否可以添加蔬菜类障碍物
-        if (add_veget_intervai_Timer.isActive()) {
-            // 如果定时器激活，仅添加苹果
+        // 根据随机数选择添加的障碍物类型
+        switch (i) {
+        case 0:
+            // 添加仙人掌和苹果作为障碍物
+            barriers.emplace_back(new Cactus1);
+            barriers.emplace_back(new Coin(1));
             barriers.emplace_back(new Coin(2));
-            return;
+            break;
+        case 1:
+            // 添加鸟类作为障碍物
+            barriers.emplace_back(new Bird);
+            break;
+        case 2:
+            // 添加鱼叉和苹果作为障碍物
+            barriers.emplace_back(new Yucha);
+            barriers.emplace_back(new Coin(2));
+            barriers.emplace_back(new Coin(2));
+            break;
+        case 3:
+            // 检查是否可以添加蔬菜类障碍物
+            if (add_veget_intervai_Timer.isActive()) {
+                // 如果定时器激活，仅添加苹果
+                barriers.emplace_back(new Coin(2));
+                return;
+            }
+            // 启动蔬菜添加间隔计时器，并添加蔬菜作为障碍物
+            add_veget_intervai_Timer.start();
+            barriers.emplace_back(new Veget);
+            break;
+        default:
+            // 默认情况下不执行任何操作
+            break;
         }
-        // 启动蔬菜添加间隔计时器，并添加蔬菜作为障碍物
-        add_veget_intervai_Timer.start();
-        barriers.emplace_back(new Veget);
-        break;
-    default:
-        // 默认情况下不执行任何操作
-        break;
+    }
+
+    else if(!morecoin){
+        srand((unsigned int)time(NULL)); // 初始化随机数生成器，基于当前时间
+        i = rand() % 4; // 生成一个0到3之间的随机数，用于决定添加哪种障碍物
+
+        // 根据随机数选择添加的障碍物类型
+        switch (i) {
+        case 0:
+            // 添加仙人掌和苹果作为障碍物
+            barriers.emplace_back(new Cactus1);
+            barriers.emplace_back(new Coin(1));
+            break;
+        case 1:
+            // 添加鸟类作为障碍物
+            barriers.emplace_back(new Bird);
+            break;
+        case 2:
+            // 添加鱼叉和苹果作为障碍物
+            barriers.emplace_back(new Yucha);
+            barriers.emplace_back(new Coin(2));
+            break;
+        case 3:
+            // 检查是否可以添加蔬菜类障碍物
+            if (add_veget_intervai_Timer.isActive()) {
+                // 如果定时器激活，仅添加苹果
+                barriers.emplace_back(new Coin(2));
+                return;
+            }
+            // 启动蔬菜添加间隔计时器，并添加蔬菜作为障碍物
+            add_veget_intervai_Timer.start();
+            barriers.emplace_back(new Veget);
+            break;
+        default:
+            // 默认情况下不执行任何操作
+            break;
+        }
     }
 }
 
@@ -439,6 +505,7 @@ void MainWindow::on_start_clicked() {
     ui->intro->hide();
     ui->store->hide();
     ui->bossmode->hide();
+    startgame_Timer.start();//游戏内计时器启动
 
     //    arch=new Archive;
     //    arch->setParent(this);

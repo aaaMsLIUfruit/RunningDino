@@ -17,6 +17,9 @@ public:
     explicit Prop(QWidget *parent = nullptr);
     ~Prop();
 
+signals:
+    void propSelected(const QString &propName);
+
 private slots:
     void onPropSelected(const QString &propName);
     void on_returnButton_clicked();

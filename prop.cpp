@@ -26,11 +26,15 @@ Prop::Prop(QWidget *parent) :
     ui->label->setGeometry(100, 80, 351, 111);
     ui->returnButton->setGeometry(700, 350, 161, 61);
 
+
+    ui->comboBox->addItem("更多金币");
+    ui->comboBox->addItem("开局无敌");
+
 }
 
 Prop::~Prop()
 {
-        delete ui;
+    delete ui;
 
 }
 
@@ -43,6 +47,10 @@ void Prop::setupConnections() {
     connect(ui->returnButton, &QPushButton::clicked, this, &Prop::on_returnButton_clicked);
 }
 
+
 void Prop::onPropSelected(const QString &propName) {
+    //处理道具选择
     qDebug() << "Selected prop: " << propName;
+    //释放信号
+    emit propSelected(propName);
 }

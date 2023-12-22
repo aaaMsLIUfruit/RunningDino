@@ -18,7 +18,7 @@
 #include "bossmode.h"
 #include "ui_bossmode.h"
 
-#define before ":/res/start_ui.png"
+
 #define back_game ":/res/background.png"
 #define ground_pic ":/res/Land.png"
 #define hurtpic ":/res/hurt.png"
@@ -26,10 +26,10 @@
 #define pause ":/res/pause.png"
 
 //音效
-#define jump ":/rees/jump.wav"
-#define coin_pic ":/rees/coin.wav"
-#define over ":/rees/over.wav"
-#define collision ":/rees/collision.wav"
+#define jump ":/res/jump.wav"
+#define coin_pic ":/res/coin.wav"
+#define over ":/res/over.wav"
+#define collision ":/res/collision.wav"
 
 Bossmode::Bossmode(QWidget *parent,int wid ,int hei) :
     QWidget(parent),
@@ -48,11 +48,11 @@ Bossmode::Bossmode(QWidget *parent,int wid ,int hei) :
 //    }
 
 
-    ground_Y = hei - 120; // 设置地面的垂直位置，假设地面高度为 70
+    ground_Y = hei - 120; // 设置地面的垂直位置，假设地面高度为 120
 
     // 加载游戏所需的图像资源
     background.load(back_game); // 加载背景图片
-    before_start.load(before);  // 加载游戏开始前的图片
+    before_start.load(back_game);  // 加载游戏开始前的图片
     ground.load(ground_pic);    // 加载地面的图片
     hurtImg.load(hurtpic);      // 加载角色受伤时的图片
     pauseImg.load(pause);       // 加载暂停游戏时的图片
@@ -60,7 +60,7 @@ Bossmode::Bossmode(QWidget *parent,int wid ,int hei) :
 
     // 初始化玩家角色的按键操作状态
     up = down = left = right = 0; // 初始化方向键为未按下状态
-    difficult = 0;                // 初始化难度级别为0
+    difficulty = 0;                // 初始化难度级别为0
 
     // 初始化游戏的状态变量
     isRuning = 0;   // 游戏是否正在运行，0 表示不在运行
@@ -106,13 +106,13 @@ Bossmode::Bossmode(QWidget *parent,int wid ,int hei) :
         r->move(up, down, right, left);
 
         // 游戏难度增加逻辑
-        if (difficult <= 80)
+        if (difficulty <= 80)
         {
-            difficult += 0.001; // 游戏难度逐渐增加，直到达到上限 80
+            difficulty += 0.001; // 游戏难度逐渐增加，直到达到上限 80
         }
         else
         {
-            difficult = 80; // 难度上限
+            difficulty = 80; // 难度上限
         }
 
         // 处理忍币障碍物
@@ -545,16 +545,19 @@ void Bossmode::paintEvent(QPaintEvent *event)
 //        font.setFamily(fontFamilies[0]);
 //        font.setPointSize(20);
 
+        ///我用这个太卡了，换个狗市字体。///
+
         QFont font;
-        font.setFamily("Consolas");  // 或 "Consolas"
+        font.setFamily("Consolas");
         font.setPointSize(20);
 
 
 
         //血量
-        painter.drawRect(QRect(1000,50,150,10));
-        painter.drawLine(1050,50,1050,60);
-        painter.drawLine(1100,50,1100,60);
+//        painter.drawRect(QRect(600,50,150,10));
+//        painter.drawLine(600,50,1050,60);
+//        painter.drawLine(600,50,1100,60);   //划线
+
         //QPen pen1(Qt::white);
         painter.setFont(font);
         //pen1.setColor(Qt::white);
@@ -606,9 +609,9 @@ void Bossmode::paintEvent(QPaintEvent *event)
         }
         for(auto i=obstacle6.begin();i!=obstacle6.end();i++)
         {
-            if((*i)->getx()<=800)
+            if((*i)->getx()<=600)
             {
-                (*i)->speed=200;
+                (*i)->speed=100;
             }
             painter.drawPixmap(QRect((*i)->getx(),(*i)->gety(),(*i)->getwid(),(*i)->gethei()),(*i)->getpic());
         }
@@ -647,22 +650,28 @@ void Bossmode::paintEvent(QPaintEvent *event)
 
 
         //BOSS出场
-        if(Coinnum>100&&rr->hp>0)
+        if(Coinnum > 0 && rr->hp > 0)
         {
-            rr->live=1;
-            painter.drawPixmap(QRect(rr->x,rr->y,rr->wid,rr->hei),rr->getpic());
-            hp_painter.drawRect(510,50,bo_rate*700,30);//绘制Boss血量
+            rr->live = 1;  // 设置Boss为活跃状态
 
+            //qDebug() << "Drawing Boss";
+            // 绘制Boss的图像
+            painter.drawPixmap(QRect(rr->x, rr->y, rr->wid, rr->hei), rr->getpic());
+            //qDebug() << "Boss drawn";
+
+            // 绘制Boss血量条
+            hp_painter.drawRect(390, 50, bo_rate * 400, 30);
+
+            // 创建一个新的画笔用于绘制Boss血量文本
             QPainter bo_painter(this);
-            bo_painter.setFont(QFont("黑体",20));
-            bo_painter.setPen(Qt::black);
-            bo_painter.drawText(430,75,QString("Boss:                                     %1%").arg(rr->getbaifenzhihp()));
-
+            bo_painter.setFont(font); // 设置字体
+            bo_painter.setPen(Qt::black); // 设置画笔颜色为黑色
+            // 绘制Boss血量文本
+            bo_painter.drawText(300, 75, QString("Boss:                        %1%").arg(rr->getbaifenzhihp()));
         }
-        rr->die();
+        rr->die(); // 调用Boss的死亡处理函数
 
-
-        update();
+        update();  // 请求更新窗口，将会触发重绘
     }
 }
 
@@ -672,7 +681,7 @@ void Bossmode::addobstacle()
     static int Lastcoin_time; // 静态变量，用于记录上一次生成金币后经过的时间
 
     // 判断是否到达生成新金币的时间
-    if (Lastcoin_time >= 30 - difficult)
+    if (Lastcoin_time >= 30 - difficulty)
     {
         int x = this->width() + 5;             // 设置金币的起始 x 坐标（屏幕右侧外）
         int y = ground_Y - 18 - rand() % 300;  // 随机设置金币的起始 y 坐标
@@ -685,65 +694,69 @@ void Bossmode::addobstacle()
     Lastcoin_time++; // 时间计数器自增，记录自上次生成金币后经过的时间
 
 
-    static int Lastheart_time;
-    if(Lastheart_time>=120-difficult)
+    // 红心生成逻辑
+    static int Lastheart_time; // 上次生成红心的时间
+    if (Lastheart_time >= 120 - difficulty) // 根据难度和时间间隔判断是否生成红心
     {
-        int x=this->width()+5;
-        int y=ground_Y-18-rand()%300;
-        obstacle8.push_back(new redheart(x,y,40,40));
-        Lastheart_time=0;
+        int x = this->width() + 5; // 设置红心的水平起始位置
+        int y = ground_Y - 18 - rand() % 300; // 设置红心的垂直位置，随机化以增加多样性
+        obstacle8.push_back(new redheart(x, y, 40, 40)); // 创建红心对象并加入障碍物列表
+        Lastheart_time = 0; // 重置红心生成计时器
     }
-    Lastheart_time++;
+    Lastheart_time++; // 更新红心生成计时器
 
+    // 飞箭生成逻辑
+    static int Lastfarrow_time; // 上次生成飞箭的时间
+    if (Lastfarrow_time >= 100 - difficulty) // 根据难度和时间间隔判断是否生成飞箭
+    {
+        int x = this->width() + 100; // 设置飞箭的水平起始位置
+        int y = ground_Y - 90 - rand() % 400; // 设置飞箭的垂直位置
+        obstacle2.push_back(new farrow(x, y, 200, 50)); // 创建飞箭对象并加入障碍物列表
+        Lastfarrow_time = 0; // 重置飞箭生成计时器
+    }
+    Lastfarrow_time++; // 更新飞箭生成计时器
 
-    static int Lastfarrow_time;
-    if(Lastfarrow_time>=100-difficult)
+    // 飞镖生成逻辑
+    static int Lastfbbb_time; // 上次生成飞镖的时间
+    if (Lastfbbb_time >= 220 - difficulty) // 根据难度和时间间隔判断是否生成飞镖
     {
-        int x=this->width()+100;
-        int y=ground_Y-90-rand()%400;
-        obstacle2.push_back(new farrow(x,y,200,50));
-        Lastfarrow_time=0;
+        int x = this->width() + 100; // 设置飞镖的水平起始位置
+        int y = ground_Y - 90 - rand() % 400; // 设置飞镖的垂直位置
+        obstacle3.push_back(new fbbb(x, y, 70, 70)); // 创建飞镖对象并加入障碍物列表
+        Lastfbbb_time = 0; // 重置飞镖生成计时器
     }
-    Lastfarrow_time++;
+    Lastfbbb_time += 2; // 更新飞镖生成计时器，以较慢的速度增长
 
-    static int Lastfbbb_time;
-    if(Lastfbbb_time>=220-difficult)
+    // 普攻生成逻辑
+    static int pugong_time; // 上次生成普攻的时间
+    if (rr->live && rr->pugong_ && pugong_time > 60) // 如果Boss活着且处于普攻状态，且时间间隔满足条件
     {
-        int x=this->width()+100;
-        int y=ground_Y-90-rand()%400;
-        obstacle3.push_back(new fbbb(x,y,70,70));
-        Lastfbbb_time=0;
+        int x = rr->x; // 设置普攻的水平位置
+        int y = 400; // 设置普攻的垂直位置
+        obstacle5.push_back(new pug(x, y, 200, 80)); // 创建普攻对象并加入障碍物列表
+        pugong_time = 0; // 重置普攻生成计时器
     }
-    Lastfbbb_time+=2;
-
-    static int pugong_time;
-    if(rr->live&&rr->pugong_&&pugong_time>60)
+    pugong_time++; // 更新普攻生成计时器
+    if (!rr->pugong_) // 如果Boss不再进行普攻
     {
-        int x=rr->x;
-        int y=560;
-        obstacle5.push_back(new pug(x,y,200,80));
-        pugong_time=0;
-    }
-    pugong_time++;
-    if(!rr->pugong_)
-    {
-        obstacle5.clear();
+        obstacle5.clear(); // 清除所有普攻对象
     }
 
-    static int jineng1_time;
-    if(rr->live&&rr->jineng1_&&jineng1_time>80)
+    // 技能1生成逻辑
+    static int jineng1_time; // 上次生成技能1的时间
+    if (rr->live && rr->jineng1_ && jineng1_time > 80) // 如果Boss活着且处于技能1状态，且时间间隔满足条件
     {
-        int x=rr->x;
-        int y=500-rand()%400;
-        jin1 *ppp=new jin1(x,y,600,200);
-        ppp->jineng_Timer.start();
-        obstacle6.push_back(ppp);
-        jineng1_time=0;
+        int x = rr->x; // 设置技能1的水平位置
+        int y = ground_Y - rand() % 400; // 设置技能1的垂直位置
+        jin1 *ppp = new jin1(x, y, 300, 100); // 创建技能1对象
+        ppp->jineng_Timer.start(); // 启动技能1的定时器
+        obstacle6.push_back(ppp); // 将技能1对象加入障碍物列表
+        jineng1_time = 0; // 重置技能1生成计时器
     }
-    jineng1_time++;
-    if(!rr->jineng1_)
+    jineng1_time++; // 更新技能1生成计时器
+    if (!rr->jineng1_) // 如果Boss不再进行技能1
     {
-        obstacle6.clear();
+        obstacle6.clear(); // 清除所有技能1对象
     }
 
 
@@ -753,8 +766,8 @@ void Bossmode::addobstacle()
     {
         if(jineng2_num==1)goto LO;
         int x=rr->x;
-        int y=500;
-        jin2 *ppp=new jin2(x,y,600,200);
+        int y=400;
+        jin2 *ppp=new jin2(x,y,300,100);
         ppp->jineng_Timer.start();
         obstacle7.push_back(ppp);
         jineng2_time=0;

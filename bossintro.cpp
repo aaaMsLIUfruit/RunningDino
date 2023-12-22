@@ -18,7 +18,7 @@ BossIntro::BossIntro(QWidget *parent) :
     QStringList fontFamilies = QFontDatabase::applicationFontFamilies(fontId);
     QFont font;
     font.setFamily(fontFamilies[0]);
-    font.setPointSize(20);
+    font.setPointSize(16);
 
     //设置标签字体
     ui->BossPlayButton->setFont(font);

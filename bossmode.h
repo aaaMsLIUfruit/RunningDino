@@ -21,8 +21,8 @@ private:
     QPixmap before_start;   //开始前页面
     QPixmap ground;       //地面
     QPixmap pauseImg;
-    Bossplayer *r=0;     //玩家
-    Boss *rr=0;          //boss
+    Bossplayer *r;     //玩家
+    Boss *rr;          //boss
 
     int hurtImgAlpha=0;
     QPixmap hurtImg;
@@ -60,9 +60,9 @@ public:
     bool left ;
     int Coinnum ;  //金币数量
     int Score;
-    double difficult;
+    double difficulty;
     //bool esc;    //暂停
-    //double difficult;  //控制游戏难度
+    //double difficulty;  //控制游戏难度
     QTimer remove;
     void paintEvent(QPaintEvent *event);  //绘图
     void start_game(); //开始游戏

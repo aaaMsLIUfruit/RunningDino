@@ -30,10 +30,10 @@ Boss::Boss(QWidget *parent) :
     action.setInterval(300);
     do_action.setInterval(5000);
     ji_action.setInterval(100);
-    x=1030;
-    y=160;
+    x=750;
+    y=0;
     wid=340;
-    hei=500;
+    hei=450;
     hp=10000;
     maxhp=10000;
     jingzhi_=1;
@@ -46,19 +46,19 @@ Boss::Boss(QWidget *parent) :
     //加载图片
     for(int i=0;i<4;i++)
     {
-        jingzhi[i].load(QString(":/new/resources/jingzhi%1.png").arg(i+1));
+        jingzhi[i].load(QString(":/res/jingzhi%1.png").arg(i+1));
     }
     for(int i=0;i<2;i++)
     {
-        pugong[i].load(QString(":/new/resources/pugong%1.png").arg(i+1));
+        pugong[i].load(QString(":/res/pugong%1.png").arg(i+1));
     }
     for(int i=0;i<2;i++)
     {
-        jineng1[i].load(QString(":/new/resources/jineng1%1.png").arg(i+1));
+        jineng1[i].load(QString(":/res/jineng1%1.png").arg(i+1));
     }
     for(int i=0;i<2;i++)
     {
-        jineng2[i].load(QString(":/new/resources/jineng2%1.png").arg(i+1));
+        jineng2[i].load(QString(":/res/jineng2%1.png").arg(i+1));
     }
 
     curjing=0;

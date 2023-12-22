@@ -10,16 +10,17 @@
 #include <ctime>
 #include <QMessageBox>
 #include <QFile>
-#include <QSound>
+//#include <QSound>
 #include <QDesktopServices>
 #include <QTimer>
+#include <QFontDatabase>
 
 #include "bossmode.h"
 #include "ui_bossmode.h"
 
 #define before ":/res/start_ui.png"
-#define back_game ":/res/play_ground.jpg"
-#define ground_pic ":/res/ground.png"
+#define back_game ":/res/background.png"
+#define ground_pic ":/res/Land.png"
 #define hurtpic ":/res/hurt.png"
 #define gameover ":/res/death.png"
 #define pause ":/res/pause.png"
@@ -47,7 +48,7 @@ Bossmode::Bossmode(QWidget *parent,int wid ,int hei) :
 //    }
 
 
-    ground_Y = hei - 70; // 设置地面的垂直位置，假设地面高度为 70
+    ground_Y = hei - 120; // 设置地面的垂直位置，假设地面高度为 70
 
     // 加载游戏所需的图像资源
     background.load(back_game); // 加载背景图片
@@ -73,7 +74,6 @@ Bossmode::Bossmode(QWidget *parent,int wid ,int hei) :
     remove.setInterval(17); // 设置定时器的时间间隔，用于定时更新游戏场景
 
     this->grabKeyboard(); // 获取键盘输入，确保可以接收玩家的按键操作
-
 
     //时间事件处理
 /*
@@ -128,7 +128,7 @@ Bossmode::Bossmode(QWidget *parent,int wid ,int hei) :
                 // 检查忍币是否与角色 r 发生碰撞
                 if ((*i)->ispengzhuang(r->getx() - 5, r->gety() - 5, r->getwid() - 5, r->getwid() - 5))
                 {
-                    QSound::play(coin_pic); // 播放金币收集声音
+//                    QSound::play(coin_pic); // 播放金币收集声音
                     r->setScore(2000);// 角色吃币加分
                     delete *i;//释放内存
                     i = obstacle1.erase(i); // 删除已经收集的忍币
@@ -156,7 +156,7 @@ Bossmode::Bossmode(QWidget *parent,int wid ,int hei) :
                 // 检查飞箭是否与角色发生碰撞
                 if ((*i)->ispengzhuang(r->getx() - 5, r->gety() - 5, r->getwid() - 5, r->getwid() - 5))
                 {
-                    QSound::play(collision); // 播放碰撞声音
+//                    QSound::play(collision); // 播放碰撞声音
                     r->reducehp(); // 角色减少生命值
 
                     // 根据玩家的得分进行相应的处理
@@ -196,7 +196,7 @@ Bossmode::Bossmode(QWidget *parent,int wid ,int hei) :
                 // 检查飞镖是否与角色发生碰撞
                 if ((*i)->ispengzhuang(r->getx() - 5, r->gety() - 5, r->getwid() - 5, r->getwid() - 5))
                 {
-                    QSound::play(collision); // 播放碰撞声音
+//                    QSound::play(collision); // 播放碰撞声音
                     r->reducehp(); // 角色减少生命值
 
                     // 根据玩家的得分进行相应的处理
@@ -241,7 +241,7 @@ Bossmode::Bossmode(QWidget *parent,int wid ,int hei) :
                 {
                     if ((*p)->ispengzhuang((*i)->getx() - 5, (*i)->gety() - 5, (*i)->getwid() - 5, (*i)->getwid() - 5))
                     {
-                        QSound::play(collision);
+//                        QSound::play(collision);
                         (*p)->sety(2000); // 将子弹移出屏幕
                         (*i)->sety(-50);  // 将飞箭移出屏幕
                         collisionOccurred = true;
@@ -253,7 +253,7 @@ Bossmode::Bossmode(QWidget *parent,int wid ,int hei) :
                 {
                     if ((*p)->ispengzhuang((*i)->getx() - 5, (*i)->gety() - 5, (*i)->getwid() - 5, (*i)->getwid() - 5))
                     {
-                        QSound::play(collision);
+//                        QSound::play(collision);
                         (*p)->sety(2000); // 将子弹移出屏幕
                         (*i)->sety(-50);  // 将飞镖移出屏幕
                         collisionOccurred = true;
@@ -263,7 +263,7 @@ Bossmode::Bossmode(QWidget *parent,int wid ,int hei) :
                 // 检查子弹是否与 Boss 发生碰撞
                 if (!collisionOccurred && (*p)->ispengzhuang(rr->x - 5, rr->y - 5, rr->wid - 5, rr->hei - 5))
                 {
-                    QSound::play(collision);
+//                    QSound::play(collision);
                     (*p)->sety(2000); // 将子弹移出屏幕
                     rr->reducehp();   // 减少 Boss 的生命值
                     collisionOccurred = true;
@@ -297,7 +297,7 @@ Bossmode::Bossmode(QWidget *parent,int wid ,int hei) :
                 // 检查普攻是否与角色发生碰撞
                 if ((*i)->ispengzhuang(r->getx() - 5, r->gety() - 5, r->getwid() - 5, r->getwid() - 5))
                 {
-                    QSound::play(collision); // 播放碰撞声音
+//                    QSound::play(collision); // 播放碰撞声音
                     r->reducehp(); // 角色减少生命值
 
                     // 根据玩家的得分进行相应的处理
@@ -334,7 +334,7 @@ Bossmode::Bossmode(QWidget *parent,int wid ,int hei) :
                 // 检查技能1是否与角色发生碰撞
                 if ((*i)->ispengzhuang(r->getx() - 5, r->gety() - 5, r->getwid() - 5, r->getwid() - 5))
                 {
-                    QSound::play(collision); // 播放碰撞声音
+//                    QSound::play(collision); // 播放碰撞声音
                     r->reducehp(); // 角色减少生命值
 
                     // 根据玩家的得分进行相应的处理
@@ -376,7 +376,7 @@ Bossmode::Bossmode(QWidget *parent,int wid ,int hei) :
                 // 检查技能2是否与角色发生碰撞
                 if ((*i)->ispengzhuang(r->getx() - 5, r->gety() - 5, r->getwid() - 5, r->getwid() - 5))
                 {
-                    QSound::play(collision); // 播放碰撞声音
+//                    QSound::play(collision); // 播放碰撞声音
                     r->reducehp(); // 角色减少生命值
                     hurttime = 30; // 重置受伤计时
                     hurtImgAlpha = 255; // 设置受伤图片的透明度
@@ -538,14 +538,21 @@ void Bossmode::paintEvent(QPaintEvent *event)
 
         //血量、金币、分数
 
+        //导入并设置字体
+        int fontId = QFontDatabase::addApplicationFont(QStringLiteral(":/res/ark-pixel-12px-monospaced-zh_cn.ttf"));
+        QStringList fontFamilies = QFontDatabase::applicationFontFamilies(fontId);
+        QFont font;
+        font.setFamily(fontFamilies[0]);
+        font.setPointSize(20);
+
         //血量
         painter.drawRect(QRect(1000,50,150,10));
         painter.drawLine(1050,50,1050,60);
         painter.drawLine(1100,50,1100,60);
         //QPen pen1(Qt::white);
-        painter.setFont(QFont("黑体",20));
+        painter.setFont(font);
         //pen1.setColor(Qt::white);
-        painter.setPen(Qt::white);
+        painter.setPen(Qt::black);
         painter.drawText(100,445,QString("HP:      %1%").arg(r->getbaifenzhihp()));
 
 
@@ -642,7 +649,7 @@ void Bossmode::paintEvent(QPaintEvent *event)
 
             QPainter bo_painter(this);
             bo_painter.setFont(QFont("黑体",20));
-            bo_painter.setPen(Qt::white);
+            bo_painter.setPen(Qt::black);
             bo_painter.drawText(430,75,QString("Boss:                                     %1%").arg(rr->getbaifenzhihp()));
 
         }
@@ -791,7 +798,7 @@ void Bossmode::keyPressEvent(QKeyEvent *event)
     if(event->key()==Qt::Key_W)
     {
         up=true;
-        QSound::play(jump);
+//        QSound::play(jump);
     }
     else if(event->key()==Qt::Key_S)
     {
@@ -899,7 +906,7 @@ void Bossmode::keyReleaseEvent(QKeyEvent *event)
 
 void Bossmode::gameIsOver()
 {
-    QSound::play(over);
+//    QSound::play(over);
     Score=r->getScore();
 
 

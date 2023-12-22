@@ -126,7 +126,7 @@ Bossmode::Bossmode(QWidget *parent,int wid ,int hei) :
             else
             {
                 // 检查忍币是否与角色 r 发生碰撞
-                if ((*i)->ispengzhuang(r->getx() - 5, r->gety() - 5, r->getwid() - 5, r->getwid() - 5))
+                if ((*i)->collided(r->getx() - 5, r->gety() - 5, r->getwid() - 5, r->getwid() - 5))
                 {
 //                    QSound::play(coin_pic); // 播放金币收集声音
                     r->setScore(2000);// 角色吃币加分
@@ -154,7 +154,7 @@ Bossmode::Bossmode(QWidget *parent,int wid ,int hei) :
             else
             {
                 // 检查飞箭是否与角色发生碰撞
-                if ((*i)->ispengzhuang(r->getx() - 5, r->gety() - 5, r->getwid() - 5, r->getwid() - 5))
+                if ((*i)->collided(r->getx() - 5, r->gety() - 5, r->getwid() - 5, r->getwid() - 5))
                 {
 //                    QSound::play(collision); // 播放碰撞声音
                     r->reducehp(); // 角色减少生命值
@@ -194,7 +194,7 @@ Bossmode::Bossmode(QWidget *parent,int wid ,int hei) :
             else
             {
                 // 检查飞镖是否与角色发生碰撞
-                if ((*i)->ispengzhuang(r->getx() - 5, r->gety() - 5, r->getwid() - 5, r->getwid() - 5))
+                if ((*i)->collided(r->getx() - 5, r->gety() - 5, r->getwid() - 5, r->getwid() - 5))
                 {
 //                    QSound::play(collision); // 播放碰撞声音
                     r->reducehp(); // 角色减少生命值
@@ -239,7 +239,7 @@ Bossmode::Bossmode(QWidget *parent,int wid ,int hei) :
                 // 检查子弹是否与飞箭发生碰撞
                 for (auto i = obstacle2.begin(); i != obstacle2.end() && !collisionOccurred; ++i)
                 {
-                    if ((*p)->ispengzhuang((*i)->getx() - 5, (*i)->gety() - 5, (*i)->getwid() - 5, (*i)->getwid() - 5))
+                    if ((*p)->collided((*i)->getx() - 5, (*i)->gety() - 5, (*i)->getwid() - 5, (*i)->getwid() - 5))
                     {
 //                        QSound::play(collision);
                         (*p)->sety(2000); // 将子弹移出屏幕
@@ -251,7 +251,7 @@ Bossmode::Bossmode(QWidget *parent,int wid ,int hei) :
                 // 检查子弹是否与飞镖发生碰撞
                 for (auto i = obstacle3.begin(); i != obstacle3.end() && !collisionOccurred; ++i)
                 {
-                    if ((*p)->ispengzhuang((*i)->getx() - 5, (*i)->gety() - 5, (*i)->getwid() - 5, (*i)->getwid() - 5))
+                    if ((*p)->collided((*i)->getx() - 5, (*i)->gety() - 5, (*i)->getwid() - 5, (*i)->getwid() - 5))
                     {
 //                        QSound::play(collision);
                         (*p)->sety(2000); // 将子弹移出屏幕
@@ -261,7 +261,7 @@ Bossmode::Bossmode(QWidget *parent,int wid ,int hei) :
                 }
 
                 // 检查子弹是否与 Boss 发生碰撞
-                if (!collisionOccurred && (*p)->ispengzhuang(rr->x - 5, rr->y - 5, rr->wid - 5, rr->hei - 5))
+                if (!collisionOccurred && (*p)->collided(rr->x - 5, rr->y - 5, rr->wid - 5, rr->hei - 5))
                 {
 //                    QSound::play(collision);
                     (*p)->sety(2000); // 将子弹移出屏幕
@@ -295,7 +295,7 @@ Bossmode::Bossmode(QWidget *parent,int wid ,int hei) :
             else
             {
                 // 检查普攻是否与角色发生碰撞
-                if ((*i)->ispengzhuang(r->getx() - 5, r->gety() - 5, r->getwid() - 5, r->getwid() - 5))
+                if ((*i)->collided(r->getx() - 5, r->gety() - 5, r->getwid() - 5, r->getwid() - 5))
                 {
 //                    QSound::play(collision); // 播放碰撞声音
                     r->reducehp(); // 角色减少生命值
@@ -332,7 +332,7 @@ Bossmode::Bossmode(QWidget *parent,int wid ,int hei) :
             else
             {
                 // 检查技能1是否与角色发生碰撞
-                if ((*i)->ispengzhuang(r->getx() - 5, r->gety() - 5, r->getwid() - 5, r->getwid() - 5))
+                if ((*i)->collided(r->getx() - 5, r->gety() - 5, r->getwid() - 5, r->getwid() - 5))
                 {
 //                    QSound::play(collision); // 播放碰撞声音
                     r->reducehp(); // 角色减少生命值
@@ -374,7 +374,7 @@ Bossmode::Bossmode(QWidget *parent,int wid ,int hei) :
                 if (hurttime > 1) goto LI; // 如果受伤计时未结束，跳转到标签 LI
 
                 // 检查技能2是否与角色发生碰撞
-                if ((*i)->ispengzhuang(r->getx() - 5, r->gety() - 5, r->getwid() - 5, r->getwid() - 5))
+                if ((*i)->collided(r->getx() - 5, r->gety() - 5, r->getwid() - 5, r->getwid() - 5))
                 {
 //                    QSound::play(collision); // 播放碰撞声音
                     r->reducehp(); // 角色减少生命值
@@ -407,7 +407,7 @@ Bossmode::Bossmode(QWidget *parent,int wid ,int hei) :
             else
             {
                 // 检查红心是否与角色发生碰撞
-                if ((*i)->ispengzhuang(r->getx() - 5, r->gety() - 5, r->getwid() - 5, r->getwid() - 5))
+                if ((*i)->collided(r->getx() - 5, r->gety() - 5, r->getwid() - 5, r->getwid() - 5))
                 {
                     r->increasehp(300); // 角色增加生命值
                     delete *i;//释放内存
@@ -539,11 +539,17 @@ void Bossmode::paintEvent(QPaintEvent *event)
         //血量、金币、分数
 
         //导入并设置字体
-        int fontId = QFontDatabase::addApplicationFont(QStringLiteral(":/res/ark-pixel-12px-monospaced-zh_cn.ttf"));
-        QStringList fontFamilies = QFontDatabase::applicationFontFamilies(fontId);
+//        int fontId = QFontDatabase::addApplicationFont(QStringLiteral(":/res/ark-pixel-12px-monospaced-zh_cn.ttf"));
+//        QStringList fontFamilies = QFontDatabase::applicationFontFamilies(fontId);
+//        QFont font;
+//        font.setFamily(fontFamilies[0]);
+//        font.setPointSize(20);
+
         QFont font;
-        font.setFamily(fontFamilies[0]);
+        font.setFamily("Consolas");  // 或 "Consolas"
         font.setPointSize(20);
+
+
 
         //血量
         painter.drawRect(QRect(1000,50,150,10));
@@ -654,8 +660,6 @@ void Bossmode::paintEvent(QPaintEvent *event)
 
         }
         rr->die();
-
-
 
 
         update();

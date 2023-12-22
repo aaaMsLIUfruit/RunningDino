@@ -36,7 +36,7 @@ public:
     int speed;
     coin(int x,int y,int wid,int hei);
     QPixmap getpic();
-    bool ispengzhuang(int lx,int ly,int wid,int hei);
+    bool collided(int lx,int ly,int wid,int hei);
     //判断碰撞
     void move();//障碍移动
     bool done();//判断是不是过去了
@@ -52,7 +52,7 @@ public:
     int speed;
     redheart(int x,int y,int wid,int hei);
     QPixmap getpic();
-    bool ispengzhuang(int lx,int ly,int wid,int hei);
+    bool collided(int lx,int ly,int wid,int hei);
     //判断碰撞
     void move();//障碍移动
     bool done();//判断是不是过去了
@@ -69,7 +69,7 @@ public:
     int speed;
     farrow(int x,int y,int wid,int hei);
     QPixmap getpic();
-    bool ispengzhuang(int lx,int ly,int wid,int hei);
+    bool collided(int lx,int ly,int wid,int hei);
     //判断碰撞
     void move();//障碍移动
     bool done();//判断是不是过去了
@@ -85,7 +85,7 @@ public:
     int speed;
     fbbb(int x,int y,int wid,int hei);
     QPixmap getpic();
-    bool ispengzhuang(int lx,int ly,int wid,int hei);
+    bool collided(int lx,int ly,int wid,int hei);
     //判断碰撞
     void move();//障碍移动
     bool done();//判断是不是过去了
@@ -100,7 +100,7 @@ public:
     int speed;
     bullet(int x,int y,int wid,int hei);
     QPixmap getpic();
-    bool ispengzhuang(int lx,int ly,int wid,int hei);
+    bool collided(int lx,int ly,int wid,int hei);
 
     void move();
     bool done();
@@ -116,7 +116,7 @@ public:
     int speed;
     pug(int x,int y,int wid,int hei);
     QPixmap getpic();
-    bool ispengzhuang(int lx,int ly,int wid,int hei);
+    bool collided(int lx,int ly,int wid,int hei);
     //判断碰撞
     void move();//障碍移动
     bool done();//判断是不是过去了
@@ -133,7 +133,7 @@ public:
     int speed;
     jin1(int x,int y,int wid,int hei);
     QPixmap getpic();
-    bool ispengzhuang(int lx,int ly,int wid,int hei);
+    bool collided(int lx,int ly,int wid,int hei);
     //判断碰撞
     void move();//障碍移动
     bool done();//判断是不是过去了
@@ -151,7 +151,7 @@ public:
     int speed;
     jin2(int x,int y,int wid,int hei);
     QPixmap getpic();
-    bool ispengzhuang(int lx,int ly,int wid,int hei);
+    bool collided(int lx,int ly,int wid,int hei);
     //判断碰撞
     void move();//障碍移动
     bool done();//判断是不是过去了

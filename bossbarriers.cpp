@@ -65,7 +65,7 @@ QPixmap coin::getpic()
     return this->pic;
 }
 
-bool coin::ispengzhuang(int lx, int ly, int wid, int hei)
+bool coin::collided(int lx, int ly, int wid, int hei)
 {
     QRect rect_1(this->getx(),this->gety(),this->getwid()-20,this->gethei()+20);
     QRect rect_2(lx,ly,wid,hei);
@@ -102,7 +102,7 @@ QPixmap redheart::getpic()
     return this->pic;
 }
 
-bool redheart::ispengzhuang(int lx, int ly, int wid, int hei)
+bool redheart::collided(int lx, int ly, int wid, int hei)
 {
     QRect rect_1(this->getx(),this->gety(),this->getwid()-20,this->gethei()+20);
     QRect rect_2(lx,ly,wid,hei);
@@ -141,7 +141,7 @@ QPixmap farrow::getpic()
 }
 
 
-bool farrow::ispengzhuang(int lx, int ly, int wid, int hei)
+bool farrow::collided(int lx, int ly, int wid, int hei)
 {
     QRect rect_1(this->getx(),this->gety(),this->getwid(),this->gethei());
     QRect rect_2(lx,ly,wid,hei);
@@ -177,7 +177,7 @@ QPixmap fbbb::getpic()
     return this->pic;
 }
 
-bool fbbb::ispengzhuang(int lx, int ly, int wid, int hei)
+bool fbbb::collided(int lx, int ly, int wid, int hei)
 {
     QRect rect_1(this->getx(),this->gety(),this->getwid()-100,this->gethei()-20);
     QRect rect_2(lx,ly,wid,hei);
@@ -213,7 +213,7 @@ QPixmap bullet::getpic()
     return this->pic;
 }
 
-bool bullet::ispengzhuang(int lx, int ly, int wid, int hei)
+bool bullet::collided(int lx, int ly, int wid, int hei)
 {
     QRect rect_1(this->getx(),this->gety(),this->getwid()-100,this->gethei()-20);
     QRect rect_2(lx,ly,wid,hei);
@@ -249,7 +249,7 @@ QPixmap pug::getpic()
     return this->pic;
 }
 
-bool pug::ispengzhuang(int lx, int ly, int wid, int hei)
+bool pug::collided(int lx, int ly, int wid, int hei)
 {
     QRect rect_1(this->getx(),this->gety(),this->getwid(),this->gethei());
     QRect rect_2(lx,ly,wid,hei);
@@ -289,7 +289,7 @@ QPixmap jin1::getpic()
     return this->pic[curji];
 }
 
-bool jin1::ispengzhuang(int lx, int ly, int wid, int hei)
+bool jin1::collided(int lx, int ly, int wid, int hei)
 {
     QRect rect_1(this->getx(),this->gety(),this->getwid(),this->gethei());
     QRect rect_2(lx,ly,wid,hei);
@@ -331,7 +331,7 @@ QPixmap jin2::getpic()
     return this->pic[curji];
 }
 
-bool jin2::ispengzhuang(int lx, int ly, int wid, int hei)
+bool jin2::collided(int lx, int ly, int wid, int hei)
 {
     QRect rect_1(this->getx(),this->gety(),this->getwid(),this->gethei());
     QRect rect_2(lx,ly,wid,hei);

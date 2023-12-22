@@ -146,7 +146,7 @@ void Bossplayer::move(bool up, bool down, bool right, bool left)
     //加速下落
     if(down)
     {
-        if(this->y<600-196&&!jump_Timer.isActive())
+        if(this->y<400&&!jump_Timer.isActive())
         {
             fall_speed+=fallspeed_a*2;
 
@@ -240,7 +240,7 @@ int Bossplayer::gethp()
 {
     return this->hp;
 }
-int Bossplayer::getbaifenzhihp()
+int Bossplayer::gethppercent()
 {
     return this->hp*100/this->maxhp;
 }
@@ -267,12 +267,12 @@ bool Bossplayer::shot()
     if(zidanshu==0)return 0;
     return 1;
 }
-void Bossplayer::addzidan()
+void Bossplayer::addbullet()
 {
     if(zidanshu==4)return;
     zidanshu++;
 }
-int Bossplayer::getzidan()
+int Bossplayer::getbullet()
 {
     return this->zidanshu;
 }

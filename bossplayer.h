@@ -66,8 +66,8 @@ public:
 
     //射击设置
     bool shot();
-    void addzidan();
-    int getzidan();
+    void addbullet();
+    int getbullet();
 
 
 
@@ -75,7 +75,7 @@ public:
     void reducehp();
     void increasehp(int n);
     int gethp();
-    int getbaifenzhihp();//获得处理后的血量的
+    int gethppercent();//获得处理后的血量的
 
     void dashmove_();
 

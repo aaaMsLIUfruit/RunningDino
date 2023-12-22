@@ -88,7 +88,7 @@ Bossmode::Bossmode(QWidget *parent,int wid ,int hei) :
         // 重新装弹逻辑
         connect(&r->zidan_Timer, &QTimer::timeout, [=]()
         {
-            r->addzidan(); // 调用角色 r 的 addzidan 方法添加子弹
+            r->addbullet(); // 调用角色 r 的 addzidan 方法添加子弹
         });
 
         // Boss 行为判断逻辑
@@ -559,7 +559,7 @@ void Bossmode::paintEvent(QPaintEvent *event)
         painter.setFont(font);
         //pen1.setColor(Qt::white);
         painter.setPen(Qt::black);
-        painter.drawText(100,445,QString("HP:      %1%").arg(r->getbaifenzhihp()));
+        painter.drawText(100,445,QString("HP:      %1%").arg(r->gethppercent()));
 
 
 
@@ -571,7 +571,7 @@ void Bossmode::paintEvent(QPaintEvent *event)
 
 
         //子弹数显示
-        painter.drawText(100,100,QString("Bullet:%1").arg(r->getzidan()));
+        painter.drawText(100,100,QString("Bullet:%1").arg(r->getbullet()));
 
 
 

@@ -82,12 +82,11 @@ void Character::onCharacterSelected(const QString &characterName)
                 coin -= characterCost;
 
                 emit characterSelected(characterName);
-                //emit coinChanged(coin);
+                emit coinChanged(coin);
 
             } else {
                 // 如果金币不足，提示用户
                 qDebug() << "Insufficient coins!";
-                // 这里可以使用 QMessageBox 进行提示
                 QMessageBox::critical(this, "Insufficient Coins", "金币数量不足！");
             }
         } else {
@@ -96,3 +95,4 @@ void Character::onCharacterSelected(const QString &characterName)
             emit characterSelected(characterName);
         }
 }
+

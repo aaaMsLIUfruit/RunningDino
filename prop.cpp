@@ -62,6 +62,7 @@ void Prop::onPropSelected(const QString &propName)
         propName == "更多金币 30coin")
     {
         propCost = 30;
+    }
 
     if (propCost > 0) {
         // 如果有金币花费
@@ -87,9 +88,9 @@ void Prop::onPropSelected(const QString &propName)
         qDebug() << "Selected prop: " << propName;
         emit propSelected(propName);
     }
-    }
-
 }
+
+
 
 void Prop::setupConnections() {
     connect(ui->comboBox, &QComboBox::currentTextChanged, this, &Prop::onPropSelected);

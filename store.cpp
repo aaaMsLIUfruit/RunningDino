@@ -41,9 +41,6 @@ Store::Store(QWidget *parent) :
     connect(ui->characters,SIGNAL(clicked()),this,SLOT(on_character_clicked()));
     connect(ui->props,SIGNAL(clicked()),this,SLOT(on_prop_clicked()));
     connect(ui->backgrounds,SIGNAL(clicked()),this,SLOT(on_background_clicked()));
-    connect(character, &Character::characterSelected, this, &Store::onCharacterChanged);
-    connect(prop, &Prop::propSelected, this, &Store::onPropChanged);
-    connect(character,&Character::coinChanged,this,&Store::onCoinChanged);
 
     //设置焦点策略，防止UI元素抢占键盘焦点
     ui->returned->setFocusPolicy(Qt::NoFocus);
@@ -63,9 +60,12 @@ void Store::on_character_clicked()
     ui->returned->hide();
 
     character=new Character(this, coin);
-    character->setParent(this);
+    character->setAttribute(Qt::WA_DeleteOnClose);
 
     character->show();
+
+    connect(character, &Character::characterSelected, this, &Store::onCharacterChanged);
+    connect(character,&Character::coinChanged,this,&Store::onCoinChanged);
 }
 
 void Store::on_prop_clicked()
@@ -81,6 +81,8 @@ void Store::on_prop_clicked()
     prop->setParent(this);
 
     prop->show();
+
+    connect(prop, &Prop::propSelected, this, &Store::onPropChanged);
 }
 
 void Store::on_background_clicked()

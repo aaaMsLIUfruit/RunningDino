@@ -251,6 +251,7 @@ void MainWindow::playgame() {
     if(dino->chara=="经典小恐龙"&&dino->chara=="超级马里奥"){
         // 重置Dino对象的当前运行图像索引为0
         dino->current_run_img = 0;
+        dino->mcurrent_run_img = 0;
     }
 
     // 显示游戏中的金币和距离UI元素
@@ -698,11 +699,17 @@ void MainWindow::showProtectedtime(){
 
     if (protected_Timer.isActive())
     {
-        int remainingTime = protected_Timer.remainingTime();
-        int seconds = remainingTime / 1000;
+        if(wudi == true){
+            ui->countdownLabel->setText("protection!");
+            ui->countdownLabel->show();
+        }
+        else{
+            int remainingTime = protected_Timer.remainingTime();
+            int seconds = remainingTime / 1000;
 
-        ui->countdownLabel->setText("protection:"+QString::number(seconds) + "s");
-        ui->countdownLabel->show();
+            ui->countdownLabel->setText("protection!"+QString::number(seconds) + "s");
+            ui->countdownLabel->show();
+        }
     }
     else
     {
@@ -720,6 +727,7 @@ void MainWindow::quickupGame(){
         barr->updatePosition();
         barr->updatePosition();
     }
+
 }
 
 void MainWindow::boss_closed(){

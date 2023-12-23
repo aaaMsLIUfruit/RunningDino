@@ -32,7 +32,8 @@ public:
     QTimer jump_Timer;      //跳跃时间计时器
     int x=100;                  //角色坐标
     int y=DINO_ON_GROUNG_POS_Y;
-    int current_run_img;        //奔跑图片下标
+    int current_run_img;        //小恐龙奔跑图片下标
+    int mcurrent_run_img;        //马里奥奔跑图片下标
     double fall_speed;     //下落速度
     bool jump_once;        //已经跳跃一次
     bool jump_twice;       //已经跳跃两次

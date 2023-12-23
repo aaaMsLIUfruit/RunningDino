@@ -33,7 +33,7 @@ private slots:
 private:
     Ui::Prop *ui;
     void setupUi();
-    void setupConnections();
+    void setupConnections();  // 设置信号和槽的连接
 };
 
 #endif // PROP_H

@@ -83,6 +83,7 @@ void Store::on_prop_clicked()
     prop->show();
 
     connect(prop, &Prop::propSelected, this, &Store::onPropChanged);
+    connect(prop,&Prop::coinChanged,this,&Store::onCoinChanged);
 }
 
 void Store::on_background_clicked()
@@ -155,6 +156,7 @@ void Background::on_returnButton_clicked()
 
 void Store::onCharacterChanged(const QString &characterName) {
     emit characterChangedInStore(characterName);
+
 }
 
 void Store::onBackgroundChanged(const QString &backgroundName){
@@ -163,6 +165,8 @@ void Store::onBackgroundChanged(const QString &backgroundName){
 
 void Store::onCoinChanged(const int &newCoinValue) {
     emit coinChanged(newCoinValue);
+    coin = mainWindowPtr->coin;
+    ui->coin->setText("Coin: " + QString::number(coin));
 }
 
 void Store::onPropChanged(const QString &propName){

@@ -212,7 +212,7 @@ void Dino::setCharacter(const QString &character) {
         current_run_img = 0;
         run_Timer.setInterval(RUN_INTERVAL);
         QObject::connect(&run_Timer, &QTimer::timeout, [this]() {
-             current_run_img = (current_run_img + 1) % 6;
+            mcurrent_run_img = (++mcurrent_run_img) % 6;
         });
         jump_Timer.setInterval(JUMP_DURATION);
         jump_Timer.setSingleShot(true);

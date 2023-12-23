@@ -20,6 +20,7 @@ Prop::Prop(QWidget *parent, int coinValue) :
     setupUi();
     setupConnections();
 
+
     ui->comboBox->setFont(font);
     ui->label->setFont(font);
     ui->returnButton->setFont(font);
@@ -37,7 +38,6 @@ Prop::Prop(QWidget *parent, int coinValue) :
     //设置焦点策略，防止UI元素抢占键盘焦点
     ui->returnButton->setFocusPolicy(Qt::NoFocus);
     ui->comboBox->setFocusPolicy(Qt::NoFocus);
-
 
 }
 
@@ -88,11 +88,13 @@ void Prop::onPropSelected(const QString &propName)
         qDebug() << "Selected prop: " << propName;
         emit propSelected(propName);
     }
+
 }
 
-
-
-void Prop::setupConnections() {
+void Prop::setupConnections(){
     connect(ui->comboBox, &QComboBox::currentTextChanged, this, &Prop::onPropSelected);
     connect(ui->returnButton, &QPushButton::clicked, this, &Prop::on_returnButton_clicked);
+
 }
+
+

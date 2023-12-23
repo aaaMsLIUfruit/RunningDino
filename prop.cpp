@@ -31,6 +31,8 @@ Prop::Prop(QWidget *parent, int coinValue) :
     ui->comboBox->addItem("无");
     ui->comboBox->addItem("复活卡 30coin");
     ui->comboBox->addItem("加速卡 30coin");
+    ui->comboBox->addItem("更多金币 30coin");
+    ui->comboBox->addItem("开局无敌 30coin");
 
     //设置焦点策略，防止UI元素抢占键盘焦点
     ui->returnButton->setFocusPolicy(Qt::NoFocus);
@@ -55,7 +57,9 @@ void Prop::onPropSelected(const QString &propName)
 
     // 根据角色名称设置相应的金币花费
     if (propName == "复活卡 30coin" ||
-        propName == "加速卡 30coin" )
+        propName == "加速卡 30coin" ||
+        propName == "开局无敌 30coin"||
+        propName == "更多金币 30coin")
     {
         propCost = 30;
 
@@ -84,6 +88,7 @@ void Prop::onPropSelected(const QString &propName)
         emit propSelected(propName);
     }
     }
+
 }
 
 void Prop::setupConnections() {

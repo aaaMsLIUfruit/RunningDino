@@ -7,6 +7,7 @@
 #include <QTimer>
 #include <QMouseEvent>
 #include <vector>
+#include <QElapsedTimer>
 
 #include "store.h"
 #include "ground.h"
@@ -53,8 +54,11 @@ public:
     QTimer add_veget_intervai_Timer;   //生成兰纳罗间隔时间计时器
     QTimer protected_Timer;            //无敌时间
     QTimer jumpHome_Timer;      //首页动画计时器
+    QElapsedTimer startgame_Timer;   //开始游戏计时器
     bool sprint_once;         //是否已经冲刺一次
     bool sprint_twice;        //是否已经冲刺两次
+    bool wudi=false;     //开局无敌是否开启,默认关闭
+    bool morecoin=false;   //更多金币是否开启,默认关闭
     int i;                    //障碍物类型
     int coin;           //金币
     int rec;               //纪录

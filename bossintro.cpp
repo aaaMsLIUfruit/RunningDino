@@ -5,7 +5,7 @@
 #include "ui_bossintro.h"
 
 BossIntro::BossIntro(QWidget *parent) :
-    QDialog(parent),
+    QDialog(parent,Qt::WindowTitleHint|Qt::CustomizeWindowHint),
     ui(new Ui::BossIntro)
 {
     ui->setupUi(this);
@@ -28,10 +28,6 @@ BossIntro::BossIntro(QWidget *parent) :
     ui->intro_2->setFont(font);
     ui->intro_3->setFont(font);
     ui->intro_4->setFont(font);
-
-    //禁用关闭按钮
-    //    setWindowFlags(windowFlags()& ~Qt::WindowCloseButtonHint);
-    setWindowFlags(Qt::FramelessWindowHint);
 
 
     //设置按钮样式

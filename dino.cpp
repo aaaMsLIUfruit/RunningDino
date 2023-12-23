@@ -35,7 +35,7 @@ Dino::Dino(QWidget *parent){
     // 默认隐藏 GIF 标签
     dinoLabel->raise();
     jumpSound = new QMediaPlayer(parent);
-    setCharacter("经典小恐龙 free");
+    setCharacter("超级马里奥 50coin");
 }
 
 // 获取当前 Dino 的图像，基于其位置（跳跃或跑步）
@@ -60,7 +60,7 @@ QPixmap Dino::getImg() {
         if (y >= DINO_ON_GROUNG_POS_Y) {
             // 当 Dino 在地面上时，返回跑步图像
 
-            return mariorun_img[current_run_img];
+            return mariorun_img[mcurrent_run_img];
 
         } else {
             // 当 Dino 在空中时，返回跳跃图像
@@ -209,10 +209,10 @@ void Dino::setCharacter(const QString &character) {
         mariorun_img[4] = mario5.scaled(100,110);
         mariorun_img[5] = mario6.scaled(100,110);
         mariojump_img = mariojump.scaled(100,110);
-        current_run_img = 0;
+        mcurrent_run_img = 0;
         run_Timer.setInterval(RUN_INTERVAL);
         QObject::connect(&run_Timer, &QTimer::timeout, [this]() {
-             current_run_img = (current_run_img + 1) % 6;
+             mcurrent_run_img = (++mcurrent_run_img) % 6;
         });
         jump_Timer.setInterval(JUMP_DURATION);
         jump_Timer.setSingleShot(true);

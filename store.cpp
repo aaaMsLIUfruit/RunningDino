@@ -41,7 +41,7 @@ Store::Store(QWidget *parent) :
     connect(ui->characters,SIGNAL(clicked()),this,SLOT(on_character_clicked()));
     connect(ui->props,SIGNAL(clicked()),this,SLOT(on_prop_clicked()));
     connect(ui->backgrounds,SIGNAL(clicked()),this,SLOT(on_background_clicked()));
-    connect(character, &Character::characterSelected, this, &Store::onCharacterChanged);
+
     connect(prop, &Prop::propSelected, this, &Store::onPropChanged);
     connect(character,&Character::coinChanged,this,&Store::onCoinChanged);
 

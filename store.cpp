@@ -78,7 +78,7 @@ void Store::on_prop_clicked()
     ui->returned->hide();
 
     prop=new Prop(this,coin);
-    prop->setParent(this);
+    prop->setAttribute(Qt::WA_DeleteOnClose);
 
     prop->show();
 
@@ -95,7 +95,8 @@ void Store::on_background_clicked()
     ui->returned->hide();
 
     background=new Background(this);
-    background->setParent(this);
+    background->setAttribute(Qt::WA_DeleteOnClose);
+
     connect(background, &Background::backgroundSelected, this, &Store::onBackgroundChanged);
 
     background->show();

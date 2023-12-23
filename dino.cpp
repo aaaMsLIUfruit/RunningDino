@@ -199,6 +199,7 @@ void Dino::setCharacter(const QString &character) {
         QPixmap mario4(":/res/Mario4.png");
         QPixmap mario5(":/res/Mario5.png");
         QPixmap mario6(":/res/Mario6.png");
+        QPixmap mariojump(":/res/Mariojump.png");
 
         //调整人物大小
         mariorun_img[0] = mario1.scaled(100,110);
@@ -207,6 +208,7 @@ void Dino::setCharacter(const QString &character) {
         mariorun_img[3] = mario4.scaled(100,110);
         mariorun_img[4] = mario5.scaled(100,110);
         mariorun_img[5] = mario6.scaled(100,110);
+        mariojump_img = mariojump.scaled(100,110);
         current_run_img = 0;
         run_Timer.setInterval(RUN_INTERVAL);
         QObject::connect(&run_Timer, &QTimer::timeout, [this]() {

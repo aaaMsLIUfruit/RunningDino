@@ -82,7 +82,7 @@ void Character::onCharacterSelected(const QString &characterName)
                 coin -= characterCost;
 
                 emit characterSelected(characterName);
-                emit coinChanged(coin);
+                //emit coinChanged(coin);
 
             } else {
                 // 如果金币不足，提示用户

@@ -28,6 +28,8 @@ BossIntro::BossIntro(QWidget *parent) :
     ui->intro_2->setFont(font);
     ui->intro_3->setFont(font);
     ui->intro_4->setFont(font);
+    ui->intro_5->setFont(font);
+    ui->intro_6->setFont(font);
 
 
     //设置按钮样式

@@ -12,6 +12,7 @@
 #include "config.h"
 #include "dino.h"
 #include "bossmode.h"
+#include "archive.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -31,12 +32,7 @@ MainWindow::MainWindow(QWidget *parent)
     home = new Home(this);
     home->show();
 
-    // 创建商店界面，并设置其为主窗口的子窗口
-    store = new Store(this);
-    store->hide();
-
     dino = new Dino(this);
-
 
     //连接home的信号到槽函数
     connect(home,&Home::switchToArc,this,&MainWindow::switchToArchWindow);
@@ -84,6 +80,7 @@ void MainWindow::initWindow() {
     ui->game_over->setFont(font);
     ui->record->setFont(font);
     ui->bossmode->setFont(font);
+    ui->countdownLabel->setFont(font);
 
     // 设置UI元素的几何位置
     ui->start->setGeometry(390, 140, ui->start->width(), ui->start->height());
@@ -95,6 +92,7 @@ void MainWindow::initWindow() {
     ui->store->setFocusPolicy(Qt::NoFocus);
     ui->restart->setFocusPolicy(Qt::NoFocus);
     ui->return_main->setFocusPolicy(Qt::NoFocus);
+    ui->bossmode->setFocusPolicy(Qt::NoFocus);
 
     // 隐藏某些UI元素，这些元素在游戏开始时不应该显示
     ui->coin->hide();
@@ -122,35 +120,36 @@ void MainWindow::initWindow() {
     connect(&m_Timer, &QTimer::timeout, this, [&]() {
     updatePosition(); // 更新游戏内物体的位置
     collisionDetection(); // 检测碰撞
+    showProtectedtime();
 
     // 更新金币和距离的显示
     ui->coin->setText("Coin: " + QString::number(coin));
     ui->distance->setText("Distance: " + QString::number(grounds.distance) + " m");
     ui->record->setText("Record: " + QString::number(rec) + " m");
 
-    // 如果当前距离超过了记录，则更新记录
-   if (grounds.distance > rec) {
+     // 如果当前距离超过了记录，则更新记录
+    if (grounds.distance > rec) {
         ui->record->setText("Record: " + QString::number(grounds.distance) + " m");
     }
 
-    // 刷新屏幕，以便更改能够显示出来
-     update();
-    });
+     // 刷新屏幕，以便更改能够显示出来
+        update();
+        });
 
-    connect(&add_Barrier_interval_Timer, &QTimer::timeout, this, [&]() {
-        addBarrier(); // 添加新的障碍物
-    });
+        connect(&add_Barrier_interval_Timer, &QTimer::timeout, this, [&]() {
+            addBarrier(); // 添加新的障碍物
+        });
 
 
-    // 初始化距离和金币的显示
-    grounds.distance = 0;
-    ui->coin->setText("Coin: " + QString::number(coin));
-    ui->distance->setText("Distance: " + QString::number(grounds.distance) + " m");
-    ui->record->setText("Record: " + QString::number(rec) + " m");
+     // 初始化距离和金币的显示
+        grounds.distance = 0;
+        ui->coin->setText("Coin: " + QString::number(coin));
+        ui->distance->setText("Distance: " + QString::number(grounds.distance) + " m");
+        ui->record->setText("Record: " + QString::number(rec) + " m");
 
-    // 初始化冲刺状态为false
-    sprint_once = false;
-    sprint_twice = false;
+     // 初始化冲刺状态为false
+        sprint_once = false;
+        sprint_twice = false;
 }
 
 //更新角色
@@ -506,12 +505,15 @@ void MainWindow::on_store_clicked() {
     ui->store->hide();
     ui->bossmode->hide();
 
-    // 显示商店界面
-    store->show();
+    // 创建商店界面，并设置其为主窗口的子窗口
+    store = new Store(this);
+    store->show(); // 显示商店界面
+    store->setAttribute(Qt::WA_DeleteOnClose); //设置窗口关闭时自动删除
 
     connect(store, &Store::characterChangedInStore, this, &MainWindow::updateDinoCharacter);
     connect(store, &Store::backgroundChangedInStore, this, &MainWindow::updateBackground);
-
+    connect(store, &Store::coinChanged, this, &MainWindow::updateCoin);
+    connect(store, &Store::propChangedInStore, this, &MainWindow::updateProp);
 }
 
 
@@ -621,6 +623,52 @@ void MainWindow::on_bossmode_clicked(){
 
 }
 
+
+void MainWindow::updateCoin(const int &newCoinValue) {
+    coin = newCoinValue;
+    update();
+}
+
+void MainWindow::updateProp(const QString &propName){
+    if(propName == "复活卡 30coin")
+    {
+        //gameRevive();
+    }
+    else if(propName == "加速卡")
+    {
+        quickupGame();
+    }
+}
+
+//显示保护状态倒计时
+void MainWindow::showProtectedtime(){
+
+    if (protected_Timer.isActive())
+    {
+        int remainingTime = protected_Timer.remainingTime();
+        int seconds = remainingTime / 1000;
+
+        ui->countdownLabel->setText("protection:"+QString::number(seconds) + "s");
+        ui->countdownLabel->show();
+    }
+    else
+    {
+        ui->countdownLabel->hide();
+    }
+}
+
+
+void MainWindow::quickupGame(){
+
+    // 通过再次调用计算位置函数加速移动
+    grounds.calculatePositions();
+    grounds.calculatePositions();
+    for (auto &barr : barriers) {
+        barr->updatePosition();
+        barr->updatePosition();
+    }
+}
+
 void MainWindow::boss_closed(){
     ui->start->show();
     ui->intro->show();
@@ -629,8 +677,8 @@ void MainWindow::boss_closed(){
 
 }
 
-
 MainWindow::~MainWindow()
 {
     delete ui;
+
 }

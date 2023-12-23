@@ -182,7 +182,7 @@ void Dino::setCharacter(const QString &character) {
         jump_Timer.setSingleShot(true);
 
         //初始化声音
-//        jumpSound->setMedia(QUrl::fromLocalFile(":/res/JumpSound.wav"));
+        //jumpSound->setMedia(QUrl::fromLocalFile(":/res/JumpSound.wav"));
 
         windSound.setSource(QUrl::fromLocalFile(":/res/WindSound.mp3"));
         windSound.setVolume(50);
@@ -216,7 +216,7 @@ void Dino::setCharacter(const QString &character) {
         jump_Timer.setSingleShot(true);
 
           //初始化声音
-//        jumpSound->setMedia(QUrl::fromLocalFile(":/res/JumpSound.wav"));
+        //jumpSound->setMedia(QUrl::fromLocalFile(":/res/JumpSound.wav"));
 
         windSound.setSource(QUrl::fromLocalFile(":/res/WindSound.mp3"));
         windSound.setVolume(50);

@@ -39,8 +39,11 @@
         <file>res/24.png</file>
         <file>res/blood.png</file>
         <file>res/bullet.png</file>
+        <file>res/butt_1.png</file>
+        <file>res/butt_2.png</file>
         <file>res/feibiao.png</file>
         <file>res/feijian.png</file>
+        <file>res/ground.png</file>
         <file>res/hurt.png</file>
         <file>res/jineng11.png</file>
         <file>res/jineng12.png</file>
@@ -50,9 +53,20 @@
         <file>res/jingzhi2.png</file>
         <file>res/jingzhi3.png</file>
         <file>res/jingzhi4.png</file>
+        <file>res/jump.png</file>
+        <file>res/play_ground.jpg</file>
         <file>res/pugong.png</file>
         <file>res/pugong1.png</file>
         <file>res/pugong2.png</file>
+        <file>res/run_1.png</file>
+        <file>res/run_2.png</file>
+        <file>res/run_3.png</file>
+        <file>res/run_4.png</file>
+        <file>res/run_5.png</file>
+        <file>res/startbut_1.png</file>
+        <file>res/startbut_2.png</file>
+        <file>res/titl.png</file>
+        <file>res/title.png</file>
         <file>res/coin.wav</file>
         <file>res/collision.wav</file>
         <file>res/jump.wav</file>

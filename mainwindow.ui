@@ -174,7 +174,6 @@ font: 25pt ;</string>
      <font>
       <family>Microsoft Yi Baiti</family>
       <pointsize>18</pointsize>
-      <weight>50</weight>
       <italic>false</italic>
       <bold>false</bold>
      </font>
@@ -267,6 +266,30 @@ font: 18pt;</string>
      <string>Boss战</string>
     </property>
    </widget>
+   <widget class="QLabel" name="countdownLabel">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>100</y>
+      <width>171</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(54,54,54);
+font: 11pt;</string>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -274,7 +297,7 @@ font: 18pt;</string>
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>25</height>
+     <height>17</height>
     </rect>
    </property>
   </widget>

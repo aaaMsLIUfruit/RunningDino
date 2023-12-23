@@ -30,7 +30,7 @@ BossIntro::BossIntro(QWidget *parent) :
     ui->intro_4->setFont(font);
 
     //禁用关闭按钮
-//    setWindowFlags(windowFlags()& ~Qt::WindowCloseButtonHint);
+    //    setWindowFlags(windowFlags()& ~Qt::WindowCloseButtonHint);
     setWindowFlags(Qt::FramelessWindowHint);
 
 

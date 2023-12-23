@@ -40,13 +40,13 @@ Bossmode::Bossmode(QWidget *parent,int wid ,int hei) :
     this->resize(wid, hei); // 设置场景的宽度和高度
     // 假设 this 是子窗口，parentWidget() 返回其父窗口
 
-//    if (parent) {
-//        QRect parentGeometry = parent->geometry();
-//        int x = parentGeometry.x() + (parentGeometry.width() - this->width()) / 2;
-//        int y = parentGeometry.y() + (parentGeometry.height() - this->height()) / 2;
-//        this->move(x, y);
+    //    if (parent) {
+    //        QRect parentGeometry = parent->geometry();
+    //        int x = parentGeometry.x() + (parentGeometry.width() - this->width()) / 2;
+    //        int y = parentGeometry.y() + (parentGeometry.height() - this->height()) / 2;
+    //        this->move(x, y);
 
-//    }
+    //    }
 
 
     ground_Y = hei - 120; // 设置地面的垂直位置，假设地面高度为 120
@@ -77,7 +77,7 @@ Bossmode::Bossmode(QWidget *parent,int wid ,int hei) :
     this->grabKeyboard(); // 获取键盘输入，确保可以接收玩家的按键操作
 
     //时间事件处理
-/*
+    /*
     connect(&r->zidan_Timer,&QTimer::timeout,[=]()
     {
         r->addzidan();
@@ -100,367 +100,367 @@ Bossmode::Bossmode(QWidget *parent,int wid ,int hei) :
 
 
     connect(&remove, &QTimer::timeout, [=]()
-    {
-        // 重新装弹逻辑
-        connect(&r->zidan_Timer, &QTimer::timeout, [=]()
-        {
-            r->addbullet(); // 调用角色 r 的 addzidan 方法添加子弹
-        });
-
-        // Boss 行为判断逻辑
-        connect(&rr->do_action, &QTimer::timeout, [=]()
-        {
-            int xxx = rand() % 4; // 随机选择一个数字来决定 Boss 的行动
-            // 根据随机数改变 Boss 的状态
-            rr->jingzhi_ = (xxx == 0);
-            rr->pugong_ = (xxx == 1);
-            rr->jineng1_ = (xxx == 2);
-            rr->jineng2_ = (xxx == 3);
-        });
-
-        // 控制角色 r 的移动
-        r->move(up, down, right, left);
-
-        // 游戏难度增加逻辑
-        if (difficulty <= 80)
-        {
-            difficulty += 0.001; // 游戏难度逐渐增加，直到达到上限 80
-        }
-        else
-        {
-            difficulty = 80; // 难度上限
-        }
-
-        // 处理忍币障碍物
-        for (auto i = obstacle1.begin(); i != obstacle1.end(); )
-        {
-            if ((*i)->done()) // 检查忍币是否超出屏幕范围
             {
-                delete *i;//释放内存
-                i = obstacle1.erase(i); // 超出屏幕的忍币被删除
-            }
-            else
-            {
-                // 检查忍币是否与角色 r 发生碰撞
-                if ((*i)->collided(r->getx() - 5, r->gety() - 5, r->getwid() - 5, r->getwid() - 5))
+                // 重新装弹逻辑
+                connect(&r->zidan_Timer, &QTimer::timeout, [=]()
+                        {
+                            r->addbullet(); // 调用角色 r 的 addzidan 方法添加子弹
+                        });
+
+                // Boss 行为判断逻辑
+                connect(&rr->do_action, &QTimer::timeout, [=]()
+                        {
+                            int xxx = rand() % 4; // 随机选择一个数字来决定 Boss 的行动
+                            // 根据随机数改变 Boss 的状态
+                            rr->jingzhi_ = (xxx == 0);
+                            rr->pugong_ = (xxx == 1);
+                            rr->jineng1_ = (xxx == 2);
+                            rr->jineng2_ = (xxx == 3);
+                        });
+
+                // 控制角色 r 的移动
+                r->move(up, down, right, left);
+
+                // 游戏难度增加逻辑
+                if (difficulty <= 80)
                 {
-//                    QSound::play(coin_pic); // 播放金币收集声音
-                    r->setScore(2000);// 角色吃币加分
-                    delete *i;//释放内存
-                    i = obstacle1.erase(i); // 删除已经收集的忍币
-                    Coinnum++; // 增加收集到的忍币数量
-                    break; // 跳出循环，因为迭代器已被修改
+                    difficulty += 0.001; // 游戏难度逐渐增加，直到达到上限 80
                 }
                 else
                 {
-                    (*i)->move(); // 如果没有碰撞，则移动忍币
-                    ++i; // 迭代器前进
+                    difficulty = 80; // 难度上限
                 }
-            }
-        }
-        //飞箭
-        // 遍历飞箭障碍物列表
-        for(auto i = obstacle2.begin(); i != obstacle2.end(); )
-        {
-            if ((*i)->done()) // 检查飞箭是否超出屏幕范围
-            {
-                delete *i;//释放内存
-                i = obstacle2.erase(i); // 如果是，从列表中删除飞箭
-            }
-            else
-            {
-                // 检查飞箭是否与角色发生碰撞
-                if ((*i)->collided(r->getx() - 5, r->gety() - 5, r->getwid() - 5, r->getwid() - 5))
+
+                // 处理忍币障碍物
+                for (auto i = obstacle1.begin(); i != obstacle1.end(); )
                 {
-//                    QSound::play(collision); // 播放碰撞声音
-                    r->reducehp(); // 角色减少生命值
-
-                    // 根据玩家的得分进行相应的处理
-                    if (r->getScore() > 2000)
-                        goto K; // 如果得分超过2000，跳转到标签 K
-                    if (r->getScore() >= 100)
-                        r->setScore(-100); // 如果得分大于等于100，减少100分
-                    else
-                        r->setScore(0); // 否则得分设置为0
-                    K:; // 标签 K
-
-                    hurtImgAlpha = 255; // 设置受伤图片的透明度
-                    delete *i;//释放内存
-                    i = obstacle2.erase(i); // 清空飞箭列表
-
-                    break; // 处理完碰撞后退出循环
-                }
-                if (!obstacle2.empty())
-                {
-                    (*i)->move(); // 如果列表不为空，则移动飞箭
-                    ++i; // 迭代器前进
-                }
-            }
-        }
-
-        //飞镖
-        // 遍历飞镖障碍物列表
-        for(auto i = obstacle3.begin(); i != obstacle3.end(); )
-        {
-            if ((*i)->done()) // 检查飞镖是否超出屏幕范围
-            {
-                delete *i;//释放内存
-                i = obstacle3.erase(i); // 如果是，从列表中删除飞镖
-            }
-            else
-            {
-                // 检查飞镖是否与角色发生碰撞
-                if ((*i)->collided(r->getx() - 5, r->gety() - 5, r->getwid() - 5, r->getwid() - 5))
-                {
-//                    QSound::play(collision); // 播放碰撞声音
-                    r->reducehp(); // 角色减少生命值
-
-                    // 根据玩家的得分进行相应的处理
-                    if (r->getScore() > 2000)
-                        goto Kk; // 如果得分超过2000，跳转到标签 Kk
-                    if (r->getScore() >= 100)
-                        r->setScore(-100); // 如果得分大于等于100，减少100分
-                    else
-                        r->setScore(0); // 否则得分设置为0
-                    Kk:; // 标签 Kk
-
-                    hurtImgAlpha = 255; // 设置受伤图片的透明度
-                    delete *i;//释放内存
-                    i = obstacle3.erase(i); // 清空飞镖列表
-
-                    break; // 处理完碰撞后退出循环
-                }
-                if (!obstacle3.empty())
-                {
-                    (*i)->move(); // 如果列表不为空，则移动飞镖
-                    ++i; // 迭代器前进
-                }
-            }
-        }
-
-        //子弹
-        // 遍历子弹障碍物列表
-        //子弹
-        for (auto p = obstacle4.begin(); p != obstacle4.end(); )
-        {
-            if ((*p)->done())
-            {
-                delete *p;//释放内存
-                p = obstacle4.erase(p); // 如果子弹超出屏幕范围，删除子弹
-            }
-            else
-            {
-                bool collisionOccurred = false;
-
-                // 检查子弹是否与飞箭发生碰撞
-                for (auto i = obstacle2.begin(); i != obstacle2.end() && !collisionOccurred; ++i)
-                {
-                    if ((*p)->collided((*i)->getx() - 5, (*i)->gety() - 5, (*i)->getwid() - 5, (*i)->getwid() - 5))
+                    if ((*i)->done()) // 检查忍币是否超出屏幕范围
                     {
-//                        QSound::play(collision);
-                        (*p)->sety(2000); // 将子弹移出屏幕
-                        (*i)->sety(-50);  // 将飞箭移出屏幕
-                        collisionOccurred = true;
+                        delete *i;//释放内存
+                        i = obstacle1.erase(i); // 超出屏幕的忍币被删除
+                    }
+                    else
+                    {
+                        // 检查忍币是否与角色 r 发生碰撞
+                        if ((*i)->collided(r->getx() - 5, r->gety() - 5, r->getwid() - 5, r->getwid() - 5))
+                        {
+                            //                    QSound::play(coin_pic); // 播放金币收集声音
+                            r->setScore(2000);// 角色吃币加分
+                            delete *i;//释放内存
+                            i = obstacle1.erase(i); // 删除已经收集的忍币
+                            Coinnum++; // 增加收集到的忍币数量
+                            break; // 跳出循环，因为迭代器已被修改
+                        }
+                        else
+                        {
+                            (*i)->move(); // 如果没有碰撞，则移动忍币
+                            ++i; // 迭代器前进
+                        }
+                    }
+                }
+                //飞箭
+                // 遍历飞箭障碍物列表
+                for(auto i = obstacle2.begin(); i != obstacle2.end(); )
+                {
+                    if ((*i)->done()) // 检查飞箭是否超出屏幕范围
+                    {
+                        delete *i;//释放内存
+                        i = obstacle2.erase(i); // 如果是，从列表中删除飞箭
+                    }
+                    else
+                    {
+                        // 检查飞箭是否与角色发生碰撞
+                        if ((*i)->collided(r->getx() - 5, r->gety() - 5, r->getwid() - 5, r->getwid() - 5))
+                        {
+                            //                    QSound::play(collision); // 播放碰撞声音
+                            r->reducehp(); // 角色减少生命值
+
+                            // 根据玩家的得分进行相应的处理
+                            if (r->getScore() > 2000)
+                                goto K; // 如果得分超过2000，跳转到标签 K
+                            if (r->getScore() >= 100)
+                                r->setScore(-100); // 如果得分大于等于100，减少100分
+                            else
+                                r->setScore(0); // 否则得分设置为0
+                        K:; // 标签 K
+
+                            hurtImgAlpha = 255; // 设置受伤图片的透明度
+                            delete *i;//释放内存
+                            i = obstacle2.erase(i); // 清空飞箭列表
+
+                            break; // 处理完碰撞后退出循环
+                        }
+                        if (!obstacle2.empty())
+                        {
+                            (*i)->move(); // 如果列表不为空，则移动飞箭
+                            ++i; // 迭代器前进
+                        }
                     }
                 }
 
-                // 检查子弹是否与飞镖发生碰撞
-                for (auto i = obstacle3.begin(); i != obstacle3.end() && !collisionOccurred; ++i)
+                //飞镖
+                // 遍历飞镖障碍物列表
+                for(auto i = obstacle3.begin(); i != obstacle3.end(); )
                 {
-                    if ((*p)->collided((*i)->getx() - 5, (*i)->gety() - 5, (*i)->getwid() - 5, (*i)->getwid() - 5))
+                    if ((*i)->done()) // 检查飞镖是否超出屏幕范围
                     {
-//                        QSound::play(collision);
-                        (*p)->sety(2000); // 将子弹移出屏幕
-                        (*i)->sety(-50);  // 将飞镖移出屏幕
-                        collisionOccurred = true;
+                        delete *i;//释放内存
+                        i = obstacle3.erase(i); // 如果是，从列表中删除飞镖
+                    }
+                    else
+                    {
+                        // 检查飞镖是否与角色发生碰撞
+                        if ((*i)->collided(r->getx() - 5, r->gety() - 5, r->getwid() - 5, r->getwid() - 5))
+                        {
+                            //                    QSound::play(collision); // 播放碰撞声音
+                            r->reducehp(); // 角色减少生命值
+
+                            // 根据玩家的得分进行相应的处理
+                            if (r->getScore() > 2000)
+                                goto Kk; // 如果得分超过2000，跳转到标签 Kk
+                            if (r->getScore() >= 100)
+                                r->setScore(-100); // 如果得分大于等于100，减少100分
+                            else
+                                r->setScore(0); // 否则得分设置为0
+                        Kk:; // 标签 Kk
+
+                            hurtImgAlpha = 255; // 设置受伤图片的透明度
+                            delete *i;//释放内存
+                            i = obstacle3.erase(i); // 清空飞镖列表
+
+                            break; // 处理完碰撞后退出循环
+                        }
+                        if (!obstacle3.empty())
+                        {
+                            (*i)->move(); // 如果列表不为空，则移动飞镖
+                            ++i; // 迭代器前进
+                        }
                     }
                 }
 
-                // 检查子弹是否与 Boss 发生碰撞
-                if (!collisionOccurred && (*p)->collided(rr->x - 5, rr->y - 5, rr->wid - 5, rr->hei - 5))
+                //子弹
+                // 遍历子弹障碍物列表
+                //子弹
+                for (auto p = obstacle4.begin(); p != obstacle4.end(); )
                 {
-//                    QSound::play(collision);
-                    (*p)->sety(2000); // 将子弹移出屏幕
-                    rr->reducehp();   // 减少 Boss 的生命值
-                    collisionOccurred = true;
-                }
-
-                if (!collisionOccurred)
-                {
-                    (*p)->move(); // 如果没有发生碰撞，则移动子弹
-                    ++p;
-                }
-                else
-                {
-                    delete *p;//释放内存
-                    p = obstacle4.erase(p); // 删除发生碰撞的子弹
-                }
-            }
-        }
-
-
-        //普攻
-        // 遍历普攻障碍物列表
-        for(auto i = obstacle5.begin(); i != obstacle5.end(); )
-        {
-            if ((*i)->done()) // 检查普攻是否超出屏幕范围
-            {
-                delete *i;//释放内存
-                i = obstacle5.erase(i); // 如果是，从列表中删除普攻
-            }
-            else
-            {
-                // 检查普攻是否与角色发生碰撞
-                if ((*i)->collided(r->getx() - 5, r->gety() - 5, r->getwid() - 5, r->getwid() - 5))
-                {
-//                    QSound::play(collision); // 播放碰撞声音
-                    r->reducehp(); // 角色减少生命值
-
-                    // 根据玩家的得分进行相应的处理
-                    if (r->getScore() >= 100)
-                        r->setScore(-100); // 如果得分大于等于100，减少100分
+                    if ((*p)->done())
+                    {
+                        delete *p;//释放内存
+                        p = obstacle4.erase(p); // 如果子弹超出屏幕范围，删除子弹
+                    }
                     else
-                        r->setScore(0); // 否则得分设置为0
+                    {
+                        bool collisionOccurred = false;
 
-                    hurtImgAlpha = 255; // 设置受伤图片的透明度
-                    delete *i;//释放内存
-                    i = obstacle5.erase(i); // 删除已处理的普攻
+                        // 检查子弹是否与飞箭发生碰撞
+                        for (auto i = obstacle2.begin(); i != obstacle2.end() && !collisionOccurred; ++i)
+                        {
+                            if ((*p)->collided((*i)->getx() - 5, (*i)->gety() - 5, (*i)->getwid() - 5, (*i)->getwid() - 5))
+                            {
+                                //                        QSound::play(collision);
+                                (*p)->sety(2000); // 将子弹移出屏幕
+                                (*i)->sety(-50);  // 将飞箭移出屏幕
+                                collisionOccurred = true;
+                            }
+                        }
 
-                    break; // 处理完碰撞后退出循环
+                        // 检查子弹是否与飞镖发生碰撞
+                        for (auto i = obstacle3.begin(); i != obstacle3.end() && !collisionOccurred; ++i)
+                        {
+                            if ((*p)->collided((*i)->getx() - 5, (*i)->gety() - 5, (*i)->getwid() - 5, (*i)->getwid() - 5))
+                            {
+                                //                        QSound::play(collision);
+                                (*p)->sety(2000); // 将子弹移出屏幕
+                                (*i)->sety(-50);  // 将飞镖移出屏幕
+                                collisionOccurred = true;
+                            }
+                        }
+
+                        // 检查子弹是否与 Boss 发生碰撞
+                        if (!collisionOccurred && (*p)->collided(rr->x - 5, rr->y - 5, rr->wid - 5, rr->hei - 5))
+                        {
+                            //                    QSound::play(collision);
+                            (*p)->sety(2000); // 将子弹移出屏幕
+                            rr->reducehp();   // 减少 Boss 的生命值
+                            collisionOccurred = true;
+                        }
+
+                        if (!collisionOccurred)
+                        {
+                            (*p)->move(); // 如果没有发生碰撞，则移动子弹
+                            ++p;
+                        }
+                        else
+                        {
+                            delete *p;//释放内存
+                            p = obstacle4.erase(p); // 删除发生碰撞的子弹
+                        }
+                    }
                 }
-                if (!obstacle5.empty())
-                {
-                    (*i)->move(); // 如果列表不为空，则移动普攻
-                    ++i; // 迭代器前进
-                }
-            }
-        }
 
-        //技能1
-        // 遍历技能1障碍物列表
-        for(auto i = obstacle6.begin(); i != obstacle6.end(); )
-        {
-            if ((*i)->done()) // 检查技能1是否超出屏幕范围
-            {
-                delete *i;//释放内存
-                i = obstacle6.erase(i); // 如果是，从列表中删除技能1
-            }
-            else
-            {
-                // 检查技能1是否与角色发生碰撞
-                if ((*i)->collided(r->getx() - 5, r->gety() - 5, r->getwid() - 5, r->getwid() - 5))
-                {
-//                    QSound::play(collision); // 播放碰撞声音
-                    r->reducehp(); // 角色减少生命值
 
-                    // 根据玩家的得分进行相应的处理
-                    if (r->getScore() >= 100)
-                        r->setScore(-100); // 如果得分大于等于100，减少100分
+                //普攻
+                // 遍历普攻障碍物列表
+                for(auto i = obstacle5.begin(); i != obstacle5.end(); )
+                {
+                    if ((*i)->done()) // 检查普攻是否超出屏幕范围
+                    {
+                        delete *i;//释放内存
+                        i = obstacle5.erase(i); // 如果是，从列表中删除普攻
+                    }
                     else
-                        r->setScore(0); // 否则得分设置为0
+                    {
+                        // 检查普攻是否与角色发生碰撞
+                        if ((*i)->collided(r->getx() - 5, r->gety() - 5, r->getwid() - 5, r->getwid() - 5))
+                        {
+                            //                    QSound::play(collision); // 播放碰撞声音
+                            r->reducehp(); // 角色减少生命值
 
-                    hurtImgAlpha = 255; // 设置受伤图片的透明度
-                    delete *i;//释放内存
-                    i = obstacle6.erase(i); // 删除已处理的技能1
+                            // 根据玩家的得分进行相应的处理
+                            if (r->getScore() >= 100)
+                                r->setScore(-100); // 如果得分大于等于100，减少100分
+                            else
+                                r->setScore(0); // 否则得分设置为0
 
-                    break; // 处理完碰撞后退出循环
+                            hurtImgAlpha = 255; // 设置受伤图片的透明度
+                            delete *i;//释放内存
+                            i = obstacle5.erase(i); // 删除已处理的普攻
+
+                            break; // 处理完碰撞后退出循环
+                        }
+                        if (!obstacle5.empty())
+                        {
+                            (*i)->move(); // 如果列表不为空，则移动普攻
+                            ++i; // 迭代器前进
+                        }
+                    }
                 }
-                if (!obstacle6.empty())
+
+                //技能1
+                // 遍历技能1障碍物列表
+                for(auto i = obstacle6.begin(); i != obstacle6.end(); )
                 {
-                    (*i)->move(); // 如果列表不为空，则移动技能1
-                    ++i; // 迭代器前进
+                    if ((*i)->done()) // 检查技能1是否超出屏幕范围
+                    {
+                        delete *i;//释放内存
+                        i = obstacle6.erase(i); // 如果是，从列表中删除技能1
+                    }
+                    else
+                    {
+                        // 检查技能1是否与角色发生碰撞
+                        if ((*i)->collided(r->getx() - 5, r->gety() - 5, r->getwid() - 5, r->getwid() - 5))
+                        {
+                            //                    QSound::play(collision); // 播放碰撞声音
+                            r->reducehp(); // 角色减少生命值
+
+                            // 根据玩家的得分进行相应的处理
+                            if (r->getScore() >= 100)
+                                r->setScore(-100); // 如果得分大于等于100，减少100分
+                            else
+                                r->setScore(0); // 否则得分设置为0
+
+                            hurtImgAlpha = 255; // 设置受伤图片的透明度
+                            delete *i;//释放内存
+                            i = obstacle6.erase(i); // 删除已处理的技能1
+
+                            break; // 处理完碰撞后退出循环
+                        }
+                        if (!obstacle6.empty())
+                        {
+                            (*i)->move(); // 如果列表不为空，则移动技能1
+                            ++i; // 迭代器前进
+                        }
+                    }
                 }
-            }
-        }
 
 
-        //技能2
-        static int hurttime = 30; // 设置一个静态变量，用于控制受伤的计时
+                //技能2
+                static int hurttime = 30; // 设置一个静态变量，用于控制受伤的计时
 
-        // 遍历技能2障碍物列表
-        for(auto i = obstacle7.begin(); i != obstacle7.end(); )
-        {
-            if ((*i)->done()) // 检查技能2是否超出屏幕范围
-            {
-                delete *i;//释放内存
-                i = obstacle7.erase(i); // 如果是，从列表中删除技能2
-            }
-            else
-            {
-                if (hurttime > 1) goto LI; // 如果受伤计时未结束，跳转到标签 LI
-
-                // 检查技能2是否与角色发生碰撞
-                if ((*i)->collided(r->getx() - 5, r->gety() - 5, r->getwid() - 5, r->getwid() - 5))
+                // 遍历技能2障碍物列表
+                for(auto i = obstacle7.begin(); i != obstacle7.end(); )
                 {
-//                    QSound::play(collision); // 播放碰撞声音
-                    r->reducehp(); // 角色减少生命值
-                    hurttime = 30; // 重置受伤计时
-                    hurtImgAlpha = 255; // 设置受伤图片的透明度
-                    delete *i;//释放内存
-                    i = obstacle7.erase(i); // 删除已处理的技能2
-                    break; // 处理完碰撞后退出循环
+                    if ((*i)->done()) // 检查技能2是否超出屏幕范围
+                    {
+                        delete *i;//释放内存
+                        i = obstacle7.erase(i); // 如果是，从列表中删除技能2
+                    }
+                    else
+                    {
+                        if (hurttime > 1) goto LI; // 如果受伤计时未结束，跳转到标签 LI
+
+                        // 检查技能2是否与角色发生碰撞
+                        if ((*i)->collided(r->getx() - 5, r->gety() - 5, r->getwid() - 5, r->getwid() - 5))
+                        {
+                            //                    QSound::play(collision); // 播放碰撞声音
+                            r->reducehp(); // 角色减少生命值
+                            hurttime = 30; // 重置受伤计时
+                            hurtImgAlpha = 255; // 设置受伤图片的透明度
+                            delete *i;//释放内存
+                            i = obstacle7.erase(i); // 删除已处理的技能2
+                            break; // 处理完碰撞后退出循环
+                        }
+                    LI: // 标签 LI
+                        if (!obstacle7.empty())
+                        {
+                            hurttime--; // 受伤计时递减
+                            (*i)->move(); // 如果列表不为空，则移动技能2
+                            ++i; // 迭代器前进
+                        }
+                    }
                 }
-                LI: // 标签 LI
-                if (!obstacle7.empty())
+
+
+                //红心
+                // 遍历红心障碍物列表
+                for(auto i = obstacle8.begin(); i != obstacle8.end(); )
                 {
-                    hurttime--; // 受伤计时递减
-                    (*i)->move(); // 如果列表不为空，则移动技能2
-                    ++i; // 迭代器前进
+                    if ((*i)->done()) // 检查红心是否超出屏幕范围
+                    {
+                        delete *i;//释放内存
+                        i = obstacle8.erase(i); // 如果是，从列表中删除红心
+                    }
+                    else
+                    {
+                        // 检查红心是否与角色发生碰撞
+                        if ((*i)->collided(r->getx() - 5, r->gety() - 5, r->getwid() - 5, r->getwid() - 5))
+                        {
+                            r->increasehp(300); // 角色增加生命值
+                            delete *i;//释放内存
+                            i = obstacle8.erase(i); // 删除已处理的红心
+                            break; // 处理完碰撞后退出循环
+                        }
+                        if (!obstacle8.empty())
+                        {
+                            (*i)->move(); // 如果列表不为空，则移动红心
+                            ++i; // 迭代器前进
+                        }
+                    }
                 }
-            }
-        }
 
 
-        //红心
-        // 遍历红心障碍物列表
-        for(auto i = obstacle8.begin(); i != obstacle8.end(); )
-        {
-            if ((*i)->done()) // 检查红心是否超出屏幕范围
-            {
-                delete *i;//释放内存
-                i = obstacle8.erase(i); // 如果是，从列表中删除红心
-            }
-            else
-            {
-                // 检查红心是否与角色发生碰撞
-                if ((*i)->collided(r->getx() - 5, r->gety() - 5, r->getwid() - 5, r->getwid() - 5))
+
+
+
+
+
+
+                if(isRuning)
                 {
-                    r->increasehp(300); // 角色增加生命值
-                    delete *i;//释放内存
-                    i = obstacle8.erase(i); // 删除已处理的红心
-                    break; // 处理完碰撞后退出循环
+                    if(r->gethp()<=0)
+                    {
+                        gameIsOver();//结束游戏
+                    }
+
+                    addobstacle();//增加障碍物函数
                 }
-                if (!obstacle8.empty())
-                {
-                    (*i)->move(); // 如果列表不为空，则移动红心
-                    ++i; // 迭代器前进
-                }
-            }
-        }
+
+                //音乐部分
 
 
 
 
-
-
-
-
-        if(isRuning)
-        {
-            if(r->gethp()<=0)
-            {
-                gameIsOver();//结束游戏
-            }
-
-            addobstacle();//增加障碍物函数
-        }
-
-        //音乐部分
-
-
-
-
-    });
+            });
 
 
 
@@ -487,7 +487,7 @@ void Bossmode::paintEvent(QPaintEvent *event)
     {
         //背景图片
 
-/*      painter.drawPixmap(QRect(0,0,this->width(),this->height())
+        /*      painter.drawPixmap(QRect(0,0,this->width(),this->height())
                      ,background
                      ,QRect(backImgX[0],0,this->width(),this->height()));  //在指定区域绘制指定尺寸的图片
         if(backImgX[0]>0)
@@ -554,11 +554,11 @@ void Bossmode::paintEvent(QPaintEvent *event)
         //血量、金币、分数
 
         //导入并设置字体
-//        int fontId = QFontDatabase::addApplicationFont(QStringLiteral(":/res/ark-pixel-12px-monospaced-zh_cn.ttf"));
-//        QStringList fontFamilies = QFontDatabase::applicationFontFamilies(fontId);
-//        QFont font;
-//        font.setFamily(fontFamilies[0]);
-//        font.setPointSize(20);
+        //        int fontId = QFontDatabase::addApplicationFont(QStringLiteral(":/res/ark-pixel-12px-monospaced-zh_cn.ttf"));
+        //        QStringList fontFamilies = QFontDatabase::applicationFontFamilies(fontId);
+        //        QFont font;
+        //        font.setFamily(fontFamilies[0]);
+        //        font.setPointSize(20);
 
         ///我用这个太卡了，换个狗市字体。///
 
@@ -569,9 +569,9 @@ void Bossmode::paintEvent(QPaintEvent *event)
 
 
         //血量
-//        painter.drawRect(QRect(600,50,150,10));
-//        painter.drawLine(600,50,1050,60);
-//        painter.drawLine(600,50,1100,60);   //划线
+        //        painter.drawRect(QRect(600,50,150,10));
+        //        painter.drawLine(600,50,1050,60);
+        //        painter.drawLine(600,50,1100,60);   //划线
 
 
         QPainter hp_painter(this);
@@ -651,11 +651,11 @@ void Bossmode::paintEvent(QPaintEvent *event)
 
 
 
-//        //暂停画面
-//        if(isPause&&!GameOver)
-//        {
-//            painter.drawPixmap(QRect(0,0,this->width(),this->height()),pauseImg);
-//        }
+        //        //暂停画面
+        //        if(isPause&&!GameOver)
+        //        {
+        //            painter.drawPixmap(QRect(0,0,this->width(),this->height()),pauseImg);
+        //        }
 
 
 
@@ -783,7 +783,7 @@ void Bossmode::addobstacle()
         jineng2_time=0;
         jineng2_num=1;
     }
-    LO:
+LO:
     jineng2_time++;
     if(!rr->jineng2_)
     {
@@ -825,7 +825,7 @@ void Bossmode::keyPressEvent(QKeyEvent *event)
     if(event->key()==Qt::Key_W)
     {
         up=true;
-//        QSound::play(jump);
+        //        QSound::play(jump);
     }
     else if(event->key()==Qt::Key_S)
     {
@@ -859,16 +859,16 @@ void Bossmode::keyPressEvent(QKeyEvent *event)
     }
     else if(!GameOver && isRuning&&!isPause&&event->key()==Qt::Key_Q)
     {
-         r->dashmove_() ;
+        r->dashmove_() ;
     }
     else if(GameOver && event->key()==Qt::Key_R)
     {
         start_game();
     }
-//    else if(GameOver&&event->key()==Qt::Key_B)
-//    {
-//        back();
-//    }
+    //    else if(GameOver&&event->key()==Qt::Key_B)
+    //    {
+    //        back();
+    //    }
     else
     {
         return QWidget::keyPressEvent(event);
@@ -937,7 +937,7 @@ void Bossmode::keyReleaseEvent(QKeyEvent *event)
 
 void Bossmode::gameIsOver()
 {
-//    QSound::play(over);
+    //    QSound::play(over);
     Score=r->getScore();
 
 

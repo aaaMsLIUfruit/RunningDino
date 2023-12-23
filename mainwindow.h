@@ -73,8 +73,14 @@ public:
 
     void initStartScreen();
     void showComponents();
+    void showProtectedtime();
     void updateDinoCharacter(const QString &characterName);
     void updateBackground(const QString &backgroundName);
+    void updateProp(const QString &propName);
+    void quickupGame();
+
+public slots:
+    void updateCoin(const int &newCoinValue);
 
 private slots:
     void switchToArchWindow();

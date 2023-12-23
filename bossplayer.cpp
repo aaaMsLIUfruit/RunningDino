@@ -51,10 +51,10 @@ Bossplayer::Bossplayer(QWidget *parent)
     connect(&run_Timer,&QTimer::timeout,
             [=]()
             {
-               currunpic=(currunpic+1)%2;
+                currunpic=(currunpic+1)%2;
 
             }
-      );//跑步图片的切换
+            );//跑步图片的切换
 
 
     //下面设定生命恢复
@@ -62,13 +62,13 @@ Bossplayer::Bossplayer(QWidget *parent)
     connect(&hp_Timer,&QTimer::timeout,
             [=]()
             {
-                    if(hp<maxhp)
-                    {
-                        hp+=1 ;
-                    }
+                if(hp<maxhp)
+                {
+                    hp+=1 ;
+                }
 
             }
-      );
+            );
 
 }
 

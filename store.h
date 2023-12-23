@@ -22,6 +22,8 @@ class Store : public QWidget
 signals:
     void characterChangedInStore(const QString &characterName);
     void backgroundChangedInStore(const QString &backgroundName);
+    void propChangedInStore(const QString &propName);
+    void coinChanged(const int &newCoinValue);
 
 public:
     explicit Store(QWidget *parent = nullptr);
@@ -38,6 +40,8 @@ public:
 public slots:
     void onCharacterChanged(const QString &characterName);
     void onBackgroundChanged(const QString &backgroundName);
+    void onPropChanged(const QString &propName);
+    void onCoinChanged(const int &newCoinValue);
 
 private slots:
     void on_character_clicked();

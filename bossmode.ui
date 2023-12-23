@@ -10,12 +10,6 @@
     <height>720</height>
    </rect>
   </property>
-  <property name="font">
-   <font>
-    <family>System</family>
-    <bold>true</bold>
-   </font>
-  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>

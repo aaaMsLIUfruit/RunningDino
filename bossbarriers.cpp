@@ -27,7 +27,7 @@ Bossbarriers::Bossbarriers(int x, int y, int width, int height)
             {
                 curji = (curji + 1) % 4; // 循环更新技能图片索引
             }
-    );
+            );
 }
 
 // 获取障碍物的水平位置

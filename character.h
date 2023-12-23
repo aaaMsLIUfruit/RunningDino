@@ -17,14 +17,15 @@ class Character : public QWidget
     Q_OBJECT
 
 public:
-    explicit Character(QWidget *parent = nullptr);
+    explicit Character(QWidget *parent = nullptr, int coinValue = 0);
     ~Character();
 
     int coin;
-    Store *storePtr;
+    Store *storePtr = nullptr;
 
 signals:
     void characterSelected(const QString &characterName);
+    void coinChanged(const int &newCoinValue);
 
 private slots:
     void onCharacterSelected(const QString &characterName);

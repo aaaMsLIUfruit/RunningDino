@@ -29,6 +29,10 @@ Background::Background(QWidget *parent) :
     ui->comboBox->addItem("经典像素");
     ui->comboBox->addItem("马里奥世界");
 
+    //设置焦点策略，防止UI元素抢占键盘焦点
+    ui->comboBox->setFocusPolicy(Qt::NoFocus);
+    ui->returnButton->setFocusPolicy(Qt::NoFocus);
+
 }
 
 Background::~Background()

@@ -41,6 +41,15 @@ Store::Store(QWidget *parent) :
     connect(ui->characters,SIGNAL(clicked()),this,SLOT(on_character_clicked()));
     connect(ui->props,SIGNAL(clicked()),this,SLOT(on_prop_clicked()));
     connect(ui->backgrounds,SIGNAL(clicked()),this,SLOT(on_background_clicked()));
+    connect(character, &Character::characterSelected, this, &Store::onCharacterChanged);
+    connect(prop, &Prop::propSelected, this, &Store::onPropChanged);
+    connect(character,&Character::coinChanged,this,&Store::onCoinChanged);
+
+    //设置焦点策略，防止UI元素抢占键盘焦点
+    ui->returned->setFocusPolicy(Qt::NoFocus);
+    ui->characters->setFocusPolicy(Qt::NoFocus);
+    ui->props->setFocusPolicy(Qt::NoFocus);
+    ui->backgrounds->setFocusPolicy(Qt::NoFocus);
 
 }
 
@@ -53,9 +62,8 @@ void Store::on_character_clicked()
     ui->backgrounds->hide();
     ui->returned->hide();
 
-    character=new Character(this);
+    character=new Character(this, coin);
     character->setParent(this);
-    connect(character, &Character::characterSelected, this, &Store::onCharacterChanged);
 
     character->show();
 }
@@ -69,7 +77,7 @@ void Store::on_prop_clicked()
     ui->backgrounds->hide();
     ui->returned->hide();
 
-    prop=new Prop(this);
+    prop=new Prop(this,coin);
     prop->setParent(this);
 
     prop->show();
@@ -149,6 +157,14 @@ void Store::onCharacterChanged(const QString &characterName) {
 
 void Store::onBackgroundChanged(const QString &backgroundName){
     emit backgroundChangedInStore(backgroundName);
+}
+
+void Store::onCoinChanged(const int &newCoinValue) {
+    emit coinChanged(newCoinValue);
+}
+
+void Store::onPropChanged(const QString &propName){
+    emit propChangedInStore(propName);
 }
 
 Store::~Store()

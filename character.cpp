@@ -1,16 +1,18 @@
 #include "character.h"
 #include "ui_character.h"
-#include "store.h"
+#include "archive.h"
+
 
 #include <QDebug>
 #include <QFontDatabase>
+#include <QMessageBox>
 
-Character::Character(QWidget *parent) :
+Character::Character(QWidget *parent, int coinValue) :
     QWidget(parent),
+    coin(coinValue),
     ui(new Ui::Character)
+
 {
-    storePtr=qobject_cast<Store*>(parent);
-    //coin = storePtr->coin;
 
     int fontId = QFontDatabase::addApplicationFont(QStringLiteral(":/res/ark-pixel-12px-monospaced-zh_cn.ttf"));
     QStringList fontFamilies = QFontDatabase::applicationFontFamilies(fontId);
@@ -36,6 +38,10 @@ Character::Character(QWidget *parent) :
     ui->comboBox->setGeometry(400, 100, 400, 71);
     ui->label->setGeometry(100, 80, 351, 111);
     ui->returnButton->setGeometry(790, 350, 161, 61);
+
+    //设置焦点策略，防止UI元素抢占键盘焦点
+    ui->comboBox->setFocusPolicy(Qt::NoFocus);
+    ui->returnButton->setFocusPolicy(Qt::NoFocus);
 
 }
 
@@ -65,18 +71,24 @@ void Character::onCharacterSelected(const QString &characterName)
             characterName == "超级马里奥 50coin") {
             characterCost = 50;
         }
-        // 其他角色的设置金币花费...
 
         if (characterCost > 0) {
             // 如果有金币花费
             if (coin >= characterCost) {
                 // 如果有足够金币，则发出信号
                 qDebug() << "Selected character: " << characterName;
+                QMessageBox::information(this, "Sufficient Coins", "购买成功！");
+
+                coin -= characterCost;
+
                 emit characterSelected(characterName);
+                emit coinChanged(coin);
+
             } else {
                 // 如果金币不足，提示用户
                 qDebug() << "Insufficient coins!";
-                // 这里可以使用 QMessageBox 或者其他方式进行提示
+                // 这里可以使用 QMessageBox 进行提示
+                QMessageBox::critical(this, "Insufficient Coins", "金币数量不足！");
             }
         } else {
             // 无需花费金币的角色，直接发出信号

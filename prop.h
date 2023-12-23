@@ -5,6 +5,8 @@
 #include <QComboBox>
 #include <QPushButton>
 
+class Store;
+
 namespace Ui {
 class Prop;
 }
@@ -14,8 +16,15 @@ class Prop : public QWidget
     Q_OBJECT
 
 public:
-    explicit Prop(QWidget *parent = nullptr);
+    explicit Prop(QWidget *parent = nullptr, int coinValue = 0);
     ~Prop();
+
+    int coin;
+    Store *storePtr = nullptr;
+
+signals:
+    void propSelected(const QString &propName);
+    void coinChanged(const int &newCoinValue);
 
 private slots:
     void onPropSelected(const QString &propName);

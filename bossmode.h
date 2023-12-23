@@ -41,10 +41,10 @@ public:
     vector<jin1 *>obstacle6;//放技能1的容器
     vector<jin2 *>obstacle7;//放技能2的容器
 
-//    GameButton *button=0;
-//    GameButton *button_2=0;
-//    GameButton *button_3=0;
-//    GameButton *button_4=0;
+    //    GameButton *button=0;
+    //    GameButton *button_2=0;
+    //    GameButton *button_3=0;
+    //    GameButton *button_4=0;
 
     //按钮
     QPushButton *backButton;

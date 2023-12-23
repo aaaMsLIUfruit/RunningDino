@@ -70,41 +70,41 @@ Boss::Boss(QWidget *parent) :
     connect(&action,&QTimer::timeout,
             [=]()
             {
-        if(jingzhi_)
-        {
-                       curjing=(curjing+1)%4;
-        }
-        else if(pugong_)
-        {
-                       curpu++;
-                       curpu=curpu%2;
-        }
-        else if(jineng1_)
-        {
-                       curji1=(curji1+1)%2;
-        }
-        else if(jineng2_)
-        {
-                       curji2=(curji2+1)%2;
-        }
+                if(jingzhi_)
+                {
+                    curjing=(curjing+1)%4;
+                }
+                else if(pugong_)
+                {
+                    curpu++;
+                    curpu=curpu%2;
+                }
+                else if(jineng1_)
+                {
+                    curji1=(curji1+1)%2;
+                }
+                else if(jineng2_)
+                {
+                    curji2=(curji2+1)%2;
+                }
 
 
 
 
             }
-      );
+            );
 
     hpp_Timer.setInterval(20);  //设定每帧时长
     connect(&hpp_Timer,&QTimer::timeout,
             [=]()
             {
-                    if(hp<maxhp)
-                    {
-                        hp+=10 ;
-                    }
+                if(hp<maxhp)
+                {
+                    hp+=10 ;
+                }
 
             }
-      );
+            );
 }
 
 void Boss::reducehp()
@@ -120,7 +120,7 @@ int Boss::getbaifenzhihp()
 QPixmap Boss::getpic()
 {
     QPixmap pic;
-/*    if(boss_ac==30)
+    /*    if(boss_ac==30)
     {
         boss_ac=0;
         jingzhi_=1;
